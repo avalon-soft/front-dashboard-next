@@ -1,0 +1,9 @@
+{
+  "MainPage": {
+    "title": "Привіт світ"
+  },
+  "NotFoundPage": {
+    "title": "Halaman Tidak Ditemukan",
+    "description": "Ups! Sepertinya Anda menemukan halaman yang tidak ada. Jangan khawatir, sihir internasionalisasi kami masih bekerja keras di bagian lain aplikasi. Silakan kembali untuk menjelajahi lebih lanjut!"
+  }
+}
