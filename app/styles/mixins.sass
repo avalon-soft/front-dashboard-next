@@ -1,0 +1,12 @@
+@mixin font-face($font-family, $font-path, $font-weight, $font-style)
+  @font-face
+    font-family: $font-family
+    src: url('#{$font-path}.woff2') format('woff2')
+    font-weight: $font-weight
+    font-style: $font-style
+    font-display: swap
+
+@mixin retinaImg($path, $file)
+  background-image: url('#{$path}.#{$file}')
+  @media (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2)
+    background-image: url('#{$path}@2x.#{$file}')
