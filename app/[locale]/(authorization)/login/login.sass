@@ -1,0 +1,27 @@
+.login
+  &__container
+    height: 100%
+    width: 100%
+    padding: 32px
+    display: grid
+    grid-template-columns: 1fr 1fr
+    gap: 24px
+  &__form, &__logo
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: 12px
+  &__form
+    &-container
+      max-width: 396px
+      width: 100%
+    &-icon
+      color: theme('colors.status.text-gray')
+      cursor: pointer
+      transition: all 0.4s ease
+      border-radius: 100%
+      padding: 4px
+      &:hover
+        background: theme('colors.primary.hover')
+        color: theme('colors.main.gray-50')

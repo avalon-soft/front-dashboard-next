@@ -1,0 +1,61 @@
+.input
+  position: relative
+  width: 100%
+  font-size: 12px
+  height: 60px
+
+  &__label
+    position: absolute
+    top: 24px
+    left: 20px
+    font-size: 12px
+    line-height: 12px
+    letter-spacing: 0.72px
+    text-transform: uppercase
+  &__field
+    height: 60px
+    font-size: 16px
+    line-height: 22.4px
+    letter-spacing: 0.16px
+    border-radius: theme('borderRadius.xl')
+    padding: 25px 20px 10px 19px
+    width: 100%
+    &:focus-visible
+      outline-width: 0
+    &::placeholder
+      text-transform: uppercase
+    &--error
+    &--default
+  &__error
+    position: absolute
+    top: 14px
+    left: 20px
+    text-transform: uppercase
+    font-size: 12px
+    line-height: 12px
+    letter-spacing: 0.72px
+  &__password
+    position: absolute
+    right: 20px
+    top: 18px
+    width: 24px
+    height: 24px
+    cursor: pointer
+    
+    &::after
+      width: 24px
+    &--eye
+      background: url('/assets/icons/eye.svg')
+    &--eye-close
+      background: url('/assets/icons/eye-close.svg')
+  &__debit-card
+    position: absolute
+    top: 12px
+    right: 20px
+    width: 44px
+    height: 35px
+    // &--visa
+    //   background: url('/assets/icons/mobile_visa.svg') no-repeat center
+    // &--master
+    //   right: 58px
+    //   background: url('/assets/icons/mobile_mastercard.svg') no-repeat center
