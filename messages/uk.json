@@ -5,5 +5,12 @@
   "NotFoundPage": {
     "title": "Halaman Tidak Ditemukan",
     "description": "Ups! Sepertinya Anda menemukan halaman yang tidak ada. Jangan khawatir, sihir internasionalisasi kami masih bekerja keras di bagian lain aplikasi. Silakan kembali untuk menjelajahi lebih lanjut!"
+  },
+  "SignInPage": {
+    "signin": "Авторизуватися",
+    "rememberMe": "Запамʼятати мене",
+    "forgotPassword": "Забули пароль ?",
+    "dontHaveAnAccountYet": "Немаєте аккаунту ?",
+    "registration": "Реєстрація"
   }
 }

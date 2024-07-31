@@ -4,21 +4,36 @@ import { useGSAP } from '@gsap/react'
 
 import gsap from 'gsap'
 import './Input.sass'
+import classNames from 'classnames'
+import PreIcon from './PreIcon'
 
 interface InputProps extends React.ComponentProps<'input'> {
   error: any
   register: Object
   label: string
   isFill: boolean
+  preIcon?: string
 }
 
 export const Input = (props: InputProps) => {
-  const { register, error, label, id, className, isFill, type, name, maxLength } = props
+  const {
+    register,
+    error,
+    label,
+    id,
+    className,
+    isFill,
+    type,
+    name,
+    maxLength,
+    preIcon,
+    placeholder,
+  } = props
   const container = useRef<any>()
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
   const handleClickOnFocus = contextSafe(() => {
-    gsap.to('.input__label', { y: -12, duration: 0.3 })
+    // gsap.to('.input__label', { y: -12, duration: 0.3 })
     setTimeout(() => {
       let element = document.getElementsByTagName('com-1password-button')
       element[0]?.remove()
@@ -30,7 +45,7 @@ export const Input = (props: InputProps) => {
   }, [isFill, handleClickOnFocus])
 
   const handleClickOnBlur = contextSafe(() => {
-    !isFill && gsap.to('.input__label', { y: 0, duration: 0.3 })
+    // !isFill && gsap.to('.input__label', { y: 0, duration: 0.3 })
   })
 
   const handleClickVisiblePassword = contextSafe(() => {
@@ -50,26 +65,41 @@ export const Input = (props: InputProps) => {
 
   return (
     <div ref={container} className={`input ${(className && className) || ''}`}>
-      <label htmlFor={id} className={`input__label ${error ? 'opacity-0' : 'opacity-100'}`}>
+      <label
+        htmlFor={id}
+        className={`input__label ${error ? 'opacity-0' : 'opacity-100'}`}
+      >
         {label}
       </label>
-      <input
-        {...register}
-        id={id}
-        name={name}
-        type={isPasswordVisible ? 'text' : type}
-        onFocus={handleClickOnFocus}
-        onBlur={handleClickOnBlur}
-        className={`input__field input__field${error ? '--error' : '--default'}`}
-        maxLength={maxLength}
-      />
-      {type === 'password' && (
-        <div
-          id='eye-icon'
-          onClick={handleClickVisiblePassword}
-          className={`input__password input__password${!isPasswordVisible ? '--eye' : '--eye-close'}`}
+      <div className={classNames('input__container', { 'input__container--error': error })}>
+        {preIcon && (
+          <PreIcon
+            componentName={preIcon}
+            className={classNames(
+              'input__pre-icon',
+              `input__pre-icon--${preIcon.toLowerCase()}`
+            )}
+          />
+        )}
+        <input
+          {...register}
+          id={id}
+          name={name}
+          type={isPasswordVisible ? 'text' : type}
+          onFocus={handleClickOnFocus}
+          onBlur={handleClickOnBlur}
+          placeholder={placeholder}
+          className={`input__field input__field${error ? '--error' : '--default'}`}
+          maxLength={maxLength}
         />
-      )}
+        {type === 'password' && (
+          <div
+            id='eye-icon'
+            onClick={handleClickVisiblePassword}
+            className={`input__password input__password${!isPasswordVisible ? '--eye' : '--eye-close'}`}
+          />
+        )}
+      </div>
       {error && <div className='input__error'>{error.message}</div>}
     </div>
   )

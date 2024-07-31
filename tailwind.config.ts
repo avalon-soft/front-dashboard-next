@@ -97,7 +97,7 @@ const config: Config = {
       'body-2': [
         '14px',
         {
-          lineHeight: '14px',
+          lineHeight: '20px',
           fontWeight: 400,
         },
       ],

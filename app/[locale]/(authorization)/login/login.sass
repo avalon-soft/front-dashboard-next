@@ -1,21 +1,45 @@
+@import '@/app/styles'
+
 .login
   &__container
     height: 100%
     width: 100%
+    max-width: 1440px
+    margin: 0 auto
     padding: 32px
     display: grid
     grid-template-columns: 1fr 1fr
     gap: 24px
+    align-items: center
+    @include media(912)
+      grid-template-columns: 600px
+      justify-content: center
+    @include media(695)
+      padding: 16px
+    @include media(912)
+      grid-template-columns: 1fr
   &__form, &__logo
     display: flex
     flex-direction: column
     justify-content: center
     align-items: center
+    max-height: 896px
+    height: 100%
     border-radius: 12px
+    @include media(1024)
+      max-height: 550px
+  &__logo
+    @include media(912)
+      display: none
   &__form
     &-container
       max-width: 396px
       width: 100%
+      @include media(695)
+        max-width: 100%
+        padding: 20px
+    &-button
+      border-radius: 4px
     &-icon
       color: theme('colors.status.text-gray')
       cursor: pointer
