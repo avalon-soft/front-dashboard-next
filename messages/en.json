@@ -9,8 +9,21 @@
   "SignInPage": {
     "signin": "Sign In",
     "rememberMe": "Remember me",
-    "forgotPassword": "Forgot your password ?",
-    "dontHaveAnAccountYet":"Don't have an account yet ?",
-    "registration":"Registr"
+    "forgotPassword": "Forgot your password",
+    "enterTheEmail": "Enter the email on your account and we will sent you a password reset link.",
+    "dontHaveAnAccountYet": "Don't have an account yet ?",
+    "registration": "Registr",
+    "backToLogin": "Back to log in",
+    "signUp": "Sign up",
+    "createYourAccount": "Create your account",
+    "confirmPassword": "Confirm password",
+    "password": "Password",
+    "email": "Email",
+    "sendAPasword": "Send a password",
+    "alreadyHaveAnAccount":"Already have an account?",
+    "successfullRegistration":"You have successfully registered",
+    "textForSuccessRegistration":"A login link has been sent to your email:",
+    "DidntGetTheLink":" Didnʼt get the link",
+    "SendMore":"Send more"
   }
 }

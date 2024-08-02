@@ -9,8 +9,8 @@
   "SignInPage": {
     "signin": "Авторизуватися",
     "rememberMe": "Запамʼятати мене",
-    "forgotPassword": "Забули пароль ?",
-    "dontHaveAnAccountYet": "Немаєте аккаунту ?",
+    "forgotPassword": "Забули пароль",
+    "dontHaveAnAccountYet": "Немаєте аккаунту?",
     "registration": "Реєстрація"
   }
 }
