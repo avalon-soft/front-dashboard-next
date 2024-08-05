@@ -20,10 +20,20 @@
     "password": "Password",
     "email": "Email",
     "sendAPasword": "Send a password",
-    "alreadyHaveAnAccount":"Already have an account?",
-    "successfullRegistration":"You have successfully registered",
-    "textForSuccessRegistration":"A login link has been sent to your email:",
-    "DidntGetTheLink":" Didnʼt get the link",
-    "SendMore":"Send more"
+    "alreadyHaveAnAccount": "Already have an account?",
+    "successfullRegistration": "You have successfully registered",
+    "textForSuccessRegistration": "A login link has been sent to your email:",
+    "DidntGetTheLink": " Didnʼt get the link",
+    "SendMore": "Send more",
+    "PleaseCorrectYourEmail": "Please correct your Email",
+    "PasswordMustBeLonger": "Password must be at least 8 characters",
+    "PleaseConfirmYourPassword": "Please confirm your password",
+    "PasswordsDoNotMatch": "Passwords do not match",
+    "fullName": "Full name",
+    "PasswordMustHaveAtLeastOneUppercaseLetter": "Password must have at least one uppercase letter",
+    "PasswordMustHaveAtLeastOneLowercaseLetter": "Password must have at least one lowercase letter",
+    "PasswordMustHaveAtLeastOneNumber": "Password must have at least one number",
+    "PasswordMustHaveAtLeastOneSpecialCharacter": "Password must have at least one special character",
+    "PasswordMustBeLess":"Password must not exceed 20 characters"
   }
 }

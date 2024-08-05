@@ -1,6 +1,9 @@
+import { API_V1 } from '@/configs/constants'
 export const endpoints = {
-  reqistration: '/registration',
-  token: '/login',
+  base: API_V1,
+  
+  user: '/user',
+  token: '/auth/login',
   curentuser: 'user/current',
   subscribe: {
     buy: 'subscription/stripe/subscribe',

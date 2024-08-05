@@ -1,14 +1,17 @@
 'use client'
-import { addAuthHeader, auth } from '@/api'
+import { addAuthHeader, api } from '@/api'
 import { endpoints } from '@/api/endpoints'
 import Input from '@/app/components/Form/Input/Input'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
 import ChevronLeft from '@/app/components/icons/ChevronLeft'
 import ProgressCheck from '@/app/components/icons/ProgressCheck'
+import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+// import { signup } from '@/app/[locale]/(authorization)/registration/actions'
 
 const Registration = () => {
   const t = useTranslations('SignInPage')
@@ -19,27 +22,38 @@ const Registration = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<{ username: string; password: string; confirmPassword: string }>()
+  } = useForm<{
+    full_name: string
+    username: string
+    password: string
+    confirmPassword: string
+  }>()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [step, setStep] = useState(0)
-
+  // const [ state, action] = useActionState(signup, null)
   const { push } = useRouter()
 
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
+    const { base, user } = endpoints
+    const { full_name, username, password } = values
+    // action(values)
     try {
-      const { data } = await auth.post(endpoints.token, {
-        ...values,
+      const { status } = await api.post(base + user, {
+        full_name,
+        username,
+        password,
       })
-      addAuthHeader(data)
-      window.localStorage.setItem('session', JSON.stringify(data))
-      push(`/${locale}/dashboard`)
+      if (RESPONSE_SUCCESS_STATUS.includes(status)) setStep(1)
+      // addAuthHeader(data)
+      // window.localStorage.setItem('session', JSON.stringify(data))
+      // push(`/${locale}/dashboard`)
     } finally {
       setIsSubmitting(false)
     }
   }
-  const { username, password, confirmPassword } = watch()
+  const { username, password, confirmPassword, full_name } = watch()
   return step === 0 ? (
     <>
       <div className='my-8 w-full justify-start'>
@@ -48,15 +62,34 @@ const Registration = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          id={'name'}
+          label={t('fullName')}
+          register={{
+            ...register('full_name', {
+              required: 'This is required field',
+              pattern: {
+                value: /^[a-zA-Z]+ [a-zA-Z]+$/,
+                message: 'Full name must have first name and last name',
+              },
+            }),
+          }}
+          error={errors.full_name}
+          type='text'
+          name='full_name'
+          placeholder='Placeholder@mail.com'
+          isFill={Boolean(full_name)}
+          className='mb-4'
+        />
+        <Input
           id={'username'}
           label={t('email')}
           register={{
             ...register('username', {
               required: 'This is required field',
-              // pattern: {
-              //   value: /\S+@\S+\.\S+/,
-              //   message: 'Please correct your Email',
-              // },
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: t('PleaseCorrectYourEmail'),
+              },
             }),
           }}
           error={errors.username}
@@ -73,6 +106,21 @@ const Registration = () => {
           register={{
             ...register('password', {
               required: 'This is required field',
+              minLength: { value: 8, message: t('PasswordMustBeLonger') },
+              maxLength: { value: 20, message: t('PasswordMustBeLess') },
+              validate: {
+                hasUpperCase: (value) =>
+                  /[A-Z]/.test(value) ||
+                  t('PasswordMustHaveAtLeastOneUppercaseLetter'),
+                hasLowerCase: (value) =>
+                  /[a-z]/.test(value) ||
+                  t('PasswordMustHaveAtLeastOneLowercaseLetter'),
+                hasNumber: (value) =>
+                  /\d/.test(value) || t('PasswordMustHaveAtLeastOneNumber'),
+                hasSpecialChar: (value) =>
+                  /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                  t('Password must have at least one special character'),
+              },
             }),
           }}
           error={errors.password}
@@ -88,10 +136,17 @@ const Registration = () => {
           label={t('confirmPassword')}
           register={{
             ...register('confirmPassword', {
-              required: 'This is required field',
+              required: t('PleaseConfirmYourPassword'),
+              validate: (value) => {
+                console.log(
+                  'value :>> ',
+                  value === password || t('PasswordsDoNotMatch')
+                )
+                return value === password || t('PasswordsDoNotMatch')
+              },
             }),
           }}
-          error={errors.password}
+          error={errors.confirmPassword}
           type='password'
           name='confirmPassword'
           placeholder='Confirm password'

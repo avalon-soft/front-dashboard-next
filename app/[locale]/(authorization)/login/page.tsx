@@ -1,19 +1,15 @@
 'use client'
-import SupportIcon from '@/app/components/icons/Support'
-import './login.sass'
-import Img from '@/app/components/Image/Image'
-import Logo from '@/public/assets/logo.png'
-import LogoRetina from '@/public/assets/logo@2x.png'
 import { useForm } from 'react-hook-form'
 
 import Input from '@/app/components/Form/Input/Input'
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
 import { useTranslations, useLocale } from 'next-intl'
 import Checkbox from '@/app/components/Form/Checkbox/Checkbox'
-import { addAuthHeader, auth } from '@/api'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { addAuthHeader, api } from '@/api'
+import { useRouter } from 'next/navigation'
 import { endpoints } from '@/api/endpoints'
+import { signIn } from './actions'
 interface ILoginValues {
   username: string
   password: string
@@ -22,7 +18,6 @@ interface ILoginValues {
 export default function Login() {
   const t = useTranslations('SignInPage')
   const locale = useLocale()
-
   const {
     register,
     handleSubmit,
@@ -35,13 +30,13 @@ export default function Login() {
 
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
+    const { token, base } = endpoints
     try {
-      const { data } = await auth.post(endpoints.token, {
+      const response = await api.post(base + token, {
         ...values,
       })
-      addAuthHeader(data)
-      window.localStorage.setItem('session', JSON.stringify(data))
-      push(`/${locale}/dashboard`)
+
+      response?.data && signIn(response.data.access_token)
     } finally {
       setIsSubmitting(false)
     }
@@ -51,13 +46,13 @@ export default function Login() {
   return (
     <>
       <>
-        
         <div className='my-8 w-full justify-start'>
           <h1 className='text-heading-6'>Sign in</h1>
           <h2 className='text-body-w mt-3'>
             Enter your account details below.
           </h2>
         </div>
+        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             id={'username'}
@@ -108,7 +103,7 @@ export default function Login() {
           <LoadingButton
             isLoading={isSubmitting}
             type='submit'
-            className='login__form-button bg-primary-main hover:bg-primary-hover text-main-gray-50 text-button-1 mt-8 w-full px-4 py-3'
+            className='bg-primary-main hover:bg-primary-hover text-main-gray-50 text-button-1 mt-8 w-full rounded px-4 py-3'
             disabled={isSubmitting}
           >
             {t('signin')}

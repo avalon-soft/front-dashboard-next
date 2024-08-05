@@ -1,5 +1,6 @@
 import SupportIcon from '@/app/components/icons/Support'
-import './login/login.sass'
+// import './login/login.sass'
+import './layout.sass'
 import Img from '@/app/components/Image/Image'
 import Logo from '@/public/assets/logo.png'
 import LogoRetina from '@/public/assets/logo@2x.png'
@@ -11,11 +12,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className='flex h-screen w-full items-center justify-center'>
-      <div className='bg-main-blue-gray-50 h-screen w-full'>
-        <div className='login__container'>
-          <div className='bg-main-gray-50 login__form'>
-            <div className='login__form-container'>
-              <div className='login__form-title flex justify-between align-middle'>
+      <div className='bg-main-blue-gray-50 h-full w-full'>
+        <div className='layout__container'>
+          <div className='bg-main-gray-50 layout__left'>
+            <div className='layout__left-container'>
+              <div className='flex justify-between align-middle'>
                 <a href='/' className='flex justify-between align-middle'>
                   <Img
                     src={Logo}
@@ -30,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </span>
                 </a>
                 <SupportIcon
-                  className='login__form-icon'
+                  className='layout__left-icon'
                   width={32}
                   height={32}
                 />
@@ -38,7 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               {children}
             </div>
           </div>
-          <div className='bg-primary-focus login__logo'>
+          <div className='bg-primary-focus layout__right'>
             <Img
               src={Logo}
               srcSet={[Logo, LogoRetina]} // important!!!images name for retina display must includes @2x

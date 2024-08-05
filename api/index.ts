@@ -4,11 +4,16 @@ import { toast } from 'react-toastify'
 export const handleError = (error: AxiosError<any>) => {
   let message = error.message
   if (error.response) {
-    message = error.response.data?.errors
-      ? Object.values(error.response.data.errors).flat().join('\n')
-      : error.response.data?.message || error.message
+    let errors = error.response.data.errors
+    if (Array.isArray(errors)) {
+      errors.forEach(error => toast.error(error.error))
+    } else {
+      message = error.response.data?.errors
+        ? Object.values(errors).flat().join('\n')
+        : error.response.data?.message || error.message
+      toast.error(message)
+    }
   }
-  toast.error(message)
   return Promise.reject(error)
 }
 
@@ -19,7 +24,7 @@ export const auth: AxiosInstance = axios.create({
 auth.interceptors.response.use(undefined, (error) => handleError(error))
 
 export const api: AxiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/`,
 })
 
 api.interceptors.response.use(undefined, (error) => {
@@ -29,8 +34,8 @@ api.interceptors.response.use(undefined, (error) => {
   )
     return
   if (error.response?.status === 401) {
-    window.localStorage.clear()
-    window.location.reload()
+    // window.localStorage.clear()
+    // window.location.reload()
   }
   handleError(error)
 })

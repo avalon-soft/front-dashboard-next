@@ -1,6 +1,5 @@
 @import '@/app/styles'
-
-.login
+.layout
   &__container
     height: 100%
     width: 100%
@@ -18,23 +17,13 @@
       padding: 16px
     @include media(912)
       grid-template-columns: 1fr
-  &__form, &__logo
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    max-height: 896px
-    height: 100%
-    border-radius: 12px
-    @include media(1024)
-      max-height: 550px
-  &__logo
-    @include media(912)
-      display: none
-  &__form
+  &__left
+    padding: 44px
     &-container
       max-width: 396px
       width: 100%
+      @include media(912)
+        max-width: 100%
       @include media(695)
         max-width: 100%
         padding: 20px
@@ -49,3 +38,18 @@
       &:hover
         background: theme('colors.primary.hover')
         color: theme('colors.main.gray-50')
+
+  &__left, &__right
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    max-height: 896px
+    height: 100%
+    border-radius: 12px
+    @include media(1024)
+      max-height: 100%
+  &__right
+    @include media(912)
+      display: none
+  
