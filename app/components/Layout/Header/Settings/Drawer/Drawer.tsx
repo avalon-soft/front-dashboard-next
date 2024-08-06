@@ -5,10 +5,15 @@ import Moon from '@/app/components/icons/Moon'
 import Help from '@/app/components/icons/Help'
 import Settings from '@/app/components/icons/Settings'
 import Logout from '@/app/components/icons/Logout'
-import ToggleSwitch from '@/app/components/Form/ToggleSwitch/ToggleSwitch'
-import Checkbox from '@/app/components/Form/Checkbox/Checkbox'
 import ThemeSwitch from '@/app/components/ThemeSwitch'
-const Drawer = () => {
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+const Drawer = ({ open }: { open: boolean }) => {
+  useGSAP(() => {
+    if(open) {
+      gsap.to('.drawer', { height: '224', padding: '4px', duration: 0.3 })
+    } else {gsap.to('.drawer', { height: '0', padding: '0 4px', duration: 0.3 })}
+  }, [open])
   return (
     <div className='drawer dark:bg-main-gray-900'>
       <div className='drawer__container'>
@@ -33,9 +38,7 @@ const Drawer = () => {
               />
               <span>Nigth mode</span>
             </div>
-            {/* <Checkbox label='' /> */}
             <ThemeSwitch />
-            {/* <ToggleSwitch /> */}
           </li>
           <li className='drawer__list-item hover:bg-main-gray-200 dark:hover:bg-main-gray-400 text-caption-1 text-main-gray-900 dark:text-main-gray-50'>
             <Help

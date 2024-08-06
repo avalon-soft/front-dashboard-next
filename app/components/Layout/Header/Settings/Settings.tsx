@@ -12,29 +12,28 @@ import Drawer from './Drawer/Drawer'
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const container = useRef<any>()
+
   const { contextSafe } = useGSAP({ scope: container })
-  useGSAP(() => {
-    // gsap.set('.drawer', { height: 0})
-  })
+
   const onClickGood = contextSafe(() => {
-    gsap.to('.settings__icon', { rotation: isOpenDrawer ? 180 : 0 })
+    gsap.to(container.current, { rotation: isOpenDrawer ? 0 : 180 })
     setIsOpenDrawer(!isOpenDrawer)
   })
   return (
     <div className='settings'>
-      <button
-        onClick={onClickGood}
-        className='settings__container'
-        ref={container}
-      >
+      <button onClick={onClickGood} className='settings__container'>
         <Avatar />
-        <ChevronDown
-          width={16}
-          height={16}
-          className={classNames('text-status-text-gray dark:text-main-gray-50 settings__icon')}
-        />
+        <div ref={container}>
+          <ChevronDown
+            width={16}
+            height={16}
+            className={classNames(
+              'text-status-text-gray dark:text-main-gray-50 settings__icon'
+            )}
+          />
+        </div>
       </button>
-      <Drawer />
+      <Drawer open={isOpenDrawer} />
     </div>
   )
 }
