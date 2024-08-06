@@ -6,6 +6,8 @@ import gsap from 'gsap'
 import './Input.sass'
 import classNames from 'classnames'
 import PreIcon from './PreIcon'
+import Eye from '../../icons/Eye'
+import EyeClose from '../../icons/EyeClose'
 
 interface InputProps extends React.ComponentProps<'input'> {
   error: any
@@ -29,38 +31,78 @@ export const Input = (props: InputProps) => {
     preIcon,
     placeholder,
   } = props
-  const container = useRef<any>()
+
+  const container = useRef<any>(undefined)
+  const eyeRef = useRef<any>(undefined)
+  const eyeCloseRef = useRef<any>()
+
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
+
+  useGSAP(() => {
+    // console.log('eyeRef :>> ', eyeRef.current)
+    // console.log('eyeRef :>> ', eyeCloseRef.current)
+    // if (isPasswordVisible) {
+    //     gsap.to(eyeRef.current, {
+    //       duration: 0.3,
+    //       rotateY: 180,
+    //       opacity: 0,
+    //     })
+    //     gsap.to(eyeCloseRef.current, {
+    //       duration: 0.3,
+    //       rotateY: 0,
+    //       opacity: 1,
+    //     })
+    //   } else {
+    //     gsap.to(eyeRef, {
+    //       duration: 0.3,
+    //       rotateY: 0,
+    //       opacity: 1,
+    //     })
+    //     gsap.to(eyeCloseRef, {
+    //       duration: 0.3,
+    //       rotateY: 180,
+    //       opacity: 0,
+    //     })
+    // }
+  }, [isPasswordVisible])
   const handleClickOnFocus = contextSafe(() => {
-    // gsap.to('.input__label', { y: -12, duration: 0.3 })
     setTimeout(() => {
       let element = document.getElementsByTagName('com-1password-button')
       element[0]?.remove()
     }, 50)
   })
-
   useEffect(() => {
     isFill && handleClickOnFocus()
   }, [isFill, handleClickOnFocus])
 
-  const handleClickOnBlur = contextSafe(() => {
-    // !isFill && gsap.to('.input__label', { y: 0, duration: 0.3 })
-  })
+  const handleClickOnBlur = contextSafe(() => {})
 
-  const handleClickVisiblePassword = contextSafe(() => {
-    setPasswordVisible(!isPasswordVisible)
-    const eyeIcon = document.getElementById('eye-icon')
-    if (eyeIcon) {
-      gsap.to(eyeIcon, {
-        duration: 0,
-        rotateY: 0,
+  const handleClickVisiblePassword = contextSafe((context: any) => {
+    if (isPasswordVisible) {
+      gsap.to(eyeRef.current, {
+        duration: 0.3,
+        rotateY: 180,
         opacity: 0,
-        onComplete: () => {
-          gsap.to(eyeIcon, { duration: 0.3, rotateY: 180, opacity: 1 })
-        },
+      })
+      gsap.to(eyeCloseRef.current, {
+        duration: 0.3,
+        rotateY: 0,
+        opacity: 1,
+      })
+    } else {
+      gsap.to(eyeRef.current, {
+        duration: 0.3,
+        rotateY: 0,
+        opacity: 1,
+      })
+      gsap.to(eyeCloseRef.current, {
+        duration: 0.3,
+        rotateY: 180,
+        opacity: 0,
       })
     }
+    setPasswordVisible(!isPasswordVisible)
   })
 
   return (
@@ -71,12 +113,16 @@ export const Input = (props: InputProps) => {
       >
         {label}
       </label>
-      <div className={classNames('input__container', { 'input__container--error': error })}>
+      <div
+        className={classNames('input__container dark:border-main-gray-50', {
+          'input__container--error': error,
+        })}
+      >
         {preIcon && (
           <PreIcon
             componentName={preIcon}
             className={classNames(
-              'input__pre-icon',
+              'input__pre-icon dark:text-main-gray-50',
               `input__pre-icon--${preIcon.toLowerCase()}`
             )}
           />
@@ -89,15 +135,32 @@ export const Input = (props: InputProps) => {
           onFocus={handleClickOnFocus}
           onBlur={handleClickOnBlur}
           placeholder={placeholder}
-          className={`input__field input__field${error ? '--error' : '--default'}`}
+          className={`input__field dark:text-main-gray-50 input__field${error ? '--error' : '--default'}`}
           maxLength={maxLength}
         />
         {type === 'password' && (
-          <div
-            id='eye-icon'
-            onClick={handleClickVisiblePassword}
-            className={`input__password input__password${!isPasswordVisible ? '--eye' : '--eye-close'}`}
-          />
+          <>
+            <div ref={eyeRef} className='input__password'>
+              <Eye
+                id='eye-icon'
+                width={24}
+                height={24}
+                className={classNames('input__password-eye cursor-pointer')}
+                onClick={handleClickVisiblePassword}
+              />
+            </div>
+            <div ref={eyeCloseRef} className='input__password'>
+              <EyeClose
+                id='eye-close-icon'
+                width={24}
+                height={24}
+                className={classNames(
+                  'input__password-eye-close cursor-pointer'
+                )}
+                onClick={handleClickVisiblePassword}
+              />
+            </div>
+          </>
         )}
       </div>
       {error && <div className='input__error'>{error.message}</div>}

@@ -12,9 +12,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className='flex h-screen w-full items-center justify-center'>
-      <div className='bg-main-blue-gray-50 h-full w-full'>
+      <div className='bg-main-blue-gray-50 dark:bg-main-gray-200 h-full w-full'>
         <div className='layout__container'>
-          <div className='bg-main-gray-50 layout__left'>
+          <div className='bg-main-gray-50 dark:bg-main-gray-900 layout__left'>
             <div className='layout__left-container'>
               <div className='flex justify-between align-middle'>
                 <a href='/' className='flex justify-between align-middle'>
@@ -31,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </span>
                 </a>
                 <SupportIcon
-                  className='layout__left-icon'
+                  className='layout__left-icon dark:text-main-gray-50'
                   width={32}
                   height={32}
                 />
@@ -39,7 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               {children}
             </div>
           </div>
-          <div className='bg-primary-focus layout__right'>
+          <div className='bg-primary-focus dark:bg-main-gray-400 layout__right'>
             <Img
               src={Logo}
               srcSet={[Logo, LogoRetina]} // important!!!images name for retina display must includes @2x

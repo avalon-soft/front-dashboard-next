@@ -11,7 +11,7 @@
     &--error
       border-color: theme('colors.error.border')
       .input
-        &__pre-icon, &__field, &__password--
+        &__pre-icon, &__field, &__password-eye, &__password-eye-close
           color: theme('colors.error.main')
   &__label
     // position: absolute
@@ -63,16 +63,16 @@
     line-height: 12px
     // letter-spacing: 0.72px
   &__password
-    // position: absolute
+    position: absolute
     width: 26px
     height: 24px
     cursor: pointer
+    right: 10px
     &::after
       width: 26px
     &--eye
-      background: url('/assets/icons/eye.svg')
     &--eye-close
-      background: url('/assets/icons/eye-close.svg')
+      opacity: 0
   &__debit-card
     position: absolute
     top: 12px

@@ -4,7 +4,7 @@ import Breadcrumbs from '../Breadcrumbs/Breadcrumbs'
 import Settings from './Settings/Settings'
 const Header = () => {
   return (
-    <div className='header'>
+    <div className='header dark:bg-main-gray-900'>
       <div className='header__container'>
         <Breadcrumbs />
         <>

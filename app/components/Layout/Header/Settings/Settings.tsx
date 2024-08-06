@@ -31,7 +31,7 @@ const Settings = () => {
         <ChevronDown
           width={16}
           height={16}
-          className={classNames('text-status-text-gray settings__icon')}
+          className={classNames('text-status-text-gray dark:text-main-gray-50 settings__icon')}
         />
       </button>
       <Drawer />

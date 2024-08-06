@@ -1,22 +1,25 @@
-import React, { InputHTMLAttributes } from 'react'
+'use client'
+import React, {
+  Dispatch,
+  InputHTMLAttributes,
+  SetStateAction,
+} from 'react'
 import './ToggleSwitch.sass'
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
+  onChange: Dispatch<SetStateAction<any>>
 }
-const ToggleSwitch: React.FC<CheckboxProps> = ({ label, ...props }) => {
+const ToggleSwitch: React.FC<CheckboxProps> = ({ ...props }) => {
+  const { onChange } = props
   return (
     <div className='toggle-switch'>
       <input
+        id='toggle-switch'
         type='checkbox'
-        className='toggle-switch-checkbox'
-        name='toggleSwitch'
-        id='toggleSwitch'
+        className='toggle-switch__input'
         {...props}
       />
-      <label className='toggle-switch-label' htmlFor='toggleSwitch'>
-        <span className='toggle-switch-inner' />
-        <span className='toggle-switch-switch' />
-      </label>
+      <span className='toggle-switch__slider round' onClick={onChange} />
     </div>
   )
 }
