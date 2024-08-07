@@ -1,12 +1,12 @@
 // components/DynamicComponent.tsx
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 
-interface PropsPreicon {
+interface PropsprependInnerIcon {
   componentName: string
   [key: string]: any // accept leverage any props
 }
 
-const PreIcon = ({ componentName, ...props }: PropsPreicon) => {
+const InnerIcon = ({ componentName, ...props }: PropsprependInnerIcon) => {
   const [Component, setComponent] = useState<React.ComponentType<any> | null>(
     null
   )
@@ -37,4 +37,4 @@ const PreIcon = ({ componentName, ...props }: PropsPreicon) => {
   )
 }
 
-export default PreIcon
+export default InnerIcon

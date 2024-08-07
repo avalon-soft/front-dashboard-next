@@ -101,6 +101,13 @@ const config: Config = {
           fontWeight: 400,
         },
       ],
+      'body-3': [
+        '10px',
+        {
+          lineHeight: '14px',
+          fontWeight: 600,
+        },
+      ],
       'caption-1': [
         '12px',
         {

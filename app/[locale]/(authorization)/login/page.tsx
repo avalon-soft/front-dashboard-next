@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import { endpoints } from '@/api/endpoints'
 import { signIn } from './actions'
 interface ILoginValues {
-  username: string
+  email: string
   password: string
 }
 
@@ -41,7 +41,7 @@ export default function Login() {
       setIsSubmitting(false)
     }
   }
-  const { username, password } = watch()
+  const { email, password } = watch()
 
   return (
     <>
@@ -55,10 +55,10 @@ export default function Login() {
         {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
-            id={'username'}
+            id={'email'}
             label={'Email'}
             register={{
-              ...register('username', {
+              ...register('email', {
                 required: 'This is required field',
                 // pattern: {
                 //   value: /\S+@\S+\.\S+/,
@@ -66,13 +66,13 @@ export default function Login() {
                 // },
               }),
             }}
-            error={errors.username}
+            error={errors.email}
             type='text'
-            name='username'
+            name='email'
             placeholder='Placeholder@mail.com'
-            isFill={Boolean(username)}
+            isFill={Boolean(email)}
             className='mb-4'
-            preIcon='Mail'
+            prependInnerIcon='Mail'
           />
           <Input
             id={'password'}
@@ -87,7 +87,7 @@ export default function Login() {
             name='password'
             placeholder='Password'
             isFill={Boolean(password)}
-            preIcon='Lock'
+            prependInnerIcon='Lock'
             className='mb-4'
           />
           <div className='flex items-center justify-between'>

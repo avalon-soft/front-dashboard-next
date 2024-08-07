@@ -1,11 +1,18 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { useGSAP } from '@gsap/react'
 
 import gsap from 'gsap'
 import './Input.sass'
 import classNames from 'classnames'
-import PreIcon from './PreIcon'
+import PrependInnerIcon from './InnerIcon'
+import AppendInnerIcon from './InnerIcon'
 import Eye from '../../icons/Eye'
 import EyeClose from '../../icons/EyeClose'
 
@@ -14,7 +21,10 @@ interface InputProps extends React.ComponentProps<'input'> {
   register: Object
   label: string
   isFill: boolean
-  preIcon?: string
+  prependInnerIcon?: string
+  appendInnerIcon?: string
+  colorIcon?: string
+  propsAppendIconButton?: React.ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 export const Input = (props: InputProps) => {
@@ -28,8 +38,11 @@ export const Input = (props: InputProps) => {
     type,
     name,
     maxLength,
-    preIcon,
+    prependInnerIcon,
     placeholder,
+    appendInnerIcon,
+    colorIcon,
+    propsAppendIconButton,
   } = props
 
   const container = useRef<any>(undefined)
@@ -39,33 +52,6 @@ export const Input = (props: InputProps) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
 
-  useGSAP(() => {
-    // console.log('eyeRef :>> ', eyeRef.current)
-    // console.log('eyeRef :>> ', eyeCloseRef.current)
-    // if (isPasswordVisible) {
-    //     gsap.to(eyeRef.current, {
-    //       duration: 0.3,
-    //       rotateY: 180,
-    //       opacity: 0,
-    //     })
-    //     gsap.to(eyeCloseRef.current, {
-    //       duration: 0.3,
-    //       rotateY: 0,
-    //       opacity: 1,
-    //     })
-    //   } else {
-    //     gsap.to(eyeRef, {
-    //       duration: 0.3,
-    //       rotateY: 0,
-    //       opacity: 1,
-    //     })
-    //     gsap.to(eyeCloseRef, {
-    //       duration: 0.3,
-    //       rotateY: 180,
-    //       opacity: 0,
-    //     })
-    // }
-  }, [isPasswordVisible])
   const handleClickOnFocus = contextSafe(() => {
     setTimeout(() => {
       let element = document.getElementsByTagName('com-1password-button')
@@ -78,7 +64,7 @@ export const Input = (props: InputProps) => {
 
   const handleClickOnBlur = contextSafe(() => {})
 
-  const handleClickVisiblePassword = contextSafe((context: any) => {
+  const handleClickVisiblePassword = contextSafe(() => {
     if (isPasswordVisible) {
       gsap.to(eyeRef.current, {
         duration: 0.3,
@@ -118,12 +104,12 @@ export const Input = (props: InputProps) => {
           'input__container--error': error,
         })}
       >
-        {preIcon && (
-          <PreIcon
-            componentName={preIcon}
+        {prependInnerIcon && (
+          <PrependInnerIcon
+            componentName={prependInnerIcon}
             className={classNames(
               'input__pre-icon dark:text-main-gray-50',
-              `input__pre-icon--${preIcon.toLowerCase()}`
+              `input__pre-icon--${prependInnerIcon.toLowerCase()}`
             )}
           />
         )}
@@ -138,6 +124,18 @@ export const Input = (props: InputProps) => {
           className={`input__field dark:text-main-gray-50 input__field${error ? '--error' : '--default'}`}
           maxLength={maxLength}
         />
+        {appendInnerIcon && (
+          <button {...propsAppendIconButton}>
+            <AppendInnerIcon
+              width={24}
+              heigth={24}
+              componentName={appendInnerIcon}
+              className={classNames('dark:text-main-gray-50 cursor-pointer', {
+                [`${colorIcon}`]: colorIcon,
+              })}
+            />
+          </button>
+        )}
         {type === 'password' && (
           <>
             <div ref={eyeRef} className='input__password'>

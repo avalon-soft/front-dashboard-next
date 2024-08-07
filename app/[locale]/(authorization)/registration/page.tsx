@@ -24,7 +24,7 @@ const Registration = () => {
     formState: { errors },
   } = useForm<{
     full_name: string
-    username: string
+    email: string
     password: string
     confirmPassword: string
   }>()
@@ -37,12 +37,12 @@ const Registration = () => {
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
     const { base, user } = endpoints
-    const { full_name, username, password } = values
+    const { full_name, email, password } = values
     // action(values)
     try {
       const { status } = await api.post(base + user, {
         full_name,
-        username,
+        email,
         password,
       })
       if (RESPONSE_SUCCESS_STATUS.includes(status)) setStep(1)
@@ -53,7 +53,7 @@ const Registration = () => {
       setIsSubmitting(false)
     }
   }
-  const { username, password, confirmPassword, full_name } = watch()
+  const { email, password, confirmPassword, full_name } = watch()
   return step === 0 ? (
     <>
       <div className='my-8 w-full justify-start'>
@@ -81,10 +81,10 @@ const Registration = () => {
           className='mb-4'
         />
         <Input
-          id={'username'}
+          id={'email'}
           label={t('email')}
           register={{
-            ...register('username', {
+            ...register('email', {
               required: 'This is required field',
               pattern: {
                 value: /\S+@\S+\.\S+/,
@@ -92,13 +92,13 @@ const Registration = () => {
               },
             }),
           }}
-          error={errors.username}
+          error={errors.email}
           type='text'
-          name='username'
+          name='email'
           placeholder='Placeholder@mail.com'
-          isFill={Boolean(username)}
+          isFill={Boolean(email)}
           className='mb-4'
-          preIcon='Mail'
+          prependInnerIcon='Mail'
         />
         <Input
           id={'password'}
@@ -128,7 +128,7 @@ const Registration = () => {
           name='password'
           placeholder='Password'
           isFill={Boolean(password)}
-          preIcon='Lock'
+          prependInnerIcon='Lock'
           className='mb-4'
         />
         <Input
@@ -151,7 +151,7 @@ const Registration = () => {
           name='confirmPassword'
           placeholder='Confirm password'
           isFill={Boolean(confirmPassword)}
-          preIcon='Lock'
+          prependInnerIcon='Lock'
           className='mb-4'
         />
         <LoadingButton
@@ -188,7 +188,7 @@ const Registration = () => {
       <p className='text-body-2 mb-8 mt-4 text-center'>
         {t('textForSuccessRegistration')}
         <br />
-        <span className='text-primary-main'>{username}</span>.
+        <span className='text-primary-main'>{email}</span>.
       </p>
       <p className='text-body-2 text-center'>
         {t('DidntGetTheLink')}?

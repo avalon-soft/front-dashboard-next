@@ -62,7 +62,7 @@ const ForgotPassword = () => {
           placeholder='Placeholder@mail.com'
           isFill={Boolean(username)}
           className='mb-4'
-          preIcon='Mail'
+          prependInnerIcon='Mail'
         />
         <LoadingButton
           isLoading={isSubmitting}
