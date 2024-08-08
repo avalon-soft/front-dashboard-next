@@ -9,6 +9,7 @@ import ChevronLeft from '../../icons/ChevronLeft'
 import { useGSAP } from '@gsap/react'
 import sass from '@/app/styles/modules/variables.module.sass'
 import gsap from 'gsap'
+import Navigation from './Navigation/Navigation'
 
 const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
   const { className, ...defaultDivProps } = props
@@ -19,17 +20,24 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
 
   const handleClickResizeSidebar = contextSafe(() => {
     const layoutSidebar = document.querySelector('.layout__sidebar')
+    const layoutContent = document.querySelector('.layout__content')
     const button = container.current?.querySelector('.sidebar__btn')
     const buttonIcon = container.current?.querySelector('.sidebar__btn-icon')
     const logoTitle = container.current?.querySelector('.sidebar__logo-title')
     const logoLink = container.current?.querySelector('.sidebar__logo-link')
-    
+
     if (layoutSidebar && button && buttonIcon && logoTitle && logoLink) {
       if (isMini) {
         gsap.fromTo(
           layoutSidebar,
           { width: sass.minSidebarWidth },
           { width: sass.maxSidebarWidth, duration: 0.3 }
+        )
+        // gsap.set(layoutContent, { width: `calc(100% - ${sass.minSidebarWidth})` })
+        gsap.fromTo(
+          layoutContent,
+          { width: `calc(100% - ${sass.minSidebarWidth})` },
+          { width: `calc(100% - ${sass.maxSidebarWidth})` }
         )
         gsap.fromTo(button, { x: 25 }, { x: 0 })
         gsap.to(buttonIcon, { rotate: 0, delay: 0.1 })
@@ -40,6 +48,14 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
           layoutSidebar,
           { width: sass.maxSidebarWidth },
           { width: sass.minSidebarWidth, duration: 0.3 }
+        )
+        gsap.set(layoutContent, {
+          width: `calc(100% - ${sass.maxSidebarWidth})`,
+        })
+        gsap.fromTo(
+          layoutContent,
+          { width: `calc(100% - ${sass.maxSidebarWidth})` },
+          { width: `calc(100% - ${sass.minSidebarWidth})` }
         )
         gsap.fromTo(button, { x: 0 }, { x: 25 })
         gsap.to(buttonIcon, { rotate: 180, delay: 0.1 })
@@ -77,6 +93,9 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
             className='sidebar__btn-icon text-primary-main'
           />
         </button>
+      </div>
+      <div className='sidebar__content'>
+        <Navigation />
       </div>
     </div>
   )
