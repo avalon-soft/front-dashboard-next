@@ -1,0 +1,54 @@
+/* The switch - the box around the slider */
+.toggle-switch
+  position: relative
+  display: inline-block
+  width: 28px
+  height: 14px
+
+  /* Hide default HTML checkbox */
+  input
+    opacity: 0
+    width: 0
+    height: 0
+
+    &:checked + .toggle-switch__slider
+      background-color: theme('colors.primary.main')
+
+    &:focus + .toggle-switch__slider
+      box-shadow: 0 0 1px theme('colors.primary.main')
+
+    &:checked + .toggle-switch__slider:before
+      -webkit-transform: translateX(14px)
+      -ms-transform: translateX(14px)
+      transform: translateX(14px)
+
+  /* The slider */
+  &__slider
+    position: absolute
+    cursor: pointer
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: #ccc
+    -webkit-transition: .4s
+    transition: .4s
+    border-radius: 56px
+
+    &:before
+      position: absolute
+      content: ""
+      height: 11px
+      width: 11px
+      left: 1.5px
+      bottom: 1.5px
+      background-color: white
+      -webkit-transition: .4s
+      transition: .4s
+      border-radius: 50%
+  /* Rounded sliders */
+  &.round
+    border-radius: 34px
+
+    &__slider:before
+      border-radius: 50%

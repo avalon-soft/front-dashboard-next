@@ -1,0 +1,61 @@
+.textarea
+  position: relative
+  width: 100%
+  font-family: theme('fontFamily.Regular')
+  font-size: 12px
+  height: 100%
+
+  &__label
+    position: absolute
+    top: 24px
+    left: 20px
+    font-family: theme('fontFamily.Bold')
+    font-size: 12px
+    line-height: 12px
+    letter-spacing: 0.72px
+    text-transform: uppercase
+    color: theme('colors.grey')
+  &__field
+    height: 60px
+    font-size: 16px
+    line-height: 22.4px
+    letter-spacing: 0.16px
+    border-radius: theme('borderRadius.xl')
+    padding: 25px 20px 10px 19px
+    max-width: 400px
+    width: 100%
+    height: 130px
+    resize: none
+    &:focus-visible
+      outline-width: 0
+    &::placeholder
+      text-transform: uppercase
+      font-family: theme('fontFamily.Bold')
+    &--error
+      border: 1.5px solid theme('colors.light-pink')
+    &--default
+      border: 1.5px solid theme('colors.border')
+  &__error
+    font-family: theme('fontFamily.Bold')
+    position: absolute
+    top: 14px
+    left: 20px
+    text-transform: uppercase
+    color: theme('colors.light-pink')
+    font-size: 12px
+    line-height: 12px
+    letter-spacing: 0.72px
+  &__password
+    position: absolute
+    right: 20px
+    top: 18px
+    width: 24px
+    height: 24px
+    cursor: pointer
+
+    &::after
+      width: 24px
+    &--eye
+      background: url('/assets/icons/eye.svg')
+    &--eye-close
+      background: url('/assets/icons/eye-close.svg')

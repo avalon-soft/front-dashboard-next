@@ -97,8 +97,15 @@ const config: Config = {
       'body-2': [
         '14px',
         {
-          lineHeight: '14px',
+          lineHeight: '20px',
           fontWeight: 400,
+        },
+      ],
+      'body-3': [
+        '10px',
+        {
+          lineHeight: '14px',
+          fontWeight: 600,
         },
       ],
       'caption-1': [
@@ -129,6 +136,9 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      width: {
+        'content': 'max-content',
+      }
     },
   },
   plugins: [],
