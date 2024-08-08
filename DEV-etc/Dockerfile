@@ -16,6 +16,7 @@ RUN --mount=type=secret,id=auto-devops-build-secrets . /run/secrets/auto-devops-
 RUN npm set registry "https://registry.npmjs.org/"
 RUN npm get registry 
 ## INSTALL node modules
+RUN find /app/
 RUN npm install --prefer-offline || npm install --prefer-offline --legacy-peer-deps
 
 ## copy over all files to the work directory
