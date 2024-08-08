@@ -1,0 +1,29 @@
+import React from 'react'
+
+const Eye = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      {...props}
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M2.82281 13.3211C2.26558 12.5186 2.26558 11.4814 2.82281 10.6789C4.23146 8.65029 7.40464 5 12 5C16.5954 5 19.7685 8.65029 21.1772 10.6789C21.7344 11.4814 21.7344 12.5186 21.1772 13.3211C19.7685 15.3497 16.5954 19 12 19C7.40464 19 4.23146 15.3497 2.82281 13.3211Z'
+        stroke='currentColor'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z'
+        stroke='currentColor'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
+  )
+}
+
+export default Eye

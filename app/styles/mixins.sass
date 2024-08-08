@@ -10,3 +10,7 @@
   background-image: url('#{$path}.#{$file}')
   @media (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2)
     background-image: url('#{$path}@2x.#{$file}')
+
+@mixin media($width)
+  @media only screen and (max-width: $width + px)
+    @content

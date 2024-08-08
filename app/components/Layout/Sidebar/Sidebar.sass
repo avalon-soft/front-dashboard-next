@@ -1,0 +1,17 @@
+@import '@/app/styles/variables.sass'
+.sidebar
+  min-width: $min-sidebar-width
+  max-width: $max-sidebar-width
+  padding: 0 16px 24px
+  background: theme('colors.main.gray-50')
+  border-right: 1px solid theme('colors.primary.focus')
+  &__append
+    height: $header-height
+    border-bottom: 1px solid theme('colors.primary.focus')
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &__btn
+    position: relative
+    border-radius: 4px
+    background: theme('colors.primary.focus')
