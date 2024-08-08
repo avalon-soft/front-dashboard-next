@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:experimental
-FROM node:19-alpine AS base
+FROM node:18-alpine AS base
 
 FROM base AS builder
 # create work directory in app folder
