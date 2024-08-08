@@ -4,7 +4,12 @@ const withNextIntl = createNextIntlPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: 'app',
+  exportPathMap: async () => {
+    return {
+      '/': { dir: '/' },
+      '/[locale]': { dir: '/[locale]' },
+    }
+  },
 }
 
 export default withNextIntl(nextConfig)
