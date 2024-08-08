@@ -1,17 +1,15 @@
 'use client'
-import { addAuthHeader, api } from '@/api'
+import { api } from '@/api'
 import { endpoints } from '@/api/endpoints'
 import Input from '@/app/components/Form/Input/Input'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
-import ChevronLeft from '@/app/components/icons/ChevronLeft'
-import ProgressCheck from '@/app/components/icons/ProgressCheck'
+import ProgressCheck from '../../../components/icons/ProgressCheck'
 import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import React, { useActionState, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-// import { signup } from '@/app/[locale]/(authorization)/registration/actions'
 
 const Registration = () => {
   const t = useTranslations('SignInPage')
