@@ -8,8 +8,10 @@ WORKDIR /app
 # # install required packages for node image
 RUN apk --no-cache add g++ make git
 
+## copy over all files to the work directory
+COPY ./ /app/
+
 ## SETUP npn registry 
-COPY ./package.json /app/
 RUN --mount=type=secret,id=auto-devops-build-secrets . /run/secrets/auto-devops-build-secrets && echo -e "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > /root/.npmrc
 RUN npm set registry "https://registry.npmjs.org/"
 RUN npm get registry 
@@ -17,7 +19,7 @@ RUN npm get registry
 RUN npm install --prefer-offline || npm install --prefer-offline --legacy-peer-deps
 
 ## copy over all files to the work directory
-ADD . /app
+# ADD . /app
 
 ## BUILD stage
 RUN --mount=type=secret,id=auto-devops-build-secrets . /run/secrets/auto-devops-build-secrets && echo -e "$BUILD_ENV" > .env
