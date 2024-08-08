@@ -1,4 +1,4 @@
-import SupportIcon from '../../components/icons/Support'
+import SupportIcon from '../../components/Icons/Support'
 // import './login/login.sass'
 import './layout.sass'
 import Img from '@/app/components/Image/Image'

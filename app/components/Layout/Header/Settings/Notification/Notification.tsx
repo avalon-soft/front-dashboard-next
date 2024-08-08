@@ -1,6 +1,6 @@
 import React from 'react'
 import './Notification.sass'
-import Bell from '../../../../../components/icons/Bell'
+import Bell from '../../../../Icons/Bell'
 import Badge from '../../../../../components/Badge/Badge'
 
 interface NotificationProps {

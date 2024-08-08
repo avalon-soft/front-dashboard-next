@@ -2,13 +2,13 @@
 
 import React, { useRef, useState } from 'react'
 import './Settings.sass'
-import ChevronDown from '../../../../components/icons/ChevronDown'
+import ChevronDown from '../../../Icons/ChevronDown'
 import Avatar from './Avatar/Avatar'
 import classNames from 'classnames'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import Drawer from './Drawer/Drawer'
-import Support from '../../../..//components/icons/Support'
+import Support from '../../../Icons/Support'
 import Notification from './Notification/Notification'
 import Search from './Search/Search'
 
