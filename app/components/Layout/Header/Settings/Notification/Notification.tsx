@@ -1,7 +1,7 @@
 import React from 'react'
 import './Notification.sass'
-import Bell from '@/app/components/icons/Bell'
-import Badge from '@/app/components/Badge/Badge'
+import Bell from '../../../../../components/icons/Bell'
+import Badge from '../../../../../components/Badge/Badge'
 
 interface NotificationProps {
   icon?: boolean
