@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-import SearchIcon from '../../../../../components/icons/Search'
+import SearchIcon from '../../../../Icons/Search'
 import Input from '@/app/components/Form/Input/Input'
 import { useForm } from 'react-hook-form'
 import { useGSAP } from '@gsap/react'

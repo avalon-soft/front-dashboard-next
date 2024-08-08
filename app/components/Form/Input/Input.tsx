@@ -13,8 +13,8 @@ import './Input.sass'
 import classNames from 'classnames'
 import PrependInnerIcon from './InnerIcon'
 import AppendInnerIcon from './InnerIcon'
-import Eye from '../../icons/Eye'
-import EyeClose from '../../icons/EyeClose'
+import Eye from '../../Icons/Eye'
+import EyeClose from '../../Icons/EyeClose'
 
 interface InputProps extends React.ComponentProps<'input'> {
   error: any

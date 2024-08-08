@@ -2,7 +2,7 @@ import React from 'react'
 import './Header.sass'
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs'
 import Settings from './Settings/Settings'
-import Search from '../../icons/Search'
+import Search from '../../Icons/Search'
 const Header = () => {
   return (
     <div className='header dark:bg-main-gray-900'>
