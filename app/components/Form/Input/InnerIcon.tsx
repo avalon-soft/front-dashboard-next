@@ -15,7 +15,7 @@ const InnerIcon = ({ componentName, ...props }: PropsprependInnerIcon) => {
     const importComponent = async () => {
       try {
         const importedComponent = lazy(
-          () => import(`../../icons/${componentName}`)
+          () => import(`@/app/app/components/icons/${componentName}`)
         )
         setComponent(() => importedComponent)
       } catch (error) {
