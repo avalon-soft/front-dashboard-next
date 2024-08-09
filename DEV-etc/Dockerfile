@@ -42,5 +42,7 @@ ENV HOST 0.0.0.0
 ENV TZ="europe/kiev"
 EXPOSE 3000
 # run the build project with node
-ENTRYPOINT ["node", ".output/server/index.mjs"]
+# ENTRYPOINT ["node", ".output/server/index.mjs"]
+ENV PORT=3000
+CMD node .output/standalone/server.js
 
