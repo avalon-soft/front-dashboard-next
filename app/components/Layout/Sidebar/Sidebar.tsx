@@ -69,10 +69,10 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
   return (
     <div
       {...defaultDivProps}
-      className={classNames('sidebar', className)}
+      className={classNames('sidebar dark:bg-main-gray-900 dark:border-main-gray-700', className)}
       ref={container}
     >
-      <div className='sidebar__append pb-4 pt-6'>
+      <div className='sidebar__append pb-4 pt-6 dark:border-main-gray-700'>
         <a href='/' className='sidebar__logo-link flex items-center'>
           <Img
             src={Logo}
@@ -86,11 +86,11 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
             Logo
           </span>
         </a>
-        <button className='sidebar__btn' onClick={handleClickResizeSidebar}>
+        <button className='sidebar__btn dark:bg-main-gray-700' onClick={handleClickResizeSidebar}>
           <ChevronLeft
             width={20}
             height={20}
-            className='sidebar__btn-icon text-primary-main'
+            className='sidebar__btn-icon text-primary-main dark:text-main-gray-50'
           />
         </button>
       </div>

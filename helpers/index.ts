@@ -7,3 +7,12 @@ export function getFirstLetter(str: string) {
 export function isOnline() {
   return navigator.onLine
 }
+
+export function calculateTotalHeight(elements: any) {
+  let totalHeight = 0
+  for (let element of elements) {
+    let height = element.offsetHeight
+    totalHeight += height
+  }
+  return totalHeight
+}
