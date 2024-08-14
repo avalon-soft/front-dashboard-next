@@ -11,6 +11,7 @@ import Drawer from './Drawer/Drawer'
 import Support from '../../../Icons/Support'
 import Notification from './Notification/Notification'
 import Search from './Search/Search'
+import useClickOutside from '@/helpers/useOnClickOutside'
 
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -25,6 +26,12 @@ const Settings = () => {
     })
     setIsOpenDrawer(!isOpenDrawer)
   })
+
+  const drawer = React.createRef<HTMLDivElement>()
+  useClickOutside(drawer, () => {
+    setIsOpenDrawer(false)
+  })
+
   return (
     <div className='settings'>
       <Search />
@@ -34,22 +41,24 @@ const Settings = () => {
       <div className='ml-4'>
         <Notification icon />
       </div>
-      <button
-        onClick={handleClickOpenDrawer}
-        className='settings__container ml-6'
-      >
-        <Avatar />
-        <div ref={container}>
-          <ChevronDown
-            width={16}
-            height={16}
-            className={classNames(
-              'text-status-text-gray dark:text-main-gray-50 settings__icon'
-            )}
-          />
-        </div>
-      </button>
-      <Drawer open={isOpenDrawer} />
+      <div ref={drawer}>
+        <button
+          onClick={handleClickOpenDrawer}
+          className='settings__container ml-6'
+        >
+          <Avatar />
+          <div ref={container}>
+            <ChevronDown
+              width={16}
+              height={16}
+              className={classNames(
+                'settings__icon text-status-text-gray dark:text-main-gray-50'
+              )}
+            />
+          </div>
+        </button>
+        <Drawer open={isOpenDrawer} />
+      </div>
     </div>
   )
 }

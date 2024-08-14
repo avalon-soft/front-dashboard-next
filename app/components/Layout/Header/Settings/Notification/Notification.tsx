@@ -11,7 +11,7 @@ const Icon = () => {
   return (
     <div className='notification cursor-pointer'>
       <Bell width={24} height={24} className='dark:text-main-gray-50' />
-      <Badge className='notification__badge text-main-gray-50 dark:text-main-gray-900 text-body-3' count='9'/>
+      <Badge className='notification__badge' count='9'/>
     </div>
   )
 }

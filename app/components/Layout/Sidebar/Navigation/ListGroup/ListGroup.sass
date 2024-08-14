@@ -1,0 +1,39 @@
+.list-group
+  margin-top: 16px
+  &__title
+    margin-bottom: 8px
+  &__item
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    border-radius: 2px
+    padding: 12px 8px
+    min-height: 44px
+    position: relative
+    &--mini
+      width: 100%
+      max-width: 150px
+    &-label
+      display: flex
+      align-items: center
+      position: relative
+      width: 100%
+    &-badge
+      right: 0
+      width: max-content
+      border-radius: 12px
+  &__drawer
+    overflow: hidden
+    height: 0
+    &--mini
+      position: absolute
+      // overflow: hidden
+      height: max-content
+      left: 30px
+      top: 30px
+      width: 150px
+      max-width: 150px
+      background: theme('colors.main.gray-50')
+      border-radius: 4px
+      box-shadow: 101px 101px 40px 0px rgba(167, 174, 192, 0.00), 64px 64px 36px 0px rgba(167, 174, 192, 0.02), 36px 36px 31px 0px rgba(167, 174, 192, 0.06), 16px 16px 23px 0px rgba(167, 174, 192, 0.10), 4px 4px 13px 0px rgba(167, 174, 192, 0.12), 0px 0px 0px 0px rgba(167, 174, 192, 0.12)
+      padding: 4px

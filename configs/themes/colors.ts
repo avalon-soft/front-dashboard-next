@@ -4,6 +4,7 @@ export const colors = {
     'gray-50': '#FAFAFA',
     'gray-200': '#EEEEEE',
     'gray-400': '#BDBDBD',
+    'gray-700': '#616161',
     'gray-900': '#212121',
   },
   primary: {

@@ -34,11 +34,15 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       return NextResponse.redirect(new URL(`/${currentLocale}/login`, req.url))
     }
   } else if (cookie?.value) {
-    if (!pathname.startsWith(`/${currentLocale}/dashboard`)) {
+    console.log('cookie?.value :>> ', cookie?.value)
+    if (
+      publicPath.some((el) => pathname.startsWith(el)) ||
+      (pathname.length < 4 && pathname.startsWith('/en'))
+    ) {
       return NextResponse.redirect(
         new URL(`/${currentLocale}/dashboard`, req.url)
       )
-    }
+    } else return response
   }
   // console.log('nere :>> ')
   return response || NextResponse.next()
