@@ -3,12 +3,13 @@ import './Navigation.sass'
 import ListGroup from './ListGroup/ListGroup'
 import { useLocale } from 'next-intl'
 
-const Navigation = () => {
+const Navigation = ({ isMini }: { isMini: boolean }) => {
   const locale = useLocale()
   return (
     <nav>
       <ListGroup
-        title='Section name'
+        title='Section'
+        isMini={isMini}
         items={[
           {
             label: 'Dashboard',

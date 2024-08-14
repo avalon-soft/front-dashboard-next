@@ -1,7 +1,5 @@
 'use client'
 import React, {
-  Dispatch,
-  SetStateAction,
   useEffect,
   useRef,
   useState,

@@ -36,7 +36,7 @@ const LinkItem = (props: LinkItemProps) => {
         )}
         <span
           className={classNames(
-            'ml-2 text-body-2 text-main-gray-900 dark:text-main-gray-50',
+            'list-group__item-title ml-2 text-body-2 text-main-gray-900 dark:text-main-gray-50',
             { 'text-primary-main': pathname === path }
           )}
         >
