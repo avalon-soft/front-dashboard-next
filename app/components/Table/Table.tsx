@@ -47,7 +47,9 @@ const Table = (props: TableProps) => {
     <div>
       <div className='flex items-center justify-between'>
         {tableTitle && (
-          <h1 className='text-heading-6 text-main-gray-900'>{tableTitle}</h1>
+          <h1 className='text-heading-6 text-main-gray-900 dark:text-main-gray-50'>
+            {tableTitle}
+          </h1>
         )}
         {buttonOption && (
           <button
@@ -60,7 +62,7 @@ const Table = (props: TableProps) => {
       </div>
       <Filter />
       <div className='mb-4 py-2'>
-        <span className='text-body-2 text-main-gray-900'>
+        <span className='text-body-2 text-main-gray-900 dark:text-main-gray-50'>
           {t('resultsFound')}:
         </span>
         <span className='ml-2 text-subtitle-1 text-primary-main'>10</span>

@@ -50,7 +50,7 @@ const Dashboard = () => {
   ]
 
   return (
-    <div className='dashboard'>
+    <div className='dashboard dark:bg-main-gray-900'>
       <Table
         headers={headers}
         data={data}
