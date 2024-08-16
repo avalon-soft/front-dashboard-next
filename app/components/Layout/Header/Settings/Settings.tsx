@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Settings.sass'
 import ChevronDown from '../../../Icons/ChevronDown'
 import Avatar from './Avatar/Avatar'
@@ -12,6 +12,8 @@ import Support from '../../../Icons/Support'
 import Notification from './Notification/Notification'
 import Search from './Search/Search'
 import useClickOutside from '@/helpers/useOnClickOutside'
+import { endpoints } from '@/api/endpoints'
+import { api } from '@/api'
 
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -32,6 +34,16 @@ const Settings = () => {
     setIsOpenDrawer(false)
   })
 
+  const { base } = endpoints
+
+  useEffect(() => {
+    loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  const loadData = async () => {
+    // const response = await api.get(base + '/auth/me')
+    // console.log('response :>> ', response)
+  }
   return (
     <div className='settings'>
       <Search />

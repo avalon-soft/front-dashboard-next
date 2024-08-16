@@ -8,3 +8,4 @@ export async function signIn(token: string) {
   let locale = cookies().get('NEXT_LOCALE')?.value || 'en'
   redirect(`/${locale}/dashboard`)
 }
+

@@ -1,3 +1,4 @@
+import { addAuthHeader } from '@/api'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -21,6 +22,7 @@ const cookie = {
 
 export const createSession = async (token: string, keyToken: string = 'Bearer') => {
   const expires = new Date(Date.now() + cookie.duration)
+  addAuthHeader(`${keyToken} ${token}`)
   cookies().set(cookie.name, `${keyToken} ${token}`, {
     ...cookie.options,
     expires,

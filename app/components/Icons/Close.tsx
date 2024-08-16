@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Eye = (props: React.SVGProps<SVGSVGElement>) => {
+const Close = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -21,4 +21,4 @@ const Eye = (props: React.SVGProps<SVGSVGElement>) => {
   )
 }
 
-export default Eye
+export default Close
