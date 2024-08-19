@@ -44,7 +44,6 @@ const Search = () => {
       )
       gsap.to('.search__icon', { opacity: 0, duration: 0.1 })
     } else {
-      console.log('open :>> ')
       gsap.fromTo(
         '.search__form',
         { x: 0, opacity: 1, duration: 0.1 },
