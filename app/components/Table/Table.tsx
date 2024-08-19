@@ -123,7 +123,7 @@ const Table = (props: TableProps) => {
       </div>
       <div className='mt-4 flex items-center justify-between'>
         <div className='flex w-full items-center'>
-          <span className='text-caption-1'>Number of lines:</span>
+          <span className='text-caption-1'>{t('NumberOfLines')}:</span>
           <Select
             options={[
               { label: '20', value: '20' },

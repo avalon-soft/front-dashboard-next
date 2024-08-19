@@ -4,6 +4,7 @@ import Input from '../../Form/Input/Input'
 import FilterIcon from '@/app/components/Icons/Filter'
 import Select from '../../Form/Select/Select'
 import './Filter.sass'
+import Drawer from './Drawer/Drawer'
 const Filter = () => {
   const t = useTranslations('Filter')
 
@@ -44,6 +45,7 @@ const Filter = () => {
           />
         </button>
       </div>
+      <Drawer />
       <SaveFilter />
     </>
   )

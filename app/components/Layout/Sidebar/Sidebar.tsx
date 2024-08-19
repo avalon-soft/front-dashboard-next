@@ -1,6 +1,6 @@
 'use client'
 import classNames from 'classnames'
-import React, { HTMLProps, useRef, useState } from 'react'
+import React, { useEffect, HTMLProps, useRef, useState } from 'react'
 import './Sidebar.sass'
 import Img from '../../Image/Image'
 import Logo from '@/public/assets/logo.png'
@@ -10,14 +10,20 @@ import { useGSAP } from '@gsap/react'
 import sass from '@/app/styles/modules/variables.module.sass'
 import gsap from 'gsap'
 import Navigation from './Navigation/Navigation'
+import { useMediaQuery } from 'react-responsive'
 
 const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
   const { className, ...defaultDivProps } = props
   const [isMini, setIsMini] = useState(false)
   const container = useRef<HTMLDivElement>(null)
 
-  const { contextSafe } = useGSAP({ scope: container })
+  const isTable = useMediaQuery({ maxWidth: 1024 })
 
+  const { contextSafe } = useGSAP({ scope: container })
+  useEffect(() => {
+    if (isTable && !isMini) handleClickResizeSidebar()
+    else if (!isTable && isMini) handleClickResizeSidebar()
+  }, [isTable])
   const handleClickResizeSidebar = contextSafe(() => {
     const button = container.current?.querySelector('.sidebar__btn')
     const buttonIcon = container.current?.querySelector('.sidebar__btn-icon')
@@ -74,7 +80,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
     const titles = document.querySelectorAll('.list-group__item-title')
     const icons = document.querySelectorAll('.list-group__icon')
     const items = document.querySelectorAll('.list-group__item')
-    
+
     if (
       layoutSidebar &&
       layoutContent &&
@@ -146,7 +152,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
       )}
       ref={container}
     >
-      <div className='sidebar__append dark:border-main-gray-700 pb-4 pt-6'>
+      <div className='sidebar__append pb-4 pt-6 dark:border-main-gray-700'>
         <a href='/' className='sidebar__logo-link flex items-center'>
           <Img
             src={Logo}
@@ -172,7 +178,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
         </button>
       </div>
       <div className='sidebar__content'>
-        <Navigation isMini={isMini}/>
+        <Navigation isMini={isMini} />
       </div>
     </div>
   )
