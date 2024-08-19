@@ -34,6 +34,16 @@
     "PasswordMustHaveAtLeastOneLowercaseLetter": "Password must have at least one lowercase letter",
     "PasswordMustHaveAtLeastOneNumber": "Password must have at least one number",
     "PasswordMustHaveAtLeastOneSpecialCharacter": "Password must have at least one special character",
-    "PasswordMustBeLess":"Password must not exceed 20 characters"
+    "PasswordMustBeLess": "Password must not exceed 20 characters"
+  },
+  "Table": {
+    "resultsFound": "Results found",
+    "savedFilter": "Saved filter",
+    "clearAll": "Clear all",
+    "NumberOfLines":"Number of lines"
+  },
+  "Filter": {
+    "savedFilter": "Saved filter",
+    "clearAll": "Clear all"
   }
 }

@@ -1,9 +1,5 @@
 'use client'
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 
 import gsap from 'gsap'
@@ -42,7 +38,7 @@ export const Input = (props: InputProps) => {
     colorIcon,
     propsAppendIconButton,
   } = props
-
+  console.log('error :>> ', error)
   const container = useRef<any>(undefined)
   const eyeRef = useRef<any>(undefined)
   const eyeCloseRef = useRef<any>()
@@ -128,7 +124,7 @@ export const Input = (props: InputProps) => {
               width={24}
               heigth={24}
               componentName={appendInnerIcon}
-              className={classNames('dark:text-main-gray-50 cursor-pointer', {
+              className={classNames('cursor-pointer dark:text-main-gray-50', {
                 [`${colorIcon}`]: colorIcon,
               })}
             />

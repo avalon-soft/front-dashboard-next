@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar className='layout__sidebar'/>
       <div className='layout__content'>
         <Header />
-        <main>{children}</main>
+        <main className='layout__main'>{children}</main>
       </div>
     </div>
   )

@@ -1,0 +1,41 @@
+.pagination
+  &__container
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 8px
+
+  &__button
+    padding: 10px
+    border: 1px solid black
+    border-radius: 4px
+    cursor: pointer
+    width: 44px
+    height: 44px
+    text-align: center
+    transition: all 0.4s ease-out
+    &.active
+      border-color: theme('colors.primary.main')
+      color: theme('colors.primary.main')
+    &:hover
+      border-color: theme('colors.primary.hover')
+      color: theme('colors.primary.hover')
+
+    &:disabled
+      cursor: not-allowed
+      color: theme('colors.main.gray-400')
+      border-color: theme('colors.main.gray-400')
+      &:is(.dark .pagination__button:disabled)
+        color: theme('colors.main.gray-700')
+        border-color: theme('colors.main.gray-700')
+
+
+
+  &__dots
+    display: inline-block
+    padding: 10px
+    width: 44px
+    height: 44px
+    border: 1px solid black
+    border-radius: 4px
+    text-align: center

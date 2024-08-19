@@ -6,7 +6,7 @@ export const handleError = (error: AxiosError<any>) => {
   if (error.response) {
     let errors = error.response.data.errors
     if (Array.isArray(errors)) {
-      errors.forEach(error => toast.error(error.error))
+      errors.forEach((error) => toast.error(error.error))
     } else {
       message = error.response.data?.errors
         ? Object.values(errors).flat().join('\n')
@@ -41,5 +41,6 @@ api.interceptors.response.use(undefined, (error) => {
 })
 
 export const addAuthHeader = (session: any) => {
-  api.defaults.headers.common.Authorization = `Token ${session.access_token}`
+  console.log('session :>> ', session)
+  api.defaults.headers.common.Authorization = `${session.access_token}`
 }

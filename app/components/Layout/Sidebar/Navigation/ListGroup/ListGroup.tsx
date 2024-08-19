@@ -55,9 +55,9 @@ const ListGroup = (props: ListGroupProps) => {
       <li
         key={idx}
         className={classNames(
-          'list-group__item cursor-pointer hover:bg-primary-focus',
+          'list-group__item cursor-pointer hover:bg-primary-focus dark:hover:bg-main-gray-700',
           {
-            'bg-primary-focus': pathname === el.path,
+            'bg-primary-focus dark:bg-main-gray-700': pathname === el.path,
             'list-group__item--mini': isMini,
           }
         )}
@@ -66,7 +66,7 @@ const ListGroup = (props: ListGroupProps) => {
           href={el.path}
           prefetch={true}
           className={classNames({
-            'text-primary-main': pathname === el.path,
+            'text-primary-main dark:text-main-gray-50': pathname === el.path,
           })}
         >
           {el.label}
@@ -78,7 +78,7 @@ const ListGroup = (props: ListGroupProps) => {
   return (
     <ul ref={container} className='list-group'>
       {title && (
-        <span className='list-group__title text-main-gray-700 text-caption-1 dark:text-main-gray-50'>
+        <span className='list-group__title text-caption-1 text-main-gray-700 dark:text-main-gray-50'>
           {title}
         </span>
       )}
@@ -86,13 +86,14 @@ const ListGroup = (props: ListGroupProps) => {
         <li
           key={index}
           className={classNames('list-group__item', {
-            'bg-primary-focus':
+            'bg-primary-focus dark:bg-main-gray-700':
               (pathname === item.path && !isMini) ||
               (pathname === item.path && isMini && !openGroupIndex) ||
               (isMini && index === openGroupIndex) ||
               (isMini &&
                 item.sub_list?.some((el: any) => el.path === pathname)),
-            'hover:bg-primary-focus': !openGroupIndex,
+            'hover:bg-primary-focus dark:hover:bg-main-gray-700':
+              !openGroupIndex,
           })}
           ref={itemList}
         >
@@ -107,7 +108,7 @@ const ListGroup = (props: ListGroupProps) => {
               <ul
                 ref={drawer}
                 className={classNames('list-group__drawer', {
-                  'list-group__drawer--mini': isMini,
+                  'list-group__drawer--mini dark:bg-main-gray-900': isMini,
                 })}
               >
                 {listItems(item.sub_list)}

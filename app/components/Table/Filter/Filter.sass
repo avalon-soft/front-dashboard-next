@@ -1,0 +1,40 @@
+.filter
+  .input__container
+    border-top-right-radius: 0px
+    border-bottom-right-radius: 0px
+    border-right: none
+  &__btn:hover
+    .filter__icon
+      color: theme('colors.main.gray-50')
+  &__react-select
+    &-container
+      max-width: 150px !important
+      width: 100% !important
+    &__control
+      background: none !important
+      height: 100%
+      border-radius: 0 !important
+      border-color: theme('colors.main.gray-900') !important
+      border-right: none !important
+      &:is(.dark .filter__react-select__control)
+        border-color: theme('colors.main.gray-50') !important
+    &__placeholder
+      color: theme('colors.main.gray-900') !important
+      &:is(.dark .filter__react-select__placeholder)
+        color: theme('colors.main.gray-50') !important
+    &__indicator
+      &:is(.dark .filter__react-select__indicator)
+        color: theme('colors.main.gray-50') !important
+    &__single-value
+      &:is(.dark .filter__react-select__single-value)
+        color: theme('colors.main.gray-50')
+    &__menu-list
+      &:is(.dark .filter__react-select__menu-list)
+        background: theme('colors.main.gray-700') !important
+    &__option
+      &--is-focused
+        background: theme('colors.primary.focus') !important
+        &:is(.dark .filter__react-select__option--is-focused)
+          background: theme('colors.main.gray-400') !important
+      &--is-selected
+        background: theme('colors.primary.main') !important
