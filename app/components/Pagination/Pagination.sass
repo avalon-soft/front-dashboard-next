@@ -25,6 +25,11 @@
       cursor: not-allowed
       color: theme('colors.main.gray-400')
       border-color: theme('colors.main.gray-400')
+      &:is(.dark .pagination__button:disabled)
+        color: theme('colors.main.gray-700')
+        border-color: theme('colors.main.gray-700')
+
+
 
   &__dots
     display: inline-block

@@ -23,6 +23,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
   useEffect(() => {
     if (isTable && !isMini) handleClickResizeSidebar()
     else if (!isTable && isMini) handleClickResizeSidebar()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTable])
   const handleClickResizeSidebar = contextSafe(() => {
     const button = container.current?.querySelector('.sidebar__btn')
