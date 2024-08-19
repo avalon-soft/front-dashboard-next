@@ -1,11 +1,27 @@
-import React from 'react'
-import './Select.sass'
-const Select = () => {
+import React, { useState } from 'react'
+
+import Select, { Props as SelectProps } from 'react-select'
+import makeAnimated from 'react-select/animated'
+
+const animatedComponents = makeAnimated()
+
+interface CustomSelectProps extends SelectProps {}
+
+function CustomSelect(props: CustomSelectProps) {
+  const [isLoading, setIsLoading] = useState(false)
+
   return (
-    <div className='flex min-w-40 items-center border border-r-0 border-b-main-gray-900 border-l-main-gray-900 border-t-main-gray-900 px-3 py-2 dark:border-b-main-gray-50 dark:border-l-main-gray-50 dark:border-t-main-gray-50'>
-      Saved filters
-    </div>
+    <Select
+      {...props}
+      closeMenuOnSelect={false}
+      // components={animatedComponents}
+      components={{
+        IndicatorSeparator: () => null,
+      }}
+      // defaultValue={[colourOptions[4], colourOptions[5]]}
+      isLoading={isLoading}
+    />
   )
 }
 
-export default Select
+export default CustomSelect

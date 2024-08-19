@@ -27,7 +27,15 @@ const Filter = () => {
           isFill={Boolean()}
           propsAppendIconButton={{ onClick: () => {} }}
         />
-        <Select />
+        <Select
+          options={[
+            { label: 'Saved filter', value: 'Saved filter' },
+            { label: 'Saved filter2', value: 'Saved filter2' },
+          ]}
+          placeholder='Saved filters'
+          className='filter__react-select-container'
+          classNamePrefix='filter__react-select'
+        />
         <button className='filter__btn rounded-r-sm border border-primary-main p-2 hover:bg-primary-main'>
           <FilterIcon
             width={24}

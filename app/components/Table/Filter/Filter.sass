@@ -6,3 +6,22 @@
   &__btn:hover
     .filter__icon
       color: theme('colors.main.gray-50')
+  &__react-select
+    &-container
+      max-width: 150px !important
+      width: 100% !important
+    &__control
+      background: none !important
+      height: 100%
+      border-radius: 0 !important
+      border-color: theme('colors.main.gray-900') !important
+      border-right: none !important
+    &__placeholder
+      color: theme('colors.main.gray-900') !important
+    &__indicator
+      color: theme('colors.primary.main') !important
+    &__option
+      &--is-focused
+        background: theme('colors.primary.focus') !important
+      &--is-selected
+        background: theme('colors.primary.main') !important

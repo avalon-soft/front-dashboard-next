@@ -1,6 +1,6 @@
 .table
   width: 100%
-  border-radius: 4px
+
   &__header, &__body
     &-th, &-td
       border: 1px solid theme('colors.primary.border')
@@ -9,3 +9,30 @@
     &-th
       color: theme('colors.main.gray-900')
       background: theme('colors.primary.focus')
+  &__react-select
+    &__single-value
+      color: theme('colors.primary.main') !important
+      font-size: 16px !important
+    &-container
+      max-width: 60px !important
+      width: 100% !important
+      outline: none !important
+    &__control
+      background: none !important
+      height: 100%
+      border-radius: 0 !important
+      border: none !important
+    &__placeholder
+      color: theme('colors.main.gray-900') !important
+    &__indicator
+      padding: 0 !important
+      color: theme('colors.primary.main') !important
+    &__option
+      &--is-focused
+        background: theme('colors.primary.focus') !important
+      &--is-selected
+        background: theme('colors.primary.main') !important
+.container-table
+  // border: 1px solid theme('colors.primary.border')
+  border-radius: 4px
+  overflow: hidden
