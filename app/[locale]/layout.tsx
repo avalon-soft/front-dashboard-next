@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Providers } from '../providers'
-import '../styles/index.sass'
+import '@/app/styles/index.sass'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

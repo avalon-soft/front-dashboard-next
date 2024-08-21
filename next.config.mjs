@@ -4,7 +4,10 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  distDir: '.output'
+  distDir: '.output',
+  sassOptions: {
+    prependData: `@import "@/app/styles/mixins"`,
+  },
 }
 
 export default withNextIntl(nextConfig);
