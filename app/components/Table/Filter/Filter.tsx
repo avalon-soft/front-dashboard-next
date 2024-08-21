@@ -22,7 +22,6 @@ const Filter = () => {
 
   const handleClickDrawer = contextSafe(() => {
     let drawer = document.querySelector('.drawer-filter')
-    console.log('drawer :>> ')
     if (drawer) {
       if (isOpenDrawer) gsap.to(drawer, { height: 0, opacity: 0 })
       else

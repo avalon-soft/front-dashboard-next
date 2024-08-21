@@ -41,8 +41,8 @@ const Settings = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const loadData = async () => {
-    // const response = await api.get(base + '/auth/me')
-    // console.log('response :>> ', response)
+    const response = await api.get(base + '/auth/me')
+    console.log('response :>> ', response)
   }
   return (
     <div className='settings'>

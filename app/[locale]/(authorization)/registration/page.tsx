@@ -136,10 +136,6 @@ const Registration = () => {
             ...register('confirmPassword', {
               required: t('PleaseConfirmYourPassword'),
               validate: (value) => {
-                console.log(
-                  'value :>> ',
-                  value === password || t('PasswordsDoNotMatch')
-                )
                 return value === password || t('PasswordsDoNotMatch')
               },
             }),
@@ -155,17 +151,17 @@ const Registration = () => {
         <LoadingButton
           isLoading={isSubmitting}
           type='submit'
-          className='login__form-button bg-primary-main hover:bg-primary-hover text-main-gray-50 text-button-1 mt-8 w-full px-4 py-3'
+          className='login__form-button mt-8 w-full bg-primary-main px-4 py-3 text-button-1 text-main-gray-50 hover:bg-primary-hover'
           disabled={isSubmitting}
         >
           {t('signUp')}
         </LoadingButton>
       </form>
       <div className='mt-4 flex items-center justify-center'>
-        <span className='text-body-2 mr-2'>{t('alreadyHaveAnAccount')}</span>
+        <span className='mr-2 text-body-2'>{t('alreadyHaveAnAccount')}</span>
         <a
           href={`/${locale}/login`}
-          className='text-primary-main hover:text-primary-hover flex items-center justify-center'
+          className='flex items-center justify-center text-primary-main hover:text-primary-hover'
         >
           <span className='text-subtitle-1'>Back to log in</span>
         </a>
@@ -173,24 +169,24 @@ const Registration = () => {
     </>
   ) : (
     <>
-      <div className='bg-success-main w-content mx-auto rounded-full p-1'>
+      <div className='mx-auto w-content rounded-full bg-success-main p-1'>
         <ProgressCheck
           className='text-main-blue-gray-50'
           width={40}
           height={40}
         />
       </div>
-      <h1 className='text-heading-6 mt-6 text-center'>
+      <h1 className='mt-6 text-center text-heading-6'>
         {t('successfullRegistration')}
       </h1>
-      <p className='text-body-2 mb-8 mt-4 text-center'>
+      <p className='mb-8 mt-4 text-center text-body-2'>
         {t('textForSuccessRegistration')}
         <br />
         <span className='text-primary-main'>{email}</span>.
       </p>
-      <p className='text-body-2 text-center'>
+      <p className='text-center text-body-2'>
         {t('DidntGetTheLink')}?
-        <button className='text-primary-main text-subtitle-2 ml-2'>
+        <button className='ml-2 text-subtitle-2 text-primary-main'>
           {t('SendMore')}
         </button>
       </p>

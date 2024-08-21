@@ -38,7 +38,6 @@ export const Input = (props: InputProps) => {
     colorIcon,
     propsAppendIconButton,
   } = props
-  console.log('error :>> ', error)
   const container = useRef<any>(undefined)
   const eyeRef = useRef<any>(undefined)
   const eyeCloseRef = useRef<any>()
