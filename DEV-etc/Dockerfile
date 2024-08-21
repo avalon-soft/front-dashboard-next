@@ -37,6 +37,8 @@ RUN rm -f /root/.npmrc
 FROM base AS stable
 WORKDIR /app
 COPY --from=builder /app/.output/ /app/.output/
+COPY --from=builder /app/public/ /app/public/
+
 # expose the host and port 3000 to the server
 ENV HOST 0.0.0.0
 ENV TZ="europe/kiev"
