@@ -36,7 +36,16 @@ RUN rm -f /root/.npmrc
 ## make image for deployment
 FROM base AS stable
 WORKDIR /app
-COPY --from=builder /app/.output/ /app/.output/
+
+# COPY --from=builder /app/.output/ /app/.output/
+# COPY --from=builder /app/public/* /app/
+# COPY --from=builder /app/.output/ /app/.output/
+RUN mkdir .next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+
 # expose the host and port 3000 to the server
 ENV HOST 0.0.0.0
 ENV TZ="europe/kiev"
@@ -44,5 +53,5 @@ EXPOSE 3000
 # run the build project with node
 # ENTRYPOINT ["node", ".output/server/index.mjs"]
 ENV PORT=3000
-CMD node .output/standalone/server.js
-
+# CMD node .output/standalone/server.js
+CMD HOSTNAME="0.0.0.0" node server.js

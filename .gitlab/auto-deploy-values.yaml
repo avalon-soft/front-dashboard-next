@@ -17,3 +17,6 @@ application:
   tier: backend
   part: backend
   migrateCommand: []
+image:
+  pullPolicy: Always
+
