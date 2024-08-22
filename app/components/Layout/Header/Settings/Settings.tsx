@@ -13,26 +13,21 @@ import Notification from './Notification/Notification'
 import Search from './Search/Search'
 import useClickOutside from '@/helpers/useOnClickOutside'
 import { endpoints } from '@/api/endpoints'
-import { addAuthHeader, api } from '@/api'
+import { api } from '@/api'
+import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
+import { IUser } from '@/types'
 
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
 
-  const [isSession, setIsSession] = useState<{ access_token: string }>()
-  const { base } = endpoints
+  const [user, setUser] = useState<IUser>({} as IUser)
+
+  const { base, me } = endpoints
 
   useEffect(() => {
-    'session' in window.localStorage &&
-      setIsSession(JSON.parse(localStorage.getItem('session') || ''))
+    loadData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  useEffect(() => {
-    if (isSession) {
-      addAuthHeader(isSession)
-      loadData()
-    }
-  }, [isSession])
 
   const container = useRef<any>()
 
@@ -51,9 +46,9 @@ const Settings = () => {
     setIsOpenDrawer(false)
   })
 
-
   const loadData = async () => {
-    const response = await api.get(base + '/auth/me')
+    const { data, status } = await api.get(base + me)
+    if (RESPONSE_SUCCESS_STATUS.includes(status)) setUser(data)
   }
   return (
     <div className='settings'>
@@ -69,7 +64,7 @@ const Settings = () => {
           onClick={handleClickOpenDrawer}
           className='settings__container ml-6'
         >
-          <Avatar />
+          <Avatar user={user} />
           <div ref={container}>
             <ChevronDown
               width={16}
@@ -80,7 +75,7 @@ const Settings = () => {
             />
           </div>
         </button>
-        <Drawer open={isOpenDrawer} />
+        <Drawer open={isOpenDrawer} user={user} />
       </div>
     </div>
   )

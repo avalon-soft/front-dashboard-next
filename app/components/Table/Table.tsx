@@ -14,6 +14,8 @@ import ArrowsSort from '../Icons/ArrowsSort'
 import { useTranslations } from 'next-intl'
 import Filter from './Filter/Filter'
 import Pagination from '../Pagination/Pagination'
+import classNames from 'classnames'
+import { getColorStatus } from '@/helpers'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string
@@ -97,7 +99,17 @@ const Table = (props: TableProps) => {
               <tr key={row.id} className='table__body-tr'>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className='table__body-td text-body-2'>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <div
+                      className={classNames('max-w-max rounded-3xl px-5 py-2', {
+                        [getColorStatus(cell.getContext().getValue())]:
+                          cell.column.id === 'status',
+                      })}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </div>
                   </td>
                 ))}
               </tr>

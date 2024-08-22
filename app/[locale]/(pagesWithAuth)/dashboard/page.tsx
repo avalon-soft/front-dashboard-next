@@ -2,61 +2,34 @@
 import Table from '@/app/components/Table/Table'
 import React, { useEffect, useState } from 'react'
 import './dashboard.sass'
-import { addAuthHeader } from '@/api'
-
+import { api } from '@/api'
+import { endpoints } from '@/api/endpoints'
+import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 
 const Dashboard = () => {
+  useEffect(() => {
+    loadData()
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const headers = [
-    'firstName',
-    'lastName',
-    'age',
-    'visits',
-    'status',
-    'progress',
-  ]
+  const headers = ['id', 'name', 'status']
 
-  type Person = {
-    firstName: string
-    lastName: string
-    age: number
-    visits: number
-    status: string
-    progress: number
+  type Data = {
+    id: number
+    name: string
+    status: number
   }
 
-  const data: Person[] = [
-    {
-      firstName: 'tanner',
-      lastName: 'linsley',
-      age: 24,
-      visits: 100,
-      status: 'In Relationship',
-      progress: 50,
-    },
-    {
-      firstName: 'tandy',
-      lastName: 'miller',
-      age: 40,
-      visits: 40,
-      status: 'Single',
-      progress: 80,
-    },
-    {
-      firstName: 'joe',
-      lastName: 'dirte',
-      age: 45,
-      visits: 20,
-      status: 'Complicated',
-      progress: 10,
-    },
-  ]
-
-  // useEffect(() => {
-  //   if (!isSession) return
-  // }, [isSession])
-  // if (!isMount) return null
-
+  const { base, table } = endpoints
+  const [data, setData] = useState<Data[]>([])
+  const loadData = async () => {
+    const { data, status } = await api.get(base + table)
+    console.log('data :>> ', data)
+    if (RESPONSE_SUCCESS_STATUS.includes(status)) {
+      setData(data)
+    }
+  }
   return (
     <div className='dashboard dark:bg-main-gray-900'>
       <Table
