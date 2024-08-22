@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { Client } from './node_modules/undici-types/client.d';
 import createMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
 

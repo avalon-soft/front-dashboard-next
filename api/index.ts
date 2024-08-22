@@ -41,5 +41,6 @@ api.interceptors.response.use(undefined, (error) => {
 })
 
 export const addAuthHeader = (session: any) => {
-  api.defaults.headers.common.Authorization = `${session.access_token}`
+  console.log('addAuthHeader :>> ');
+  api.defaults.headers.common.Authorization = `Bearer ${session.access_token}`
 }

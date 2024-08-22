@@ -1,9 +1,12 @@
 'use client'
 import Table from '@/app/components/Table/Table'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './dashboard.sass'
+import { addAuthHeader } from '@/api'
+
 
 const Dashboard = () => {
+
   const headers = [
     'firstName',
     'lastName',
@@ -48,6 +51,11 @@ const Dashboard = () => {
       progress: 10,
     },
   ]
+
+  // useEffect(() => {
+  //   if (!isSession) return
+  // }, [isSession])
+  // if (!isMount) return null
 
   return (
     <div className='dashboard dark:bg-main-gray-900'>

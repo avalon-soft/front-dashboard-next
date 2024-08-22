@@ -13,10 +13,27 @@ import Notification from './Notification/Notification'
 import Search from './Search/Search'
 import useClickOutside from '@/helpers/useOnClickOutside'
 import { endpoints } from '@/api/endpoints'
-import { api } from '@/api'
+import { addAuthHeader, api } from '@/api'
 
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+
+  const [isSession, setIsSession] = useState<{ access_token: string }>()
+  const { base } = endpoints
+
+  useEffect(() => {
+    'session' in window.localStorage &&
+      setIsSession(JSON.parse(localStorage.getItem('session') || ''))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (isSession) {
+      addAuthHeader(isSession)
+      loadData()
+    }
+  }, [isSession])
+
   const container = useRef<any>()
 
   const { contextSafe } = useGSAP({ scope: container })
@@ -34,15 +51,9 @@ const Settings = () => {
     setIsOpenDrawer(false)
   })
 
-  const { base } = endpoints
 
-  useEffect(() => {
-    loadData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   const loadData = async () => {
     const response = await api.get(base + '/auth/me')
-    console.log('response :>> ', response)
   }
   return (
     <div className='settings'>
