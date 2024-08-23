@@ -7,6 +7,22 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'text-status-text-blue',
+    'text-status-text-deep-purple',
+    'text-status-text-green',
+    'text-status-text-yellow',
+    'text-status-text-orange',
+    'text-status-text-red',
+    'text-status-text-gray',
+    'bg-status-blue',
+    'bg-status-deep-purple',
+    'bg-status-green',
+    'bg-status-yellow',
+    'bg-status-orange',
+    'bg-status-red',
+    'bg-status-gray',
+  ],
   theme: {
     colors: { ...colors },
     fontSize: {

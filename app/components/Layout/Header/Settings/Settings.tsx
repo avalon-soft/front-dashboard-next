@@ -14,9 +14,21 @@ import Search from './Search/Search'
 import useClickOutside from '@/helpers/useOnClickOutside'
 import { endpoints } from '@/api/endpoints'
 import { api } from '@/api'
+import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
+import { IUser } from '@/types'
 
 const Settings = () => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+
+  const [user, setUser] = useState<IUser>({} as IUser)
+
+  const { base, me } = endpoints
+
+  useEffect(() => {
+    loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const container = useRef<any>()
 
   const { contextSafe } = useGSAP({ scope: container })
@@ -34,15 +46,9 @@ const Settings = () => {
     setIsOpenDrawer(false)
   })
 
-  const { base } = endpoints
-
-  useEffect(() => {
-    loadData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   const loadData = async () => {
-    const response = await api.get(base + '/auth/me')
-    console.log('response :>> ', response)
+    const { data, status } = await api.get(base + me)
+    if (RESPONSE_SUCCESS_STATUS.includes(status)) setUser(data)
   }
   return (
     <div className='settings'>
@@ -58,7 +64,7 @@ const Settings = () => {
           onClick={handleClickOpenDrawer}
           className='settings__container ml-6'
         >
-          <Avatar />
+          <Avatar user={user} />
           <div ref={container}>
             <ChevronDown
               width={16}
@@ -69,7 +75,7 @@ const Settings = () => {
             />
           </div>
         </button>
-        <Drawer open={isOpenDrawer} />
+        <Drawer open={isOpenDrawer} user={user} />
       </div>
     </div>
   )

@@ -37,6 +37,8 @@ export default function Login() {
       })
 
       response?.data && signIn(response.data.access_token)
+      addAuthHeader(response.data)
+      localStorage.setItem('session', JSON.stringify(response.data))
     } finally {
       setIsSubmitting(false)
     }
@@ -95,7 +97,7 @@ export default function Login() {
             <a
               href={`/${locale}/forgot-password`}
               lang={locale}
-              className='text-primary-main text-subtitle-2'
+              className='text-subtitle-2 text-primary-main'
             >
               {t('forgotPassword')}?
             </a>
@@ -103,7 +105,7 @@ export default function Login() {
           <LoadingButton
             isLoading={isSubmitting}
             type='submit'
-            className='bg-primary-main hover:bg-primary-hover text-main-gray-50 text-button-1 mt-8 w-full rounded px-4 py-3'
+            className='mt-8 w-full rounded bg-primary-main px-4 py-3 text-button-1 text-main-gray-50 hover:bg-primary-hover'
             disabled={isSubmitting}
           >
             {t('signin')}
@@ -115,7 +117,7 @@ export default function Login() {
         <a
           href={`/${locale}/registration`}
           lang={locale}
-          className='text-primary-main hover:text-primary-main text-subtitle-2 ml-2'
+          className='ml-2 text-subtitle-2 text-primary-main hover:text-primary-main'
         >
           {t('registration')}
         </a>

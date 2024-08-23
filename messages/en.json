@@ -44,6 +44,7 @@
   },
   "Filter": {
     "savedFilter": "Saved filter",
+    "savedFilters": "Saved filters",
     "clearAll": "Clear all"
   }
 }

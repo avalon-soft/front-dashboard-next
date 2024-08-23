@@ -16,3 +16,20 @@ export function calculateTotalHeight(elements: any) {
   }
   return totalHeight
 }
+
+export const getColorStatus = (status: any) => {
+  switch (status) {
+    case 'success':
+      return 'text-status-text-green bg-status-green'
+    case 'in progress':
+      return 'text-status-text-orange bg-status-orange'
+    case 'error':
+      return 'text-status-text-red bg-status-red'
+    case 'created':
+      return 'text-status-text-deep-purple bg-status-deep-purple'
+    // case 'in progress':
+    //   return 'text-status-text- bg-status-'
+    default:
+      return 'text-status-text-gray bg-status-gray'
+  }
+}

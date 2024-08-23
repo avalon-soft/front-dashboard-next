@@ -1,54 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navigation.sass'
 import ListGroup from './ListGroup/ListGroup'
 import { useLocale } from 'next-intl'
+import { navigationList } from '@/configs/constants'
+import { INavigation } from '@/types'
 
 const Navigation = ({ isMini }: { isMini: boolean }) => {
   const locale = useLocale()
+  const [navList, setNavList] = useState<INavigation[]>([])
+  useEffect(() => {
+    let list = navigationList(locale)
+    setNavList(list)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <nav>
-      <ListGroup
-        title='Section'
-        isMini={isMini}
-        items={[
-          {
-            label: 'Dashboard',
-            badge: 100,
-            icon: 'Loader',
-            path: `/${locale}/dashboard`,
-          },
-          {
-            label: 'Charts',
-            sub_list: [
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar`,
-              },
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar1`,
-              },
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar2`,
-              },
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar3`,
-              },
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar4`,
-              },
-              {
-                label: 'Bar',
-                path: `/${locale}/charts/bar5`,
-              },
-            ],
-            icon: 'Loader',
-          },
-        ]}
-      />
+      <ListGroup title='Section' isMini={isMini} items={navList} />
     </nav>
   )
 }

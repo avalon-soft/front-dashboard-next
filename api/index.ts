@@ -4,28 +4,44 @@ import { toast } from 'react-toastify'
 export const handleError = (error: AxiosError<any>) => {
   let message = error.message
   if (error.response) {
-    let errors = error.response.data.errors
+    const errors = error.response.data?.errors
     if (Array.isArray(errors)) {
-      errors.forEach((error) => toast.error(error.error))
+      errors.forEach((err) => toast.error(err.error))
+    } else if (errors && typeof errors === 'object') {
+      message = Object.values(errors).flat().join('\n')
+      toast.error(message)
     } else {
-      message = error.response.data?.errors
-        ? Object.values(errors).flat().join('\n')
-        : error.response.data?.message || error.message
+      message = error.response.data?.message || error.message
       toast.error(message)
     }
   }
   return Promise.reject(error)
 }
 
-export const auth: AxiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/auth`,
-})
-
-auth.interceptors.response.use(undefined, (error) => handleError(error))
-
 export const api: AxiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/`,
 })
+
+api.interceptors.request.use(
+  (config) => {
+    if ('session' in window.localStorage) {
+      const { access_token } = JSON?.parse(
+        localStorage.getItem('session') || ''
+      )
+
+      if (access_token) {
+        if (config.headers)
+          config.headers['Authorization'] = `Bearer ${access_token}`
+      }
+    }
+    return config
+  },
+  (error) => {
+    console.log('error :>> ', error)
+    // Handle request errors here
+    return Promise.reject(error)
+  }
+)
 
 api.interceptors.response.use(undefined, (error) => {
   if (
@@ -41,5 +57,9 @@ api.interceptors.response.use(undefined, (error) => {
 })
 
 export const addAuthHeader = (session: any) => {
-  api.defaults.headers.common.Authorization = `${session.access_token}`
+  if (session?.access_token) {
+    api.defaults.headers.common.Authorization = `Bearer ${session.access_token}`
+  } else {
+    delete api.defaults.headers.common.Authorization
+  }
 }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 
 import Select, { Props as SelectProps } from 'react-select'
 import makeAnimated from 'react-select/animated'
