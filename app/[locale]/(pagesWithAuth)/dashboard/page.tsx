@@ -25,13 +25,11 @@ const Dashboard = () => {
   const [data, setData] = useState<Data[]>([])
   const loadData = async () => {
     const { data, status } = await api.get(base + table)
-    console.log('data :>> ', data)
-    if (RESPONSE_SUCCESS_STATUS.includes(status)) {
-      setData(data)
-    }
+    if (RESPONSE_SUCCESS_STATUS.includes(status)) setData(data)
   }
   return (
     <div className='dashboard dark:bg-main-gray-900'>
+      <div className="dashboard__container">
       <Table
         headers={headers}
         data={data}
@@ -40,6 +38,7 @@ const Dashboard = () => {
           label: 'Button',
         }}
       />
+      </div>
     </div>
   )
 }

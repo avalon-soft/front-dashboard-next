@@ -18,7 +18,6 @@ export function calculateTotalHeight(elements: any) {
 }
 
 export const getColorStatus = (status: any) => {
-  console.log('getColorStatus :>> ', status)
   switch (status) {
     case 'success':
       return 'text-status-text-green bg-status-green'

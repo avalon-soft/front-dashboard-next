@@ -68,7 +68,9 @@ const Table = (props: TableProps) => {
         <span className='text-body-2 text-main-gray-900 dark:text-main-gray-50'>
           {t('resultsFound')}:
         </span>
-        <span className='ml-2 text-subtitle-1 text-primary-main'>10</span>
+        <span className='ml-2 text-subtitle-1 text-primary-main'>
+          {data.length}
+        </span>
       </div>
       <div className='container-table'>
         <table className='table'>

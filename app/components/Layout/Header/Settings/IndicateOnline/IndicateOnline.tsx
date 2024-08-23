@@ -7,11 +7,13 @@ export const IndicateOnline = () => {
   const isOnline = useOnlineStatus()
 
   return (
-    <div
-      className={classNames('indicateOnline', {
-        'bg-success-main': isOnline,
-        'bg-main-blue-gray-50': !isOnline,
-      })}
-    />
+    <div>
+      <div
+        className={classNames('indicateOnline', {
+          'bg-success-main': isOnline,
+          'bg-main-blue-gray-50': !isOnline,
+        })}
+      />
+    </div>
   )
 }

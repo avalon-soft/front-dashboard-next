@@ -58,7 +58,7 @@ const Filter = () => {
             { label: 'Saved filter', value: 'Saved filter' },
             { label: 'Saved filter2', value: 'Saved filter2' },
           ]}
-          placeholder='Saved filters'
+          placeholder={t('savedFilters')}
           className='filter__react-select-container'
           classNamePrefix='filter__react-select'
         />
