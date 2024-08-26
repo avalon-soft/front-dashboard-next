@@ -34,11 +34,11 @@ const Registration = () => {
 
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
-    const { base, user } = endpoints
+    const { base, users } = endpoints
     const { full_name, email, password } = values
     // action(values)
     try {
-      const { status } = await api.post(base + user, {
+      const { status } = await api.post(base + users.base, {
         full_name,
         email,
         password,

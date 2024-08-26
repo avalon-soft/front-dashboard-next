@@ -46,6 +46,9 @@ const Table = (props: TableProps) => {
 
   const [columns, setColumns] = useState<any>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [typeSort, setTypeSort] = useState<'ASC' | 'DESC'>('ASC')
+  const [activeSort, setActiveSort] = useState<string>()
 
   const [size, setSize] = useState<
     SingleValue<{ label: string; value: string }>
@@ -53,7 +56,7 @@ const Table = (props: TableProps) => {
 
   useLayoutEffect(() => {
     let pageSize = Number(size?.value) || 10
-    loadData({ page: 1, size: pageSize })
+    loadData({ page: 1, size: pageSize, orderBy: '-id' })
     setIsLoading(false)
     calculeteHeightTable()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,6 +66,7 @@ const Table = (props: TableProps) => {
     let items = headers.map((el) => columnHelper.accessor(el, {}))
     setColumns(items)
   }, [headers])
+
   const table = useReactTable({
     data,
     columns,
@@ -90,17 +94,33 @@ const Table = (props: TableProps) => {
     })
   }
   const t = useTranslations('Table')
-  const handleClickPagination = (page: number) => {
-    let pageSize = Number(size?.value) || 10
 
-    loadData({ page, size: pageSize })
+  const handleClickSort = async (name: string) => {
+    console.log(
+      'name === activeSort :>> ',
+      name === activeSort,
+      name,
+      activeSort
+    )
+    if (name === activeSort) {
+      if (typeSort === 'DESC') setTypeSort('ASC')
+      else setTypeSort('DESC')
+    } else setActiveSort(name)
   }
-  const handleChangeSize = (newValue: unknown) => {
-    let option = newValue as SingleValue<{ label: string; value: string }>
-    setSize(option)
-    let pageSize = Number(option?.value) || 10
-    loadData({ page: meta.page, size: pageSize })
-  }
+
+  useEffect(() => {
+    let params: IQueryParams = {}
+    let pageSize = Number(size?.value) || 10
+    currentPage && (params.page = currentPage)
+    pageSize && (params.size = pageSize)
+    activeSort && (params.orderBy = activeSort)
+    typeSort && (params.order = typeSort)
+
+    if (Object.keys(params).length) loadData(params)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSort, size, currentPage, typeSort])
+
   return (
     <div className='data-table'>
       <div className='data-table__title flex items-center justify-between'>
@@ -131,29 +151,45 @@ const Table = (props: TableProps) => {
         <div className='data-table__container'>
           <table className='data-table__table'>
             <thead className='data-table__table-header'>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr
-                  key={headerGroup.id}
-                  className='data-table__table-header-tr'
-                >
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      className='data-table__table-header-th text-caption-1'
-                    >
-                      <div className='flex items-center'>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        <ArrowsSort width={16} height={16} className='ml-2' />
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              ))}
+              {table.getHeaderGroups().map((headerGroup) => {
+                // console.log('headerGroup :>> ', headerGroup)
+                return (
+                  <tr
+                    key={headerGroup.id}
+                    className='data-table__table-header-tr'
+                  >
+                    {headerGroup.headers.map((header) => (
+                      <th
+                        key={header.id}
+                        className={classNames(
+                          'data-table__table-header-th text-caption-1',
+                          {
+                            'cursor-pointer': true,
+                          }
+                        )}
+                        onClick={() => handleClickSort(header.id)}
+                      >
+                        <div className='flex items-center'>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                          <ArrowsSort
+                            width={16}
+                            height={16}
+                            className={classNames('ml-2', {
+                              'scale-110 text-primary-main':
+                                activeSort?.includes(header.id),
+                            })}
+                          />
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                )
+              })}
             </thead>
             <tbody className='data-table__table-body'>
               {isLoading ? (
@@ -221,15 +257,17 @@ const Table = (props: TableProps) => {
             ]}
             defaultValue={size}
             value={size}
-            onChange={handleChangeSize}
+            onChange={(option) =>
+              setSize(option as SingleValue<{ label: string; value: string }>)
+            }
             className='data-table__table-react-select-container'
             classNamePrefix='table__react-select'
-            menuPlacement="top"
+            menuPlacement='top'
           />
         </div>
         <Pagination
           currentPage={meta?.page || 1}
-          onPageChange={handleClickPagination}
+          onPageChange={(page: number) => setCurrentPage(page)}
           totalPages={meta?.pageCount || 1}
         />
       </div>

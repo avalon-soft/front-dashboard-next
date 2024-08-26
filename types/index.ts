@@ -25,6 +25,8 @@ export interface IisLoading {
 export interface IQueryParams {
   page?: number
   size?: number
+  orderBy?: string | number
+  order?: 'ASC' | 'DESC'
 }
 export interface IMeta {
   page: number

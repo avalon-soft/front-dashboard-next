@@ -1,9 +1,11 @@
 import { API_V1 } from '@/configs/constants'
 export const endpoints = {
   base: API_V1,
-  user: '/user',
-  auth: {
+  users: {
+    base: '/user',
     me: '/me',
+  },
+  auth: {
     base: '/auth',
     token: '/login',
   },

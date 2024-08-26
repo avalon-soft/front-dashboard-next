@@ -30,9 +30,9 @@ export default function Login() {
 
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
-    const { token, base } = endpoints
+    const { auth, base } = endpoints
     try {
-      const response = await api.post(base + token, {
+      const response = await api.post(base + auth.base + auth.token, {
         ...values,
       })
 
