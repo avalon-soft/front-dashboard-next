@@ -1,5 +1,5 @@
 'use client'
-import { addAuthHeader, auth } from '../../../../api'
+import { addAuthHeader, api } from '../../../../api'
 import { endpoints } from '../../../../api/endpoints'
 import Input from '../../../components/Form/Input/Input'
 import LoadingButton from '../../../components/Form/LoadingButton/LoadingButton'
@@ -26,7 +26,7 @@ const ForgotPassword = () => {
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
     try {
-      const { data } = await auth.post(endpoints.token, {
+      const { data } = await api.post(endpoints.auth.token, {
         ...values,
       })
       addAuthHeader(data)
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
         <LoadingButton
           isLoading={isSubmitting}
           type='submit'
-          className='login__form-button bg-primary-main hover:bg-primary-hover text-main-gray-50 text-button-1 mt-8 w-full px-4 py-3'
+          className='login__form-button mt-8 w-full bg-primary-main px-4 py-3 text-button-1 text-main-gray-50 hover:bg-primary-hover'
           disabled={isSubmitting}
         >
           {t('sendAPasword')}
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
       </form>
       <a
         href={`/${locale}/login`}
-        className='text-primary-main hover:text-primary-hover mt-4 flex items-center justify-center'
+        className='mt-4 flex items-center justify-center text-primary-main hover:text-primary-hover'
       >
         <ChevronLeft width={24} height={25} />
         <span className='text-subtitle-1'>{t('backToLogin')}</span>

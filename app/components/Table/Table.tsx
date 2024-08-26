@@ -261,7 +261,7 @@ const Table = (props: TableProps) => {
               setSize(option as SingleValue<{ label: string; value: string }>)
             }
             className='data-table__table-react-select-container'
-            classNamePrefix='table__react-select'
+            classNamePrefix='data-table__react-select'
             menuPlacement='top'
           />
         </div>

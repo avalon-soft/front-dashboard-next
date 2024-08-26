@@ -11,8 +11,8 @@ import Eye from '../../Icons/Eye'
 import EyeClose from '../../Icons/EyeClose'
 
 interface InputProps extends React.ComponentProps<'input'> {
-  error: any
-  register: Object
+  error?: any
+  register?: Object
   label: string
   isFill: boolean
   prependInnerIcon?: string
@@ -83,7 +83,7 @@ export const Input = (props: InputProps) => {
     }
     setPasswordVisible(!isPasswordVisible)
   })
-
+  console.log('error :>> ', error)
   return (
     <div ref={container} className={`input ${(className && className) || ''}`}>
       <label
@@ -114,7 +114,9 @@ export const Input = (props: InputProps) => {
           onFocus={handleClickOnFocus}
           onBlur={handleClickOnBlur}
           placeholder={placeholder}
-          className={`input__field dark:text-main-gray-50 input__field${error ? '--error' : '--default'}`}
+          className={classNames(
+            `input__field dark:text-main-gray-50 input__field${error ? '--error' : '--default'}`
+          )}
           maxLength={maxLength}
         />
         {appendInnerIcon && (
