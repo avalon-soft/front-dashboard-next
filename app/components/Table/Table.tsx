@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Select from '../Form/Select/Select'
 
 import {
@@ -15,7 +15,16 @@ import { useTranslations } from 'next-intl'
 import Filter from './Filter/Filter'
 import Pagination from '../Pagination/Pagination'
 import classNames from 'classnames'
-import { getColorStatus } from '@/helpers'
+import {
+  calculateTotalHeight,
+  calculateTotalHeight2,
+  getColorStatus,
+} from '@/helpers'
+import Skeleton from './Skaleton/Skeleton'
+import { IMeta, IQueryParams } from '@/types'
+import { ActionMeta, SingleValue } from 'react-select'
+import gsap from 'gsap'
+import useWindowHeight from '@/helpers/useWindowHeight'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string
@@ -26,14 +35,30 @@ interface TableProps {
   headers: string[]
   tableTitle?: string
   buttonOption?: ButtonProps
+  loadData: (params?: IQueryParams) => void
+  meta: IMeta
 }
 
 const columnHelper = createColumnHelper<any>()
 
 const Table = (props: TableProps) => {
-  const { data, headers, tableTitle, buttonOption } = props
+  const { data, meta, headers, tableTitle, loadData, buttonOption } = props
 
   const [columns, setColumns] = useState<any>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const [size, setSize] = useState<
+    SingleValue<{ label: string; value: string }>
+  >({ label: '10', value: '10' })
+
+  useLayoutEffect(() => {
+    let pageSize = Number(size?.value) || 10
+    loadData({ page: 1, size: pageSize })
+    setIsLoading(false)
+    calculeteHeightTable()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     let items = headers.map((el) => columnHelper.accessor(el, {}))
     setColumns(items)
@@ -44,11 +69,41 @@ const Table = (props: TableProps) => {
     getCoreRowModel: getCoreRowModel(),
   })
 
-  const t = useTranslations('Table')
+  const height = useWindowHeight()
+  useEffect(() => {
+    calculeteHeightTable()
+  }, [height])
+  const calculeteHeightTable = () => {
+    let table = document.querySelector('.data-table')
+    let dashboard = document.querySelector('.dashboard')
 
+    let totalHeight = 0
+    for (let element of table?.children as any) {
+      if ('data-table__scroll-container' !== element.classList[0]) {
+        totalHeight = totalHeight + element.offsetHeight
+      }
+    }
+    let height = calculateTotalHeight(dashboard?.children) - totalHeight
+
+    gsap.to('.data-table__scroll-container', {
+      maxHeight: height - 125,
+    })
+  }
+  const t = useTranslations('Table')
+  const handleClickPagination = (page: number) => {
+    let pageSize = Number(size?.value) || 10
+
+    loadData({ page, size: pageSize })
+  }
+  const handleChangeSize = (newValue: unknown) => {
+    let option = newValue as SingleValue<{ label: string; value: string }>
+    setSize(option)
+    let pageSize = Number(option?.value) || 10
+    loadData({ page: meta.page, size: pageSize })
+  }
   return (
-    <div>
-      <div className='flex items-center justify-between'>
+    <div className='data-table'>
+      <div className='data-table__title flex items-center justify-between'>
         {tableTitle && (
           <h1 className='text-heading-6 text-main-gray-900 dark:text-main-gray-50'>
             {tableTitle}
@@ -57,85 +112,106 @@ const Table = (props: TableProps) => {
         {buttonOption && (
           <button
             {...buttonOption}
-            className='rounded bg-primary-main px-4 py-2 text-main-gray-50'
+            className='data-table__button rounded bg-primary-main px-4 py-2 text-main-gray-50'
           >
             {buttonOption.label}
           </button>
         )}
       </div>
-      <Filter />
-      <div className='mb-4 py-2'>
+      <Filter className='data-table__filter' />
+      <div className='data-table__resoults mb-4 py-2'>
         <span className='text-body-2 text-main-gray-900 dark:text-main-gray-50'>
           {t('resultsFound')}:
         </span>
         <span className='ml-2 text-subtitle-1 text-primary-main'>
-          {data.length}
+          {meta?.itemCount || 0}
         </span>
       </div>
-      <div className='container-table'>
-        <table className='table'>
-          <thead className='table__header'>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className='table__header-tr'>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className='table__header-th text-caption-1'
-                  >
-                    <div className='flex items-center'>
+      <div className='data-table__scroll-container'>
+        <div className='data-table__container'>
+          <table className='data-table__table'>
+            <thead className='data-table__table-header'>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr
+                  key={headerGroup.id}
+                  className='data-table__table-header-tr'
+                >
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className='data-table__table-header-th text-caption-1'
+                    >
+                      <div className='flex items-center'>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        <ArrowsSort width={16} height={16} className='ml-2' />
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody className='data-table__table-body'>
+              {isLoading ? (
+                <Skeleton cols={table.getHeaderGroups()[0].headers.length} />
+              ) : table.getRowModel().rows.length > 0 ? (
+                table.getRowModel().rows.map((row) => (
+                  <tr key={row.id} className='data-table__table-body-tr'>
+                    {row.getVisibleCells().map((cell) => (
+                      <td
+                        key={cell.id}
+                        className='data-table__table-body-td text-body-2'
+                      >
+                        <div
+                          className={classNames(
+                            'max-w-max rounded-3xl px-5 py-2',
+                            {
+                              [getColorStatus(cell.getContext().getValue())]:
+                                cell.column.id === 'status',
+                            }
+                          )}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr className='data-table__table-body-tr border border-primary-border'>
+                  <td />
+                  <td className='py-4 text-center'>{t('dataNotFound')}</td>
+                  <td />
+                </tr>
+              )}
+            </tbody>
+            <tfoot>
+              {table.getFooterGroups().map((footerGroup) => (
+                <tr key={footerGroup.id}>
+                  {footerGroup.headers.map((header) => (
+                    <th key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                            header.column.columnDef.footer,
                             header.getContext()
                           )}
-                      <ArrowsSort width={16} height={16} className='ml-2' />
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className='table__body'>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className='table__body-tr'>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='table__body-td text-body-2'>
-                    <div
-                      className={classNames('max-w-max rounded-3xl px-5 py-2', {
-                        [getColorStatus(cell.getContext().getValue())]:
-                          cell.column.id === 'status',
-                      })}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </div>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            {table.getFooterGroups().map((footerGroup) => (
-              <tr key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
-        </table>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </tfoot>
+          </table>
+        </div>
       </div>
-      <div className='mt-4 flex items-center justify-between'>
+      <div className='data-table__footer mt-4 flex items-center justify-between'>
         <div className='flex w-full items-center'>
           <span className='text-caption-1'>{t('NumberOfLines')}:</span>
           <Select
@@ -143,12 +219,19 @@ const Table = (props: TableProps) => {
               { label: '20', value: '20' },
               { label: '10', value: '10' },
             ]}
-            defaultValue={{ label: '10', value: '10' }}
-            className='table__react-select-container'
+            defaultValue={size}
+            value={size}
+            onChange={handleChangeSize}
+            className='data-table__table-react-select-container'
             classNamePrefix='table__react-select'
+            menuPlacement="top"
           />
         </div>
-        <Pagination currentPage={1} onPageChange={() => {}} totalPages={20} />
+        <Pagination
+          currentPage={meta?.page || 1}
+          onPageChange={handleClickPagination}
+          totalPages={meta?.pageCount || 1}
+        />
       </div>
     </div>
   )
