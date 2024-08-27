@@ -16,7 +16,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className='layout__container'>
           <div className='bg-main-gray-50 dark:bg-main-gray-900 layout__left'>
             <div className='layout__left-container'>
-              <div className='flex justify-between align-middle'>
+              <div className='flex justify-between items-center'>
                 <a href='/' className='flex justify-between align-middle'>
                   <Img
                     src={Logo}

@@ -28,7 +28,7 @@ const Registration = () => {
   }>()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   // const [ state, action] = useActionState(signup, null)
   const { push } = useRouter()
 
@@ -169,27 +169,31 @@ const Registration = () => {
     </>
   ) : (
     <>
-      <div className='mx-auto w-content rounded-full bg-success-main p-1'>
-        <ProgressCheck
-          className='text-main-blue-gray-50'
-          width={40}
-          height={40}
-        />
+      <div>
+        <div className='mx-auto w-content rounded-full bg-success-main p-1'>
+          <ProgressCheck
+            className='text-main-blue-gray-50'
+            width={40}
+            height={40}
+          />
+        </div>
+        <h1 className='mt-6 text-center text-heading-6'>
+          {t('successfullRegistration')}
+        </h1>
+        <p className='mb-8 mt-4 text-center text-body-2'>
+          {t('textForSuccessRegistration')}
+          <br />
+          {/* <span className='text-primary-main'>{email}</span>. */}
+          <span className='text-primary-main'>tymoshenko.vlad@gmail.com</span>.
+        </p>
+        <p className='text-center text-body-2'>
+          {t('DidntGetTheLink')}?
+          <button className='ml-2 text-subtitle-2 text-primary-main'>
+            {t('SendMore')}
+          </button>
+        </p>
       </div>
-      <h1 className='mt-6 text-center text-heading-6'>
-        {t('successfullRegistration')}
-      </h1>
-      <p className='mb-8 mt-4 text-center text-body-2'>
-        {t('textForSuccessRegistration')}
-        <br />
-        <span className='text-primary-main'>{email}</span>.
-      </p>
-      <p className='text-center text-body-2'>
-        {t('DidntGetTheLink')}?
-        <button className='ml-2 text-subtitle-2 text-primary-main'>
-          {t('SendMore')}
-        </button>
-      </p>
+      <div />
     </>
   )
 }

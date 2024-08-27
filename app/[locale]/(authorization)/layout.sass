@@ -3,7 +3,7 @@
   &__container
     height: 100%
     width: 100%
-    max-width: 1440px
+    max-width: 1028px
     margin: 0 auto
     padding: 32px
     display: grid
@@ -22,6 +22,11 @@
     &-container
       max-width: 396px
       width: 100%
+      display: flex
+      flex-direction: column
+      height: 100%
+      justify-content: space-between
+
       @include media(912)
         max-width: 100%
       @include media(695)
@@ -44,7 +49,7 @@
     flex-direction: column
     justify-content: center
     align-items: center
-    max-height: 896px
+    max-height: 664px
     height: 100%
     border-radius: 12px
     @include media(1024)
@@ -52,4 +57,3 @@
   &__right
     @include media(912)
       display: none
-  
