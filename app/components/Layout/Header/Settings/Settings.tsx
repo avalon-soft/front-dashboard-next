@@ -22,7 +22,7 @@ const Settings = () => {
 
   const [user, setUser] = useState<IUser>({} as IUser)
 
-  const { base, me } = endpoints
+  const { base, users, auth } = endpoints
 
   useEffect(() => {
     loadData()
@@ -47,7 +47,8 @@ const Settings = () => {
   })
 
   const loadData = async () => {
-    const { data, status } = await api.get(base + me)
+    const { data, status } = await api.get(base + users.base + users.me)
+    // const { data, status } = await api.get(base + auth.base + users.me)
     if (RESPONSE_SUCCESS_STATUS.includes(status)) setUser(data)
   }
   return (

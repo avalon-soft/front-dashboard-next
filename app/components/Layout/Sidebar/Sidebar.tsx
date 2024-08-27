@@ -48,7 +48,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
         gsap.fromTo(button, { x: 25 }, { x: 0 })
         gsap.to(buttonIcon, { rotate: 0, delay: 0.1 })
         gsap.to(logoLink, { x: 0, duration: 0.1 })
-        gsap.to(logoTitle, { display: 'block', delay: 0.1 })
+        gsap.to(logoTitle, { display: 'none', delay: 0.1 })
       } else {
         gsap.fromTo(
           layoutSidebar,
@@ -73,7 +73,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
     }
   })
 
-  const animationItemList = () => {
+  const animationItemList = contextSafe(() => {
     const layoutSidebar = document.querySelector('.layout__sidebar')
     const layoutContent = document.querySelector('.layout__content')
     const badge = document.querySelector('.list-group__item-badge')
@@ -81,16 +81,17 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
     const titles = document.querySelectorAll('.list-group__item-title')
     const icons = document.querySelectorAll('.list-group__icon')
     const items = document.querySelectorAll('.list-group__item')
-
-    if (
-      layoutSidebar &&
-      layoutContent &&
-      badge &&
-      labels &&
-      titles &&
-      icons &&
-      items
-    ) {
+    console.log(
+      'object :>> ',
+      Boolean(layoutSidebar),
+      Boolean(layoutContent),
+      Boolean(badge),
+      Boolean(labels),
+      Boolean(titles),
+      Boolean(icons),
+      Boolean(items)
+    )
+    if (layoutSidebar && layoutContent && labels && titles && icons && items) {
       if (isMini) {
         icons.forEach((icon) => {
           gsap.to(icon, { display: 'block', opacity: 1, delay: 0.01 })
@@ -112,7 +113,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
             duration: 0.1,
           })
         })
-        gsap.to(badge, { top: 0, right: 0, delay: 0.01 })
+        badge && gsap.to(badge, { top: 0, right: 0, delay: 0.01 })
       } else {
         labels.forEach((label) => {
           gsap.to(label, { justifyContent: 'center', duration: 0.1 })
@@ -139,10 +140,10 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
             duration: 0.1,
           })
         })
-        gsap.to(badge, { top: -10, right: -25, duration: 0.1 })
+        badge && gsap.to(badge, { top: -10, right: -25, duration: 0.1 })
       }
     }
-  }
+  })
 
   return (
     <div

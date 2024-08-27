@@ -33,3 +33,27 @@ export const getColorStatus = (status: any) => {
       return 'text-status-text-gray bg-status-gray'
   }
 }
+
+export function queryString(object: any, deleteKey = []) {
+  if (object && Object.keys(object).length) {
+    deleteKey.forEach((key) => delete object[key])
+    let params = new URLSearchParams()
+    Object.entries(object).forEach(([key, value]) => {
+      if (key !== 'undefined') {
+        if (Array.isArray(value)) params.set(key, value.join())
+        else params.set(key, value as string)
+      }
+    })
+    return `?${params}`
+  } else return ''
+}
+
+export function calculateTotalHeight2(elements: any, height: any) {
+  let totalHeight = 0
+  for (let element of elements) {
+    if ('data-table__scroll-container' !== element.classList[0]) {
+      totalHeight = totalHeight + element.offsetHeight
+    }
+  }
+  return height - totalHeight
+}

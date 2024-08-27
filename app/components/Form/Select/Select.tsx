@@ -14,7 +14,6 @@ function CustomSelect(props: CustomSelectProps) {
   return (
     <Select
       {...props}
-      closeMenuOnSelect={false}
       // components={animatedComponents}
       components={{
         IndicatorSeparator: () => null,

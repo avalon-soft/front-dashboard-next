@@ -8,12 +8,14 @@ import Select from '../../Form/Select/Select'
 import './Filter.sass'
 import Drawer from './Drawer/Drawer'
 import { useGSAP } from '@gsap/react'
-import { useRef, useState } from 'react'
+import { HTMLProps, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { calculateTotalHeight } from '@/helpers'
 import classNames from 'classnames'
 
-const Filter = () => {
+interface FilterProps extends HTMLProps<HTMLDivElement> {}
+
+const Filter = (props: FilterProps) => {
   const container = useRef<HTMLDivElement>(null)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
@@ -22,6 +24,7 @@ const Filter = () => {
 
   const handleClickDrawer = contextSafe(() => {
     let drawer = document.querySelector('.drawer-filter')
+    console.log('drawer?.children :>> ', drawer?.children)
     if (drawer) {
       if (isOpenDrawer) gsap.to(drawer, { height: 0, opacity: 0 })
       else
@@ -34,7 +37,7 @@ const Filter = () => {
   })
 
   return (
-    <>
+    <div {...props}>
       <div className='dark:bg-main-gray-600 mt-6 flex filter'>
         <Input
           id={'searchField'}
@@ -83,7 +86,7 @@ const Filter = () => {
       </div>
       <Drawer ref={container} />
       <SaveFilter />
-    </>
+    </div>
   )
 }
 

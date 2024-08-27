@@ -16,3 +16,23 @@ interface IItem {
   label: string
   path: string
 }
+
+export interface IisLoading {
+  isTable?: boolean | undefined
+  isButton?: boolean | undefined
+}
+
+export interface IQueryParams {
+  page?: number
+  size?: number
+  orderBy?: string | number
+  order?: 'ASC' | 'DESC'
+}
+export interface IMeta {
+  page: number
+  size: number
+  itemCount: number
+  pageCount: number
+  previous: string | null
+  next: string | null
+}

@@ -7,6 +7,9 @@ import DeviceFloppy from '@/app/components/Icons/DeviceFloppy'
 import classNames from 'classnames'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import Input from '@/app/components/Form/Input/Input'
+import { useForm } from 'react-hook-form'
+import { api } from '@/api'
 
 const Drawer = (props: HTMLProps<HTMLDivElement>) => {
   const { className, ...defaultProps } = props
@@ -24,17 +27,50 @@ const Drawer = (props: HTMLProps<HTMLDivElement>) => {
 
     setIsPin(!isPin)
   })
+
+  const { handleSubmit } = useForm<{ username: string }>()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const onSubmit = async (values: any) => {
+    setIsSubmitting(true)
+    try {
+      // const { data } = await api.post(endpoints.auth.token, {
+      //   ...values,
+      // })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div
       {...defaultProps}
       className={classNames('drawer-filter dark:bg-main-gray-700', className)}
     >
-      <div className='drawer-filter__content'></div>
-      <div className='drawer-filter__footer'>
-        <button className='drawer-filter__show-additional-filter flex items-center'>
+      <div className='drawer-filter__content'>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='drawer-filter__content-form'
+        >
+          <Input
+            name='name'
+            label='Name'
+            isFill={false}
+            placeholder='Please to enter name'
+          />
+          <Input
+            name='status'
+            label='Status'
+            isFill={false}
+            placeholder='Please to enter name status'
+          />
+        </form>
+      </div>
+      <div className={classNames('drawer-filter__footer')}>
+        {/* <button className='drawer-filter__show-additional-filter flex items-center'>
           <span className='mr-1 text-body-2'>Show additional filters</span>
           <ChevronDown width={24} height={24} />
-        </button>
+        </button> */}
         <div className='flex'>
           <div className='flex gap-4'>
             <button

@@ -7,9 +7,8 @@ import ProgressCheck from '../../../components/Icons/ProgressCheck'
 import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import React, { useActionState, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
 const Registration = () => {
   const t = useTranslations('SignInPage')
@@ -34,11 +33,11 @@ const Registration = () => {
 
   const onSubmit = async (values: any) => {
     setIsSubmitting(true)
-    const { base, user } = endpoints
+    const { base, users } = endpoints
     const { full_name, email, password } = values
     // action(values)
     try {
-      const { status } = await api.post(base + user, {
+      const { status } = await api.post(base + users.base, {
         full_name,
         email,
         password,
@@ -169,27 +168,30 @@ const Registration = () => {
     </>
   ) : (
     <>
-      <div className='mx-auto w-content rounded-full bg-success-main p-1'>
-        <ProgressCheck
-          className='text-main-blue-gray-50'
-          width={40}
-          height={40}
-        />
+      <div>
+        <div className='mx-auto w-content rounded-full bg-success-main p-1'>
+          <ProgressCheck
+            className='text-main-blue-gray-50'
+            width={40}
+            height={40}
+          />
+        </div>
+        <h1 className='mt-6 text-center text-heading-6'>
+          {t('successfullRegistration')}
+        </h1>
+        <p className='mb-8 mt-4 text-center text-body-2'>
+          {t('textForSuccessRegistration')}
+          <br />
+          <span className='text-primary-main'>{email}</span>.
+        </p>
+        <p className='text-center text-body-2'>
+          {t('DidntGetTheLink')}?
+          <button className='ml-2 text-subtitle-2 text-primary-main'>
+            {t('SendMore')}
+          </button>
+        </p>
       </div>
-      <h1 className='mt-6 text-center text-heading-6'>
-        {t('successfullRegistration')}
-      </h1>
-      <p className='mb-8 mt-4 text-center text-body-2'>
-        {t('textForSuccessRegistration')}
-        <br />
-        <span className='text-primary-main'>{email}</span>.
-      </p>
-      <p className='text-center text-body-2'>
-        {t('DidntGetTheLink')}?
-        <button className='ml-2 text-subtitle-2 text-primary-main'>
-          {t('SendMore')}
-        </button>
-      </p>
+      <div />
     </>
   )
 }

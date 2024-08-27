@@ -1,9 +1,14 @@
 import { API_V1 } from '@/configs/constants'
 export const endpoints = {
   base: API_V1,
-  me: '/auth/me',
-  user: '/user',
-  token: '/auth/login',
+  users: {
+    base: '/user',
+    me: '/me',
+  },
+  auth: {
+    base: '/auth',
+    token: '/login',
+  },
   curentuser: 'user/current',
   subscribe: {
     buy: 'subscription/stripe/subscribe',
@@ -11,5 +16,10 @@ export const endpoints = {
   },
   contactUs: 'mail/contact-us',
   logout: 'user/logout',
-  table: '/table'
+  dashboard: {
+    base: '/dashboard',
+    table: '/table',
+    statistic: '/statistic',
+    chart: '/chart',
+  },
 }
