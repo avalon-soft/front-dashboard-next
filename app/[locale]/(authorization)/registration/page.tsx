@@ -7,9 +7,8 @@ import ProgressCheck from '../../../components/Icons/ProgressCheck'
 import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import React, { useActionState, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
 const Registration = () => {
   const t = useTranslations('SignInPage')
@@ -28,7 +27,7 @@ const Registration = () => {
   }>()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   // const [ state, action] = useActionState(signup, null)
   const { push } = useRouter()
 
@@ -183,8 +182,7 @@ const Registration = () => {
         <p className='mb-8 mt-4 text-center text-body-2'>
           {t('textForSuccessRegistration')}
           <br />
-          {/* <span className='text-primary-main'>{email}</span>. */}
-          <span className='text-primary-main'>tymoshenko.vlad@gmail.com</span>.
+          <span className='text-primary-main'>{email}</span>.
         </p>
         <p className='text-center text-body-2'>
           {t('DidntGetTheLink')}?
