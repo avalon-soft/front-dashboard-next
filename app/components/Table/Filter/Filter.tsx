@@ -36,6 +36,7 @@ const Filter = (props: FilterProps) => {
         JSON.parse(localStorage.getItem('savedFilter') as string)
       )
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     console.log('listSavedFilter :>> ', listSavedFilter)
