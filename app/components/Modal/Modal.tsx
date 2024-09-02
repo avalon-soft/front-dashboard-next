@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
   useRef,
   useState,
+  useCallback
 } from 'react'
 import { createPortal } from 'react-dom'
 import Close from '../Icons/Close'
@@ -26,39 +27,39 @@ interface PortalHandle {
   openModal: () => void
 }
 
-const Portal = forwardRef<PortalHandle, IPortal>((props, ref) => {
+const PortalCustom = forwardRef<PortalHandle, IPortal>((props, ref) => {
   const { header, footer, body, activeButton } = props
   const [isMount, setIsMount] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
-  // Реф для DOM елемента
   const containerRef = useRef<HTMLDivElement>(null)
   const { contextSafe } = useGSAP({ scope: containerRef })
 
-  const handleClickChangeStateModalWindow = contextSafe(() => {
-    setShowModal(!showModal)
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleClickChangeStateModalWindow = useCallback(contextSafe(() => {
+    setShowModal(prev => !prev)
+  }), [contextSafe]);
 
   useEffect(() => {
     setIsMount(true)
   }, [])
 
   useGSAP(() => {
-    let modal = document.querySelector('.modal')
-    let container = document.querySelector('.modal__container')
+    const modal = containerRef.current?.querySelector('.modal');
+    const container = containerRef.current?.querySelector('.modal__container');
+    
     if (modal && container) {
       if (showModal) {
-        gsap.to(modal, { opacity: 1, zIndex: 2, duration: 0.3 })
-        gsap.to(container, { scale: 1, duration: 0.3 })
+        gsap.to(modal, { opacity: 1, zIndex: 2, duration: 0.3 });
+        gsap.to(container, { scale: 1, duration: 0.3 });
       } else {
-        gsap.to(modal, { opacity: 0, duration: 0.3 })
-        gsap.to(modal, { zIndex: -1, delay: 0.3, duration: 0.3 })
-        gsap.to(container, { scale: 0, duration: 0.3 })
+        gsap.to(modal, { opacity: 0, duration: 0.3 });
+        gsap.to(modal, { zIndex: -1, delay: 0.3, duration: 0.3 });
+        gsap.to(container, { scale: 0, duration: 0.3 });
       }
     }
-  }, [showModal])
+  }, [showModal]);
 
-  // Використовуємо useImperativeHandle для користувацьких методів
   useImperativeHandle(ref, () => ({
     toggleModal() {
       handleClickChangeStateModalWindow()
@@ -71,12 +72,12 @@ const Portal = forwardRef<PortalHandle, IPortal>((props, ref) => {
     },
   }))
 
-  if (!isMount) return null
+  if (!isMount || typeof document === 'undefined') return null;
 
   return (
     <>
       <div onClick={() => handleClickChangeStateModalWindow()}>
-        {activeButton && activeButton}
+        {activeButton}
       </div>
       {createPortal(
         <div ref={containerRef} className='modal'>
@@ -103,6 +104,8 @@ const Portal = forwardRef<PortalHandle, IPortal>((props, ref) => {
       )}
     </>
   )
-})
+});
 
-export default Portal
+PortalCustom.displayName = 'PortalCustom';
+
+export default PortalCustom;
