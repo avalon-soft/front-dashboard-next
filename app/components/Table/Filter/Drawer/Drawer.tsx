@@ -11,7 +11,7 @@ import Input from '@/app/components/Form/Input/Input'
 import { useForm } from 'react-hook-form'
 import { IQueryParams } from '@/types'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
-import Portal from '@/app/components/Modal/Modal'
+// import Portal from '@/app/components/Modal/Modal'
 import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
 
@@ -177,7 +177,7 @@ const Drawer = (props: IDrawer) => {
                     className='drawer-filter__icon drawer-filter__icon--pin-off text-error-main'
                   />
                 </button>
-                <Portal
+                {/* <Portal
                   ref={portalRef}
                   header={'Save filter'}
                   footer={footerModalWindow()}
@@ -195,7 +195,7 @@ const Drawer = (props: IDrawer) => {
                     </button>
                   }
                   body={bodyModalWindow()}
-                />
+                /> */}
               </div>
               <div className='mx-4 divide-y-2 border border-main-gray-200' />
               <div className='flex gap-4'>
