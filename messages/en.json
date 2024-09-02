@@ -46,7 +46,13 @@
   "Filter": {
     "savedFilter": "Saved filter",
     "savedFilters": "Saved filters",
-    "clearAll": "Clear all"
+    "clearAll": "Clear all",
+    "filterName": "Filter name",
+    "notify": {
+      "success": {
+        "filterSaved": "Filter saved successfull"
+      }
+    }
   },
   "Dashboard": {
     "notify": {

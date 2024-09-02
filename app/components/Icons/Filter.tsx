@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Filter = (props: React.SVGProps<SVGSVGElement>) => {
+const FilterIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -18,4 +18,4 @@ const Filter = (props: React.SVGProps<SVGSVGElement>) => {
   )
 }
 
-export default Filter
+export default FilterIcon

@@ -28,9 +28,11 @@
     &__single-value
       &:is(.dark .filter__react-select__single-value)
         color: theme('colors.main.gray-50')
-    &__menu-list
-      &:is(.dark .filter__react-select__menu-list)
-        background: theme('colors.main.gray-700') !important
+    &__menu
+      z-index: 2 !important
+      &-list
+        &:is(.dark .filter__react-select__menu-list)
+          background: theme('colors.main.gray-700') !important
     &__option
       &--is-focused
         background: theme('colors.primary.focus') !important

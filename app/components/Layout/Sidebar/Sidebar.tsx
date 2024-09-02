@@ -81,18 +81,10 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
     const titles = document.querySelectorAll('.list-group__item-title')
     const icons = document.querySelectorAll('.list-group__icon')
     const items = document.querySelectorAll('.list-group__item')
-    console.log(
-      'object :>> ',
-      Boolean(layoutSidebar),
-      Boolean(layoutContent),
-      Boolean(badge),
-      Boolean(labels),
-      Boolean(titles),
-      Boolean(icons),
-      Boolean(items)
-    )
+
     if (layoutSidebar && layoutContent && labels && titles && icons && items) {
       if (isMini) {
+        console.log('here :>> ');
         icons.forEach((icon) => {
           gsap.to(icon, { display: 'block', opacity: 1, delay: 0.01 })
         })

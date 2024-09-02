@@ -8,23 +8,43 @@ import Select from '../../Form/Select/Select'
 import './Filter.sass'
 import Drawer from './Drawer/Drawer'
 import { useGSAP } from '@gsap/react'
-import { HTMLProps, useRef, useState } from 'react'
+import { HTMLProps, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { calculateTotalHeight } from '@/helpers'
 import classNames from 'classnames'
+import { IQueryParams } from '@/types'
 
-interface FilterProps extends HTMLProps<HTMLDivElement> {}
+interface FilterProps extends HTMLProps<HTMLDivElement> {
+  loadData: (params?: IQueryParams) => void
+}
 
 const Filter = (props: FilterProps) => {
+  const { loadData, ...otherProps } = props
+
   const container = useRef<HTMLDivElement>(null)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+  const [listSavedFilter, setListSavedFilter] = useState<any[]>([])
+  const [savedFilter, setSavedFilter] = useState<any>()
   const { contextSafe } = useGSAP({ scope: container })
 
+  useEffect(() => {
+    if ('isPin' in window.localStorage) {
+      handleClickDrawer()
+    }
+    if ('savedFilter' in window.localStorage) {
+      setListSavedFilter(
+        JSON.parse(localStorage.getItem('savedFilter') as string)
+      )
+    }
+  }, [])
+  useEffect(() => {
+    console.log('listSavedFilter :>> ', listSavedFilter)
+  }, [listSavedFilter])
   const t = useTranslations('Filter')
 
   const handleClickDrawer = contextSafe(() => {
     let drawer = document.querySelector('.drawer-filter')
-    console.log('drawer?.children :>> ', drawer?.children)
+
     if (drawer) {
       if (isOpenDrawer) gsap.to(drawer, { height: 0, opacity: 0 })
       else
@@ -35,9 +55,11 @@ const Filter = (props: FilterProps) => {
     }
     setIsOpenDrawer(!isOpenDrawer)
   })
-
+  const handleChooseFilter = (option: any) => {
+    setSavedFilter(option)
+  }
   return (
-    <div {...props}>
+    <div {...otherProps}>
       <div className='dark:bg-main-gray-600 mt-6 flex filter'>
         <Input
           id={'searchField'}
@@ -57,10 +79,8 @@ const Filter = (props: FilterProps) => {
           propsAppendIconButton={{ onClick: () => {} }}
         />
         <Select
-          options={[
-            { label: 'Saved filter', value: 'Saved filter' },
-            { label: 'Saved filter2', value: 'Saved filter2' },
-          ]}
+          options={listSavedFilter}
+          onChange={(option) => handleChooseFilter(option)}
           placeholder={t('savedFilters')}
           className='filter__react-select-container'
           classNamePrefix='filter__react-select'
@@ -84,7 +104,7 @@ const Filter = (props: FilterProps) => {
           />
         </button>
       </div>
-      <Drawer ref={container} />
+      <Drawer ref={container} loadData={loadData} savedFilter={savedFilter} />
       <SaveFilter />
     </div>
   )
