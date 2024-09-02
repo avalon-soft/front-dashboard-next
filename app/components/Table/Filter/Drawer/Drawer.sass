@@ -8,12 +8,13 @@
   opacity: 0
   &__content
     padding: 24px
-    &-form
-      display: grid
-      grid-template-columns: 1fr 1fr 1fr
-      @include media(768)
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    gap: 16px
+    @include media(768)
       grid-template-columns: 1fr 1fr
-      gap: 12px
+    @include media(695)
+      grid-template-columns: 1fr
   &__footer
     display: flex
     // justify-content: space-between

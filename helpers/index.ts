@@ -35,10 +35,11 @@ export const getColorStatus = (status: any) => {
 }
 
 export function queryString(object: any, deleteKey = []) {
-  if (object && Object.keys(object).length) {
-    deleteKey.forEach((key) => delete object[key])
+  let newClearObject = clearObject(object)
+  if (newClearObject && Object.keys(newClearObject).length) {
+    deleteKey.forEach((key) => delete newClearObject[key])
     let params = new URLSearchParams()
-    Object.entries(object).forEach(([key, value]) => {
+    Object.entries(newClearObject).forEach(([key, value]) => {
       if (key !== 'undefined') {
         if (Array.isArray(value)) params.set(key, value.join())
         else params.set(key, value as string)
@@ -48,12 +49,42 @@ export function queryString(object: any, deleteKey = []) {
   } else return ''
 }
 
-export function calculateTotalHeight2(elements: any, height: any) {
-  let totalHeight = 0
-  for (let element of elements) {
-    if ('data-table__scroll-container' !== element.classList[0]) {
-      totalHeight = totalHeight + element.offsetHeight
-    }
+export function clearObject(
+  object: Record<string, any>, // типізація для вхідного об'єкта
+  exclude: string[] = [] // типізація для масиву виключень
+): Record<string, any> {
+  // типізація для об'єкта, що повертається
+  if (typeof object === 'object') {
+    Object.entries(object).forEach(([key, value]) => {
+      if (
+        (value === null || value === undefined || value === '') &&
+        !exclude.includes(key)
+      ) {
+        delete object[key]
+      } else if (
+        typeof value === 'object' &&
+        !Array.isArray(value) &&
+        !exclude.includes(key)
+      ) {
+        if (!Object.keys(object[key]).length) {
+          delete object[key]
+        } else {
+          object[key] = { ...clearObject(object[key], exclude) }
+        }
+      } else if (Array.isArray(value) && !exclude.includes(key)) {
+        object[key] = value.map((el) => {
+          return { ...clearObject(el, exclude) }
+        })
+      }
+      if (
+        value !== null &&
+        typeof value === 'object' &&
+        !Object.keys(value).length &&
+        !exclude.includes(key)
+      ) {
+        delete object[key]
+      }
+    })
   }
-  return height - totalHeight
+  return object
 }

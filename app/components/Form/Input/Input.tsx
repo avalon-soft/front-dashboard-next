@@ -83,7 +83,6 @@ export const Input = (props: InputProps) => {
     }
     setPasswordVisible(!isPasswordVisible)
   })
-  console.log('error :>> ', error)
   return (
     <div ref={container} className={`input ${(className && className) || ''}`}>
       <label

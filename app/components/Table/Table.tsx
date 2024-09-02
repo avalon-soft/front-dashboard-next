@@ -15,14 +15,10 @@ import { useTranslations } from 'next-intl'
 import Filter from './Filter/Filter'
 import Pagination from '../Pagination/Pagination'
 import classNames from 'classnames'
-import {
-  calculateTotalHeight,
-  calculateTotalHeight2,
-  getColorStatus,
-} from '@/helpers'
+import { calculateTotalHeight, getColorStatus } from '@/helpers'
 import Skeleton from './Skaleton/Skeleton'
 import { IMeta, IQueryParams } from '@/types'
-import { ActionMeta, SingleValue } from 'react-select'
+import { SingleValue } from 'react-select'
 import gsap from 'gsap'
 import useWindowHeight from '@/helpers/useWindowHeight'
 
@@ -90,18 +86,12 @@ const Table = (props: TableProps) => {
     let height = calculateTotalHeight(dashboard?.children) - totalHeight
 
     gsap.to('.data-table__scroll-container', {
-      maxHeight: height - 125,
+      maxHeight: height >= 200 ? height - 125 : 200,
     })
   }
   const t = useTranslations('Table')
 
   const handleClickSort = async (name: string) => {
-    console.log(
-      'name === activeSort :>> ',
-      name === activeSort,
-      name,
-      activeSort
-    )
     if (name === activeSort) {
       if (typeSort === 'DESC') setTypeSort('ASC')
       else setTypeSort('DESC')
@@ -138,7 +128,7 @@ const Table = (props: TableProps) => {
           </button>
         )}
       </div>
-      <Filter className='data-table__filter' />
+      <Filter loadData={loadData} className='data-table__filter' />
       <div className='data-table__resoults mb-4 py-2'>
         <span className='text-body-2 text-main-gray-900 dark:text-main-gray-50'>
           {t('resultsFound')}:

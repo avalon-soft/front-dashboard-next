@@ -27,6 +27,8 @@ export interface IQueryParams {
   size?: number
   orderBy?: string | number
   order?: 'ASC' | 'DESC'
+  name?: string
+  status?: string
 }
 export interface IMeta {
   page: number
