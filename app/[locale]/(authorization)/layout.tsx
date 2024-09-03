@@ -5,10 +5,8 @@ import Img from '@/app/components/Image/Image'
 import Logo from '@/public/assets/logo.png'
 import LogoRetina from '@/public/assets/logo@2x.png'
 
-import { useLocale, useTranslations } from 'next-intl'
+
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const locale = useLocale()
-  const t = useTranslations('SignInPage')
 
   return (
     <div className='flex h-screen w-full items-center justify-center'>

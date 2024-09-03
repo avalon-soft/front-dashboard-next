@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form'
 
 import Input from '@/app/components/Form/Input/Input'
-import { useActionState, useState } from 'react'
+import { useState } from 'react'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
 import { useTranslations, useLocale } from 'next-intl'
 import Checkbox from '@/app/components/Form/Checkbox/Checkbox'
