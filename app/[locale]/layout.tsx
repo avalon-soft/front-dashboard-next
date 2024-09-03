@@ -12,13 +12,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: {locale}
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode,
+  params: {locale: string};
 }>) {
   const messages = useMessages()
+  console.log('locale :>> ', locale);
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
+        {/* {children} */}
         <NextIntlClientProvider messages={messages}>
           <Providers>{children}</Providers>
           <ToastContainer />
