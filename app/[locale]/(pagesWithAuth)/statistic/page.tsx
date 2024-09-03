@@ -4,8 +4,6 @@ import { endpoints } from '@/api/endpoints'
 import './Statistic.sass'
 import React, { useEffect, useState } from 'react'
 import {
-  AreaChart,
-  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -13,17 +11,12 @@ import {
   ResponsiveContainer,
   ComposedChart,
   Bar,
-  Line,
   Legend,
-  Scatter,
-  RadialBarChart,
-  RadialBar,
-  LineChart,
   PieChart,
   Pie,
   Sector,
 } from 'recharts'
-import { getRandomHexColor } from '@/helpers'
+import CircleSpinner from '@/app/components/CircleSpinner/CircleSpinner'
 
 interface IOptions {
   color: string
@@ -141,26 +134,15 @@ const Statistic = () => {
     const { data } = await api.get(base + dashboard.base + dashboard.statistic)
     setStatistics(data)
   }
-  const [opacity, setOpacity] = useState({
-    uv: 1,
-    pv: 1,
-  })
 
   if (!Object.keys(statistics).length) {
-    return <div>Loading...</div> // або поверніть спіннер
+    return (
+      <div className='w-full h-full flex items-center justify-center'>
+        <CircleSpinner />
+      </div>
+    )
   }
 
-  const handleMouseEnter = (o: any) => {
-    const { dataKey } = o
-
-    setOpacity((op) => ({ ...op, [dataKey]: 0.5 }))
-  }
-
-  const handleMouseLeave = (o: any) => {
-    const { dataKey } = o
-
-    setOpacity((op) => ({ ...op, [dataKey]: 1 }))
-  }
   const { salesData, trafficData, userData } = statistics
   return (
     <div className='statistic h-full w-full dark:bg-main-gray-900'>
@@ -190,8 +172,6 @@ const Statistic = () => {
                 dataKey='y'
                 isAnimationActive={false}
                 data={trafficData[0].data}
-                // cx='50%'
-                // cy='50%'
                 outerRadius={80}
                 fill={trafficData[0].options.color}
                 name={trafficData[0].options.name}
