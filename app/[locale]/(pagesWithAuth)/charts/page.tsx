@@ -14,6 +14,7 @@ import {
   LineChart,
   Line,
 } from 'recharts'
+import CircleSpinner from '@/app/components/CircleSpinner/CircleSpinner'
 
 interface IData {
   x: number
@@ -58,7 +59,12 @@ const Charts = () => {
     return dataMax / (dataMax - dataMin)
   }
 
-  if (!charts.length) return null
+  if (!charts.length)
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <CircleSpinner />
+      </div>
+    )
   return (
     <div className='charts'>
       <div className='charts__container'>
