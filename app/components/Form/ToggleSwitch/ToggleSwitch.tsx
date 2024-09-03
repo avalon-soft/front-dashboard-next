@@ -1,9 +1,5 @@
 'use client'
-import React, {
-  Dispatch,
-  InputHTMLAttributes,
-  SetStateAction,
-} from 'react'
+import React, { Dispatch, InputHTMLAttributes, SetStateAction } from 'react'
 import './ToggleSwitch.sass'
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string

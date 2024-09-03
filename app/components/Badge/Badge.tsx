@@ -8,7 +8,14 @@ interface BadgeProps extends HTMLProps<HTMLSpanElement> {
 
 const Badge = (props: BadgeProps) => {
   const { count, className, ...defaultSpanProps } = props
-  return <span {...defaultSpanProps} className={classNames('badge text-main-gray-50 text-body-3', className)}>{count}</span>
+  return (
+    <span
+      {...defaultSpanProps}
+      className={classNames('badge text-body-3 text-main-gray-50', className)}
+    >
+      {count}
+    </span>
+  )
 }
 
 export default Badge

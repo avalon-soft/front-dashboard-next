@@ -59,14 +59,14 @@ const Drawer = (props: IDrawer) => {
 
   useEffect(() => {
     if ('isPin' in window.localStorage) handleClickIsPin()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     if (savedFilter) {
       reset(savedFilter.value)
       loadData(savedFilter.value)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedFilter])
   const { handleSubmit, reset, register, watch } = useForm<IFilter>()
   const saveFilter = useForm<ISaveFilter>()

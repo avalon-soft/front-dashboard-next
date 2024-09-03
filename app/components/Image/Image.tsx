@@ -13,12 +13,20 @@ const Img = (props: ImgProps) => {
     checkTypeDisplayClient()
   })
   const checkTypeDisplayClient = () => {
-    window.devicePixelRatio > 1 && setCustomSrc(srcSet?.find((el) => el.src.includes('@2x')) as StaticImageData)
+    window.devicePixelRatio > 1 &&
+      setCustomSrc(
+        srcSet?.find((el) => el.src.includes('@2x')) as StaticImageData
+      )
   }
   return (
     <div className={className}>
       <div className={`image`}>
-        <Image {...defaultProps} src={customSrc} alt={alt} className={`image__item`} />
+        <Image
+          {...defaultProps}
+          src={customSrc}
+          alt={alt}
+          className={`image__item`}
+        />
       </div>
     </div>
   )

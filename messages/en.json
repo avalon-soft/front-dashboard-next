@@ -40,8 +40,8 @@
     "resultsFound": "Results found",
     "savedFilter": "Saved filter",
     "clearAll": "Clear all",
-    "NumberOfLines":"Number of lines",
-    "dataNotFound" : "Data not found"
+    "NumberOfLines": "Number of lines",
+    "dataNotFound": "Data not found"
   },
   "Filter": {
     "savedFilter": "Saved filter",
@@ -56,7 +56,7 @@
   },
   "Dashboard": {
     "notify": {
-      "fakeDataCreatedSuccessfull":"Fake data created successfull"
+      "fakeDataCreatedSuccessfull": "Fake data created successfull"
     }
   }
 }

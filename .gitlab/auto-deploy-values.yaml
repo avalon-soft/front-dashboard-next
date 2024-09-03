@@ -1,6 +1,6 @@
 ingress:
   enabled: true
-  path: "/"
+  path: '/'
 service:
   enabled: true
   name: front
@@ -8,10 +8,10 @@ service:
   internalPort: 3000
 livenessProbe:
   enabled: false
-  path: "/status"
+  path: '/status'
 readinessProbe:
   enabled: false
-  path: "/status"
+  path: '/status'
 application:
   track: stable
   tier: backend
@@ -19,4 +19,3 @@ application:
   migrateCommand: []
 image:
   pullPolicy: Always
-
