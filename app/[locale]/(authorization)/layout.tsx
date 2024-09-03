@@ -5,16 +5,14 @@ import Img from '@/app/components/Image/Image'
 import Logo from '@/public/assets/logo.png'
 import LogoRetina from '@/public/assets/logo@2x.png'
 
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
-
   return (
     <div className='flex h-screen w-full items-center justify-center'>
-      <div className='bg-main-blue-gray-50 dark:bg-main-gray-200 h-full w-full'>
+      <div className='h-full w-full bg-main-blue-gray-50 dark:bg-main-gray-200'>
         <div className='layout__container'>
-          <div className='bg-main-gray-50 dark:bg-main-gray-900 layout__left'>
+          <div className='layout__left bg-main-gray-50 dark:bg-main-gray-900'>
             <div className='layout__left-container'>
-              <div className='flex justify-between items-center'>
+              <div className='flex items-center justify-between'>
                 <a href='/' className='flex justify-between align-middle'>
                   <Img
                     src={Logo}
@@ -24,7 +22,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     width={24}
                     height={24}
                   />
-                  <span className='text-primary-main text-heading-7 ml-2'>
+                  <span className='ml-2 text-heading-7 text-primary-main'>
                     Logo
                   </span>
                 </a>
@@ -37,7 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               {children}
             </div>
           </div>
-          <div className='bg-primary-focus dark:bg-main-gray-400 layout__right'>
+          <div className='layout__right bg-primary-focus dark:bg-main-gray-400'>
             <Img
               src={Logo}
               srcSet={[Logo, LogoRetina]} // important!!!images name for retina display must includes @2x

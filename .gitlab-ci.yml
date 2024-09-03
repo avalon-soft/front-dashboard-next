@@ -1,20 +1,18 @@
 variables:
   AUTO_DEVOPS_BUILD_IMAGE_FORWARDED_CI_VARIABLES: CI_COMMIT_SHA,CI_ENVIRONMENT_NAME,BUILD_ENV,ENV,TRANSLATE,NPM_REG_TOKEN,SSH_PRIVATE_KEY
-  POSTGRES_ENABLED: "false"
-  REVIEW_DISABLED: "true"
-  TEST_DISABLED: "true"
-  SAST_DISABLED: "true"
-  PERFORMANCE_DISABLED: "true"
-  BROWSER_PERFORMANCE_DISABLED: "true"
-  CODE_QUALITY_DISABLED: "true"
-  CONTAINER_SCANNING_DISABLED: "true"
-  SECRET_DETECTION_DISABLED: "true"
-
+  POSTGRES_ENABLED: 'false'
+  REVIEW_DISABLED: 'true'
+  TEST_DISABLED: 'true'
+  SAST_DISABLED: 'true'
+  PERFORMANCE_DISABLED: 'true'
+  BROWSER_PERFORMANCE_DISABLED: 'true'
+  CODE_QUALITY_DISABLED: 'true'
+  CONTAINER_SCANNING_DISABLED: 'true'
+  SECRET_DETECTION_DISABLED: 'true'
 
 include:
   - template: Auto-DevOps.gitlab-ci.yml
   - remote: https://gitlab.com/gitlab-org/gitlab/-/raw/v16.10.0-ee/lib/gitlab/ci/templates/Jobs/Deploy.latest.gitlab-ci.yml
-
 
 build:
   environment:
@@ -42,7 +40,6 @@ staging:
     - unset HELM_UPGRADE_EXTRA_ARGS
     # - unset DB_MIGRATE
 
-
 production_manual:
   environment:
     name: $CI_COMMIT_BRANCH
@@ -55,4 +52,3 @@ production_manual:
     - unset AUTO_DEVOPS_CHART_REPOSITORY_USERNAME
     - unset HELM_UPGRADE_EXTRA_ARGS
     # - unset DB_MIGRATE
-

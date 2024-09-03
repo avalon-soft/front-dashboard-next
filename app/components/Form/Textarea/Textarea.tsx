@@ -36,7 +36,10 @@ const Textarea = (props: TextareaProps) => {
   })
   return (
     <div ref={container} className='textarea'>
-      <label htmlFor={id} className={`textarea__label ${error ? 'opacity-0' : 'opacity-100'}`}>
+      <label
+        htmlFor={id}
+        className={`textarea__label ${error ? 'opacity-0' : 'opacity-100'}`}
+      >
         {label}
       </label>
       <textarea

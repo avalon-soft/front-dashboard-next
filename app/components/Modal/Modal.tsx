@@ -13,41 +13,41 @@
 // import './Modal.sass'
 // import { useGSAP } from '@gsap/react'
 // import gsap from 'gsap'
-// 
+//
 // interface IPortal {
 //   footer: ReactNode
 //   header: string
 //   body: ReactNode
 //   activeButton: ReactNode
 // }
-// 
+//
 // interface PortalHandle {
 //   toggleModal: () => void
 //   closeModal: () => void
 //   openModal: () => void
 // }
-// 
+//
 // const PortalCustom = forwardRef<PortalHandle, IPortal>((props, ref) => {
 //   const { header, footer, body, activeButton } = props
 //   const [isMount, setIsMount] = useState(false)
 //   const [showModal, setShowModal] = useState(false)
-// 
+//
 //   const containerRef = useRef<HTMLDivElement>(null)
 //   const { contextSafe } = useGSAP({ scope: containerRef })
-// 
+//
 //   // eslint-disable-next-line react-hooks/exhaustive-deps
 //   const handleClickChangeStateModalWindow = useCallback(contextSafe(() => {
 //     setShowModal(prev => !prev)
 //   }), [contextSafe]);
-// 
+//
 //   useEffect(() => {
 //     setIsMount(true)
 //   }, [])
-// 
+//
 //   useGSAP(() => {
 //     const modal = containerRef.current?.querySelector('.modal');
 //     const container = containerRef.current?.querySelector('.modal__container');
-//     
+//
 //     if (modal && container) {
 //       if (showModal) {
 //         gsap.to(modal, { opacity: 1, zIndex: 2, duration: 0.3 });
@@ -59,7 +59,7 @@
 //       }
 //     }
 //   }, [showModal]);
-// 
+//
 //   useImperativeHandle(ref, () => ({
 //     toggleModal() {
 //       handleClickChangeStateModalWindow()
@@ -71,9 +71,9 @@
 //       setShowModal(true)
 //     },
 //   }))
-// 
+//
 //   if (!isMount || typeof document === 'undefined') return null;
-// 
+//
 //   return (
 //     <>
 //       <div onClick={() => handleClickChangeStateModalWindow()}>
@@ -105,7 +105,7 @@
 //     </>
 //   )
 // });
-// 
+//
 // PortalCustom.displayName = 'PortalCustom';
-// 
+//
 // export default PortalCustom;

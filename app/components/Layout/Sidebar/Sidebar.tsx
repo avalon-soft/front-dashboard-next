@@ -84,7 +84,7 @@ const Sidebar: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
 
     if (layoutSidebar && layoutContent && labels && titles && icons && items) {
       if (isMini) {
-        console.log('here :>> ');
+        console.log('here :>> ')
         icons.forEach((icon) => {
           gsap.to(icon, { display: 'block', opacity: 1, delay: 0.01 })
         })

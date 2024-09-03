@@ -77,7 +77,7 @@ const Search = () => {
         <SearchIcon
           width={24}
           height={24}
-          className='dark:text-main-gray-50 search__icon'
+          className='search__icon dark:text-main-gray-50'
         />
       </button>
     </div>

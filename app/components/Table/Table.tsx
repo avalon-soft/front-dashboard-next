@@ -32,13 +32,15 @@ interface TableProps {
   tableTitle?: string
   buttonOption?: ButtonProps
   loadData: (params?: IQueryParams) => void
-  meta: IMeta
+  meta?: IMeta
+  isFilter?: boolean
 }
 
 const columnHelper = createColumnHelper<any>()
 
 const Table = (props: TableProps) => {
-  const { data, meta, headers, tableTitle, loadData, buttonOption } = props
+  const { data, meta, headers, tableTitle, loadData, isFilter, buttonOption } =
+    props
 
   const [columns, setColumns] = useState<any>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -128,13 +130,15 @@ const Table = (props: TableProps) => {
           </button>
         )}
       </div>
-      <Filter loadData={loadData} className='data-table__filter' />
+      {isFilter && (
+        <Filter loadData={loadData} className='data-table__filter' />
+      )}
       <div className='data-table__resoults mb-4 py-2'>
         <span className='text-body-2 text-main-gray-900 dark:text-main-gray-50'>
           {t('resultsFound')}:
         </span>
         <span className='ml-2 text-subtitle-1 text-primary-main'>
-          {meta?.itemCount || 0}
+          {meta?.itemCount || data.length || 0}
         </span>
       </div>
       <div className='data-table__scroll-container'>
@@ -237,30 +241,33 @@ const Table = (props: TableProps) => {
           </table>
         </div>
       </div>
-      <div className='data-table__footer mt-4 flex items-center justify-between'>
-        <div className='flex w-full items-center'>
-          <span className='text-caption-1'>{t('NumberOfLines')}:</span>
-          <Select
-            options={[
-              { label: '20', value: '20' },
-              { label: '10', value: '10' },
-            ]}
-            defaultValue={size}
-            value={size}
-            onChange={(option) =>
-              setSize(option as SingleValue<{ label: string; value: string }>)
-            }
-            className='data-table__table-react-select-container'
-            classNamePrefix='data-table__react-select'
-            menuPlacement='top'
+      {meta && (
+        <div className='data-table__footer mt-4 flex items-center justify-between'>
+          <div className='flex w-full items-center'>
+            <span className='text-caption-1'>{t('NumberOfLines')}:</span>
+            <Select
+              options={[
+                { label: '20', value: '20' },
+                { label: '10', value: '10' },
+              ]}
+              defaultValue={size}
+              value={size}
+              onChange={(option) =>
+                setSize(option as SingleValue<{ label: string; value: string }>)
+              }
+              className='data-table__table-react-select-container'
+              classNamePrefix='data-table__react-select'
+              menuPlacement='top'
+            />
+          </div>
+
+          <Pagination
+            currentPage={meta?.page || 1}
+            onPageChange={(page: number) => setCurrentPage(page)}
+            totalPages={meta?.pageCount || 1}
           />
         </div>
-        <Pagination
-          currentPage={meta?.page || 1}
-          onPageChange={(page: number) => setCurrentPage(page)}
-          totalPages={meta?.pageCount || 1}
-        />
-      </div>
+      )}
     </div>
   )
 }

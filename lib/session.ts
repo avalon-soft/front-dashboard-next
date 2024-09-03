@@ -20,7 +20,10 @@ const cookie = {
   duration: 24 * 60 * 60 * 1000,
 }
 
-export const createSession = async (token: string, keyToken: string = 'Bearer') => {
+export const createSession = async (
+  token: string,
+  keyToken: string = 'Bearer'
+) => {
   const expires = new Date(Date.now() + cookie.duration)
   addAuthHeader(`${keyToken} ${token}`)
   cookies().set(cookie.name, `${keyToken} ${token}`, {

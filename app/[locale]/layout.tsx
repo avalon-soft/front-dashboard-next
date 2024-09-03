@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: {locale}
+  params: { locale },
 }: Readonly<{
-  children: React.ReactNode,
-  params: {locale: string};
+  children: React.ReactNode
+  params: { locale: string }
 }>) {
   const messages = useMessages()
-  console.log('locale :>> ', locale);
+  console.log('locale :>> ', locale)
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
