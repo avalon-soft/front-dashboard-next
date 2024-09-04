@@ -10,9 +10,12 @@ import Drawer from './Drawer/Drawer'
 import { useGSAP } from '@gsap/react'
 import { HTMLProps, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { calculateTotalHeight } from '@/helpers'
+import { calculateTotalHeight, queryString } from '@/helpers'
 import classNames from 'classnames'
 import { IQueryParams } from '@/types'
+import { useFilterStore } from '@/stores/filterStore'
+import useQueryParams from '@/hooks/useQueryParams'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface FilterProps extends HTMLProps<HTMLDivElement> {
   loadData: (params?: IQueryParams) => void
@@ -21,26 +24,24 @@ interface FilterProps extends HTMLProps<HTMLDivElement> {
 const Filter = (props: FilterProps) => {
   const { loadData, ...otherProps } = props
 
+  const { filters, chooseFilter, setChooseFilter, removeChooseFilter } =
+    useFilterStore()
+
   const container = useRef<HTMLDivElement>(null)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
-  const [listSavedFilter, setListSavedFilter] = useState<any[]>([])
-  const [savedFilter, setSavedFilter] = useState<any>()
+
   const { contextSafe } = useGSAP({ scope: container })
 
   useEffect(() => {
     if ('isPin' in window.localStorage) {
       handleClickDrawer()
     }
-    if ('savedFilter' in window.localStorage) {
-      setListSavedFilter(
-        JSON.parse(localStorage.getItem('savedFilter') as string)
-      )
+    return () => {
+      removeChooseFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  useEffect(() => {
-    console.log('listSavedFilter :>> ', listSavedFilter)
-  }, [listSavedFilter])
+
   const t = useTranslations('Filter')
 
   const handleClickDrawer = contextSafe(() => {
@@ -57,8 +58,10 @@ const Filter = (props: FilterProps) => {
     setIsOpenDrawer(!isOpenDrawer)
   })
   const handleChooseFilter = (option: any) => {
-    setSavedFilter(option)
+    setChooseFilter(option)
+    handleClickDrawer()
   }
+
   return (
     <div {...otherProps}>
       <div className='dark:bg-main-gray-600 mt-6 flex filter'>
@@ -80,8 +83,9 @@ const Filter = (props: FilterProps) => {
           propsAppendIconButton={{ onClick: () => {} }}
         />
         <Select
-          options={listSavedFilter}
+          options={filters}
           onChange={(option) => handleChooseFilter(option)}
+          value={chooseFilter}
           placeholder={t('savedFilters')}
           className='filter__react-select-container'
           classNamePrefix='filter__react-select'
@@ -105,7 +109,7 @@ const Filter = (props: FilterProps) => {
           />
         </button>
       </div>
-      <Drawer ref={container} loadData={loadData} savedFilter={savedFilter} />
+      <Drawer ref={container} loadData={loadData} savedFilter={chooseFilter} />
       <SaveFilter />
     </div>
   )

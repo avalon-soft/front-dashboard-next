@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import classNames from 'classnames'
 import { calculateTotalHeight } from '@/helpers'
 import Link from 'next/link'
-import useClickOutside from '@/helpers/useOnClickOutside'
+import useClickOutside from '@/hooks/useOnClickOutside'
 
 interface ListGroupProps {
   title?: string

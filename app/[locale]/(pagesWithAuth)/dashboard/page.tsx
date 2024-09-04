@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
 import { queryString } from '@/helpers'
 import { usePathname, useRouter } from 'next/navigation' // Замінено на новий пакет
+import useQueryParams from '@/hooks/useQueryParams'
 
 const Dashboard = () => {
   // useEffect(() => {
@@ -36,8 +37,11 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<IisLoading>({})
   const router = useRouter()
   const pathname = usePathname()
+  const query = useQueryParams()
+
   const loadData = async (params?: IQueryParams) => {
-    router.replace(pathname + queryString(params))
+    console.log('params, query :>> ', params, query)
+    router.replace(pathname + queryString({ ...query, ...params }))
     const { data, status } = await api.get(
       base + dashboard.base + dashboard.table + queryString(params)
     )
@@ -49,7 +53,7 @@ const Dashboard = () => {
     setIsLoading({ isButton: true })
     await api.post(base + dashboard.base + dashboard.table)
     toast.success(t('notify.fakeDataCreatedSuccessfull'))
-    loadData({ page: 1, size: 10 })
+    loadData(query)
     setIsLoading({ isButton: false })
   }
   const { isTable, isButton } = isLoading
@@ -62,6 +66,7 @@ const Dashboard = () => {
           tableTitle='Table with fake data'
           loadData={loadData}
           meta={data.meta}
+          isFilter
           buttonOption={{
             label: 'Create fake data to table',
             onClick: () => createFakeData(),

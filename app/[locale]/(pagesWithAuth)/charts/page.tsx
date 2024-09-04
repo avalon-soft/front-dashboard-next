@@ -41,22 +41,7 @@ const Charts = () => {
   const loadData = async () => {
     const { base, dashboard } = endpoints
     const { data } = await api.get(base + dashboard.base + dashboard.chart)
-    console.log('data :>> ', data)
     setCharts(data)
-  }
-
-  const gradientOffset = (data: IData[]) => {
-    const dataMax = Math.max(...data.map((i) => i.y))
-    const dataMin = Math.min(...data.map((i) => i.x))
-
-    if (dataMax <= 0) {
-      return 0
-    }
-    if (dataMin >= 0) {
-      return 1
-    }
-
-    return dataMax / (dataMax - dataMin)
   }
 
   if (!charts.length)

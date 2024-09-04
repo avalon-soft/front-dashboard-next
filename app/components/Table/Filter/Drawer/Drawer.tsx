@@ -11,9 +11,11 @@ import Input from '@/app/components/Form/Input/Input'
 import { useForm } from 'react-hook-form'
 import { IQueryParams } from '@/types'
 import LoadingButton from '@/app/components/Form/LoadingButton/LoadingButton'
-// import Portal from '@/app/components/Modal/Modal'
+import Portal from '@/app/components/Modal/Modal'
 import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
+import { clearObject, getKeysObject } from '@/helpers'
+import { useFilterStore } from '@/stores/filterStore'
 
 interface IFilter {
   name: string
@@ -36,12 +38,15 @@ interface PortalHandle {
 }
 
 const Drawer = (props: IDrawer) => {
-  const t = useTranslations('Filter')
   const { loadData, savedFilter, className, ...defaultProps } = props
   const [isPin, setIsPin] = useState(false)
+  
   const container = useRef<HTMLButtonElement>(null)
-  const { contextSafe } = useGSAP({ scope: container })
   const portalRef = useRef<PortalHandle>(null)
+  
+  const t = useTranslations('Filter')
+  
+  const { contextSafe } = useGSAP({ scope: container })
 
   const handleClickIsPin = contextSafe(() => {
     if (!isPin) {
@@ -61,31 +66,34 @@ const Drawer = (props: IDrawer) => {
     if ('isPin' in window.localStorage) handleClickIsPin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  
   useEffect(() => {
     if (savedFilter) {
       reset(savedFilter.value)
-      loadData(savedFilter.value)
+      
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedFilter])
+
   const { handleSubmit, reset, register, watch } = useForm<IFilter>()
   const saveFilter = useForm<ISaveFilter>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const watchAllFields = watch()
-
+  const { filters, setFilters } = useFilterStore()
   const handleClickSaved = ({ filterName }: { filterName: string }) => {
-    let savedFilters =
-      'savedFilter' in localStorage
-        ? JSON?.parse(localStorage.getItem('savedFilter') as string)
-        : []
+    let savedFilters = [...filters]
     savedFilters.push({ label: filterName, value: watchAllFields })
-    localStorage.setItem('savedFilter', JSON.stringify(savedFilters))
-    portalRef.current && portalRef.current.toggleModal()
+
+    setFilters(savedFilters)
+    // portalRef.current && portalRef.current.toggleModal()
+
     toast.success(t('notify.success.filterSaved'))
+
     saveFilter.reset()
+    return true
   }
-  const onSubmit = async (values: any) => {
-    console.log('values :>> ', values)
+
+  const onSubmit = async (values: IFilter) => {
     setIsSubmitting(true)
     try {
       loadData(values)
@@ -94,7 +102,10 @@ const Drawer = (props: IDrawer) => {
     }
   }
   const handleClickClear = () => {
-    reset()
+    reset({
+      name: '',
+      status: ''
+    })
   }
 
   const bodyModalWindow = () => {
@@ -113,13 +124,22 @@ const Drawer = (props: IDrawer) => {
     return (
       <>
         <LoadingButton
-          onClick={saveFilter.handleSubmit(handleClickSaved)}
-          className='w-24 rounded-sm border border-primary-border bg-primary-main px-4 py-3 text-main-gray-50 hover:bg-primary-hover'
+          type='submit'
+          className='w-24 rounded-sm border border-primary-border bg-primary-main px-4 py-3 text-main-gray-50 hover:bg-primary-hover disabled:bg-main-blue-gray-50 disabled:text-main-gray-400'
+          disabled={!saveFilter.watch().filterName}
         >
           Save
         </LoadingButton>
       </>
     )
+  }
+
+  const handleClickModal = () => {
+    if (Boolean(getKeysObject(clearObject(watchAllFields)).length)) {
+      portalRef.current?.toggleModal()
+    } else {
+      toast.warning(t('notify.warning.filterIsEmpty'))
+    }
   }
 
   return (
@@ -177,14 +197,15 @@ const Drawer = (props: IDrawer) => {
                     className='drawer-filter__icon drawer-filter__icon--pin-off text-error-main'
                   />
                 </button>
-                {/* <Portal
+                <Portal
                   ref={portalRef}
                   header={'Save filter'}
                   footer={footerModalWindow()}
+                  onSave={saveFilter.handleSubmit(handleClickSaved)}
                   activeButton={
                     <button
                       type='button'
-                      // onClick={handleClickSaved}
+                      onClick={() => handleClickModal()}
                       className='rounded-sm bg-primary-main p-2'
                     >
                       <DeviceFloppy
@@ -195,7 +216,7 @@ const Drawer = (props: IDrawer) => {
                     </button>
                   }
                   body={bodyModalWindow()}
-                /> */}
+                />
               </div>
               <div className='mx-4 divide-y-2 border border-main-gray-200' />
               <div className='flex gap-4'>

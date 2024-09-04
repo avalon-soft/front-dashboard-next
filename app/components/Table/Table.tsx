@@ -20,7 +20,7 @@ import Skeleton from './Skaleton/Skeleton'
 import { IMeta, IQueryParams } from '@/types'
 import { SingleValue } from 'react-select'
 import gsap from 'gsap'
-import useWindowHeight from '@/helpers/useWindowHeight'
+import useWindowHeight from '@/hooks/useWindowHeight'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string
@@ -146,7 +146,6 @@ const Table = (props: TableProps) => {
           <table className='data-table__table'>
             <thead className='data-table__table-header'>
               {table.getHeaderGroups().map((headerGroup) => {
-                // console.log('headerGroup :>> ', headerGroup)
                 return (
                   <tr
                     key={headerGroup.id}
