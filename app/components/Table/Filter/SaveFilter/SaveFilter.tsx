@@ -17,7 +17,7 @@ const EXCLUDE_KEYS = ['page', 'size', 'order', 'orderBy']
 
 interface SaveFilterProps extends HTMLProps<HTMLDivElement> {}
 
-export const SaveFilter = forwardRef<HTMLDivElement, SaveFilterProps>(
+const SaveFilter = forwardRef<HTMLDivElement, SaveFilterProps>(
   (props, ref) => {
     let query = useQueryParams()
     const path = usePathname()
@@ -113,3 +113,7 @@ export const SaveFilter = forwardRef<HTMLDivElement, SaveFilterProps>(
     )
   }
 )
+
+SaveFilter.displayName = 'SaveFilter'
+
+export default SaveFilter
