@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { SaveFilter } from './SaveFilter/SaveFilter'
+import SaveFilter from './SaveFilter/SaveFilter'
 import Input from '../../Form/Input/Input'
 import FilterIcon from '@/app/components/Icons/Filter'
 import Select from '../../Form/Select/Select'

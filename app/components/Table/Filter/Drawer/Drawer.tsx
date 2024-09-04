@@ -246,4 +246,5 @@ const Drawer = forwardRef<HTMLDivElement, IDrawer>((props, ref) => {
     </>
   )
 })
+Drawer.displayName = 'Drawer'
 export default Drawer
