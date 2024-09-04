@@ -1,5 +1,11 @@
 'use client'
-import React, { HTMLProps, useEffect, useRef, useState } from 'react'
+import React, {
+  forwardRef,
+  HTMLProps,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import './Drawer.sass'
 import Pin from '@/app/components/Icons/Pin'
 import PinOff from '@/app/components/Icons/PinOff'
@@ -37,16 +43,15 @@ interface PortalHandle {
   openModal: () => void
 }
 
-const Drawer = (props: IDrawer) => {
+const Drawer = forwardRef<HTMLDivElement, IDrawer>((props, ref) => {
   const { loadData, savedFilter, className, ...defaultProps } = props
   const [isPin, setIsPin] = useState(false)
-  
+
   const container = useRef<HTMLButtonElement>(null)
   const portalRef = useRef<PortalHandle>(null)
-  
-  const t = useTranslations('Filter')
-  
   const { contextSafe } = useGSAP({ scope: container })
+
+  const t = useTranslations('Filter')
 
   const handleClickIsPin = contextSafe(() => {
     if (!isPin) {
@@ -66,11 +71,10 @@ const Drawer = (props: IDrawer) => {
     if ('isPin' in window.localStorage) handleClickIsPin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+
   useEffect(() => {
     if (savedFilter) {
       reset(savedFilter.value)
-      
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedFilter])
@@ -80,13 +84,12 @@ const Drawer = (props: IDrawer) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const watchAllFields = watch()
   const { filters, setFilters } = useFilterStore()
+
   const handleClickSaved = ({ filterName }: { filterName: string }) => {
     let savedFilters = [...filters]
     savedFilters.push({ label: filterName, value: watchAllFields })
 
     setFilters(savedFilters)
-    // portalRef.current && portalRef.current.toggleModal()
-
     toast.success(t('notify.success.filterSaved'))
 
     saveFilter.reset()
@@ -104,7 +107,7 @@ const Drawer = (props: IDrawer) => {
   const handleClickClear = () => {
     reset({
       name: '',
-      status: ''
+      status: '',
     })
   }
 
@@ -145,6 +148,7 @@ const Drawer = (props: IDrawer) => {
   return (
     <>
       <div
+        ref={ref}
         {...defaultProps}
         className={classNames('drawer-filter dark:bg-main-gray-700', className)}
       >
@@ -241,6 +245,5 @@ const Drawer = (props: IDrawer) => {
       </div>
     </>
   )
-}
-
+})
 export default Drawer

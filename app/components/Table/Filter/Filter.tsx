@@ -14,8 +14,6 @@ import { calculateTotalHeight, queryString } from '@/helpers'
 import classNames from 'classnames'
 import { IQueryParams } from '@/types'
 import { useFilterStore } from '@/stores/filterStore'
-import useQueryParams from '@/hooks/useQueryParams'
-import { usePathname, useRouter } from 'next/navigation'
 
 interface FilterProps extends HTMLProps<HTMLDivElement> {
   loadData: (params?: IQueryParams) => void
@@ -59,8 +57,16 @@ const Filter = (props: FilterProps) => {
   })
   const handleChooseFilter = (option: any) => {
     setChooseFilter(option)
-    handleClickDrawer()
+    !isOpenDrawer && handleClickDrawer()
   }
+  const saveFilterContainer = useRef<any>(null)
+
+  const saveFilterGSAP = useGSAP({ scope: saveFilterContainer })
+  const handleClickDisplayChips = saveFilterGSAP.contextSafe(() => {
+    if (saveFilterContainer.current) {
+      gsap.to(saveFilterContainer.current, { opacity: 1, height: '100%' })
+    }
+  })
 
   return (
     <div {...otherProps}>
@@ -109,8 +115,15 @@ const Filter = (props: FilterProps) => {
           />
         </button>
       </div>
-      <Drawer ref={container} loadData={loadData} savedFilter={chooseFilter} />
-      <SaveFilter />
+      <Drawer
+        ref={container}
+        loadData={(value) => {
+          loadData(value)
+          handleClickDisplayChips()
+        }}
+        savedFilter={chooseFilter}
+      />
+      <SaveFilter ref={saveFilterContainer} />
     </div>
   )
 }
