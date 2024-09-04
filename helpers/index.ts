@@ -97,3 +97,11 @@ export function getRandomHexColor() {
   }
   return color
 }
+
+export const getKeysObject = ( obj: { [key: string]: any } ) => {
+  if (typeof obj === 'object') {
+    return Object.keys(obj)
+  }
+  return []
+
+}

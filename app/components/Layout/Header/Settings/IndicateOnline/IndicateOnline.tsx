@@ -1,4 +1,4 @@
-import useOnlineStatus from '@/helpers/useOnlineStatus'
+import useOnlineStatus from '@/hooks/useOnlineStatus'
 import classNames from 'classnames'
 import React from 'react'
 import './IndicateOnline.sass'

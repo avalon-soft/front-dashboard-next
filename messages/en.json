@@ -51,6 +51,9 @@
     "notify": {
       "success": {
         "filterSaved": "Filter saved successfull"
+      },
+      "warning": {
+        "filterIsEmpty": "The filter is empty. Please add parameters and try again."
       }
     }
   },
