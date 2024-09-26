@@ -14,8 +14,8 @@ readinessProbe:
   path: '/status'
 application:
   track: stable
-  tier: backend
-  part: backend
+  tier: frontend
+  part: frontend
   migrateCommand: []
 image:
   pullPolicy: Always
