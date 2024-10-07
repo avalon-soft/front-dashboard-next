@@ -137,7 +137,7 @@ const Statistic = () => {
 
   if (!Object.keys(statistics).length) {
     return (
-      <div className='w-full h-full flex items-center justify-center'>
+      <div className='flex h-full w-full items-center justify-center'>
         <CircleSpinner />
       </div>
     )
@@ -172,6 +172,8 @@ const Statistic = () => {
                 dataKey='y'
                 isAnimationActive={false}
                 data={trafficData[0].data}
+                cx='20%'
+                cy='50%'
                 outerRadius={80}
                 fill={trafficData[0].options.color}
                 name={trafficData[0].options.name}
@@ -180,8 +182,10 @@ const Statistic = () => {
               <Pie
                 dataKey='y'
                 data={trafficData[1].data}
-                cx={500}
-                cy={200}
+                // cx={500}
+                // cy={200}
+                cx='70%'
+                cy='50%'
                 innerRadius={40}
                 outerRadius={80}
                 fill={trafficData[1].options.color}

@@ -11,7 +11,6 @@ export default function ThemeSwitch() {
 
   useEffect(() => setMounted(true), [])
   useEffect(() => {
-    console.log('resolvedTheme :>> ', resolvedTheme)
     resolvedTheme === 'dark' && setIsChecked(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
