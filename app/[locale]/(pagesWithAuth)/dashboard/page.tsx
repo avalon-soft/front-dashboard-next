@@ -13,12 +13,6 @@ import { usePathname, useRouter } from 'next/navigation' // Замінено н�
 import useQueryParams from '@/hooks/useQueryParams'
 
 const Dashboard = () => {
-  // useEffect(() => {
-  //   loadData()
-  //   // }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
   const headers = ['id', 'name', 'status']
 
   type Data = {
@@ -40,7 +34,6 @@ const Dashboard = () => {
   const query = useQueryParams()
 
   const loadData = async (params?: IQueryParams) => {
-    console.log('params, query :>> ', params, query)
     router.replace(pathname + queryString({ ...query, ...params }))
     const { data, status } = await api.get(
       base + dashboard.base + dashboard.table + queryString(params)
@@ -56,7 +49,7 @@ const Dashboard = () => {
     loadData(query)
     setIsLoading({ isButton: false })
   }
-  const { isTable, isButton } = isLoading
+  const { isButton } = isLoading
   return (
     <div className='dashboard dark:bg-main-gray-900'>
       <div className='dashboard__container'>
