@@ -80,5 +80,12 @@
     "PasswordMustHaveAtLeastOneNumber": "Password must have at least one number",
     "PasswordMustHaveAtLeastOneSpecialCharacter": "Password must have at least one special character",
     "PasswordMustBeLess": "Password must not exceed 20 characters"
+  },
+  "Payments": {
+    "createdPayment": "Create a payment",
+    "amount": "Amount",
+    "createdPaymentSuccess": "Payment created successfully",
+    "cancel": "Cancel",
+    "payment": "Payment"
   }
 }

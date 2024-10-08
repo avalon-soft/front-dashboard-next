@@ -16,4 +16,13 @@ export const endpoints = {
     statistic: '/statistic',
     chart: '/chart',
   },
+  payments: {
+    base: '/payment',
+    mono: {
+      base: '/mono',
+      my: '/my',
+      invoice: '/invoice',
+      check: 'check',
+    },
+  },
 }
