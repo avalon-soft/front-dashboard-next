@@ -8,6 +8,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const response = await localesMiddleware(req)
 
   const pathname = req.nextUrl.pathname
+
   const locale =
     routing.locales.find((locale) => pathname.startsWith(`/${locale}`)) ||
     routing.defaultLocale
@@ -19,6 +20,9 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     `/${locale}/forgot-password`,
     `/${locale}/registration`,
   ]
+  if (!pathname.startsWith(`/${locale}`)) {
+    return NextResponse.redirect(new URL(`/${locale}${pathname}${req.nextUrl.search}`, req.url))
+  }
 
   if (!publicPath.includes(pathname) && !cookie) {
     if (!pathname.startsWith(`/${locale}/login`)) {
@@ -39,5 +43,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ['/', '/(uk|en)/:path*'],
+  matcher: ['/', '/payments', '/(uk|en)/:path*'],
 }

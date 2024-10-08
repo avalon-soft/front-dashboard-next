@@ -10,7 +10,6 @@ import { endpoints } from '@/api/endpoints'
 import { api } from '@/api'
 import { RESPONSE_SUCCESS_STATUS } from '@/configs/constants'
 import LoadingButton from '../../Form/LoadingButton/LoadingButton'
-import { toast } from 'react-toastify'
 
 interface PortalHandle {
   toggleModal: () => void
@@ -40,33 +39,38 @@ const ModalCreatePayments = forwardRef<
     handleSubmit,
     watch,
     formState: { errors },
+    control,
   } = useForm<{
     amount: string
+    currency: any
   }>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const onSubmit = async (values: any) => {
-    setIsSubmitting(true)
+    // setIsSubmitting(true)
     const { base, payments } = endpoints
-    const { amount } = values
+    const { amount, currency } = values
 
     try {
-      const { status } = await api.post(
+      const { data, status } = await api.post(
         base + payments.base + payments.mono.base + payments.mono.invoice,
         {
-          amount,
+          amount: parseInt(amount),
+          currency: currency.number,
         }
       )
+
       if (RESPONSE_SUCCESS_STATUS.includes(status)) {
+        window.open(data.pageUrl)
         modalRef.current?.closeModal()
         onSuccess()
-        toast.success(t('createdPaymentSuccess'))
+        // toast.success(t('createdPaymentSuccess'))
       }
     } finally {
       setIsSubmitting(false)
     }
   }
-  const { amount } = watch()
+  const { amount, currency } = watch()
 
   return (
     <Modal ref={modalRef}>
@@ -108,7 +112,8 @@ const ModalCreatePayments = forwardRef<
             isFill={Boolean(amount)}
             className='mb-4'
             wallet
-            // prependInnerIcon='UAH'
+            walletRegister={control}
+            prependInnerIcon={currency?.label || 'UAH'}
           />
         </div>
         <div className='modal__actions'>

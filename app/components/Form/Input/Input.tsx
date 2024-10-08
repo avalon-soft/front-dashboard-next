@@ -14,14 +14,13 @@ import Select from '../Select/Select'
 import {
   ControlProps,
   DropdownIndicatorProps,
-  MenuListProps,
   MenuProps,
   OptionProps,
   SingleValueProps,
   ValueContainerProps,
-  components,
 } from 'react-select'
 import Chevron from '../../Icons/ChevronDown'
+import { Control, Controller, FieldValues } from 'react-hook-form'
 
 interface InputProps extends React.ComponentProps<'input'> {
   error?: any
@@ -33,6 +32,7 @@ interface InputProps extends React.ComponentProps<'input'> {
   colorIcon?: string
   propsAppendIconButton?: React.ButtonHTMLAttributes<HTMLButtonElement>
   wallet?: boolean
+  walletRegister?: Object
 }
 
 export const Input = (props: InputProps) => {
@@ -52,6 +52,7 @@ export const Input = (props: InputProps) => {
     colorIcon,
     propsAppendIconButton,
     wallet,
+    walletRegister,
   } = props
   const container = useRef<any>(undefined)
   const eyeRef = useRef<any>(undefined)
@@ -59,7 +60,7 @@ export const Input = (props: InputProps) => {
 
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
-  const [optionValue, setOptionValue] = useState<any>()
+  const [optionValue, setOptionValue] = useState<any>(ListOfCurrencies[0])
   const handleClickOnFocus = contextSafe(() => {
     setTimeout(() => {
       let element = document.getElementsByTagName('com-1password-button')
@@ -71,9 +72,12 @@ export const Input = (props: InputProps) => {
   }, [isFill, handleClickOnFocus])
 
   const handleClickOnBlur = contextSafe(() => {})
-
   const Option = (props: OptionProps) => {
-    const { label, value } = props.data as { label: string; value: string }
+    const { label, value } = props.data as {
+      label: string
+      value: string
+      number: Number
+    }
     return (
       <div
         ref={props.innerRef}
@@ -145,7 +149,6 @@ export const Input = (props: InputProps) => {
     )
   }
   const DropdownIndicator = (props: DropdownIndicatorProps) => {
-    console.log('DropdownIndicator :>> ', props)
     return (
       <div {...props.innerProps}>
         <Chevron
@@ -186,6 +189,7 @@ export const Input = (props: InputProps) => {
     }
     setPasswordVisible(!isPasswordVisible)
   })
+
   return (
     <div ref={container} className={`input ${(className && className) || ''}`}>
       <label
@@ -222,21 +226,28 @@ export const Input = (props: InputProps) => {
           maxLength={maxLength}
         />
         {wallet && (
-          <Select
-            isSearchable={false}
-            classNamePrefix={'input__wallet-select'}
-            options={ListOfCurrencies}
-            value={optionValue}
+          <Controller
+            control={walletRegister as Control<FieldValues>}
+            name='currency'
             defaultValue={ListOfCurrencies[0]}
-            onChange={setOptionValue}
-            components={{
-              Option,
-              Menu,
-              SingleValue,
-              Control,
-              DropdownIndicator,
-              ValueContainer,
-            }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                isSearchable={false}
+                classNamePrefix={'input__wallet-select'}
+                options={ListOfCurrencies}
+                // value={optionValue}
+                // onChange={setOptionValue}
+                components={{
+                  Option,
+                  Menu,
+                  SingleValue,
+                  Control,
+                  DropdownIndicator,
+                  ValueContainer,
+                }}
+              />
+            )}
           />
         )}
         {appendInnerIcon && (

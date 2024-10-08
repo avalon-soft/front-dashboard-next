@@ -20,6 +20,7 @@ export const endpoints = {
     base: '/payment',
     mono: {
       base: '/mono',
+      my: '/my',
       invoice: '/invoice',
       check: 'check',
     },

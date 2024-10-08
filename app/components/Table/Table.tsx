@@ -79,6 +79,7 @@ const Table = (props: TableProps) => {
     let table = document.querySelector('.data-table')
     let dashboard = document.querySelector('.dashboard')
     let users = document.querySelector('.users')
+    let payments = document.querySelector('.payments')
     let totalHeight = 0
     for (let element of table?.children as any) {
       if ('data-table__scroll-container' !== element.classList[0]) {
@@ -86,7 +87,7 @@ const Table = (props: TableProps) => {
       }
     }
     let height =
-      calculateTotalHeight(dashboard?.children || users?.children) - totalHeight
+      calculateTotalHeight(dashboard?.children || users?.children || payments?.children) - totalHeight
 
     gsap.to('.data-table__scroll-container', {
       maxHeight: height >= 200 ? height - 125 : 200,

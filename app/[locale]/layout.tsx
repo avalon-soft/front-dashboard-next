@@ -18,7 +18,7 @@ export default function RootLayout({
   params: { locale: string }
 }>) {
   const messages = useMessages()
-  console.log('locale :>> ', locale)
+  
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
