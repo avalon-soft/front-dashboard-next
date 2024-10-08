@@ -10,13 +10,14 @@ interface CustomSelectProps extends SelectProps {}
 
 function CustomSelect(props: CustomSelectProps) {
   const [isLoading, setIsLoading] = useState(false)
-
+  const { components, ...defaultProps } = props
   return (
     <Select
-      {...props}
+      {...defaultProps}
       // components={animatedComponents}
       components={{
         IndicatorSeparator: () => null,
+        ...components,
       }}
       // defaultValue={[colourOptions[4], colourOptions[5]]}
       isLoading={isLoading}

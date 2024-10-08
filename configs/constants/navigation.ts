@@ -22,5 +22,10 @@ export const navigationList = (locale: string): INavigation[] => {
       icon: 'Loader',
       path: `/${locale}/users`,
     },
+    {
+      label: 'Payments',
+      icon: 'Loader',
+      path: `/${locale}/payments`,
+    },
   ]
 }

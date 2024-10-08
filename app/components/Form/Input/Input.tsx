@@ -9,6 +9,19 @@ import PrependInnerIcon from './InnerIcon'
 import AppendInnerIcon from './InnerIcon'
 import Eye from '../../Icons/Eye'
 import EyeClose from '../../Icons/EyeClose'
+import { ListOfCurrencies } from '@/configs/constants'
+import Select from '../Select/Select'
+import {
+  ControlProps,
+  DropdownIndicatorProps,
+  MenuListProps,
+  MenuProps,
+  OptionProps,
+  SingleValueProps,
+  ValueContainerProps,
+  components,
+} from 'react-select'
+import Chevron from '../../Icons/ChevronDown'
 
 interface InputProps extends React.ComponentProps<'input'> {
   error?: any
@@ -19,6 +32,7 @@ interface InputProps extends React.ComponentProps<'input'> {
   appendInnerIcon?: string
   colorIcon?: string
   propsAppendIconButton?: React.ButtonHTMLAttributes<HTMLButtonElement>
+  wallet?: boolean
 }
 
 export const Input = (props: InputProps) => {
@@ -37,6 +51,7 @@ export const Input = (props: InputProps) => {
     appendInnerIcon,
     colorIcon,
     propsAppendIconButton,
+    wallet,
   } = props
   const container = useRef<any>(undefined)
   const eyeRef = useRef<any>(undefined)
@@ -44,7 +59,7 @@ export const Input = (props: InputProps) => {
 
   const [isPasswordVisible, setPasswordVisible] = useState(false)
   const { contextSafe } = useGSAP({ scope: container })
-
+  const [optionValue, setOptionValue] = useState<any>()
   const handleClickOnFocus = contextSafe(() => {
     setTimeout(() => {
       let element = document.getElementsByTagName('com-1password-button')
@@ -56,6 +71,94 @@ export const Input = (props: InputProps) => {
   }, [isFill, handleClickOnFocus])
 
   const handleClickOnBlur = contextSafe(() => {})
+
+  const Option = (props: OptionProps) => {
+    const { label, value } = props.data as { label: string; value: string }
+    return (
+      <div
+        ref={props.innerRef}
+        {...props.innerProps}
+        className={classNames(
+          'group cursor-pointer p-2 transition-all hover:bg-primary-focus',
+          { 'bg-primary-focus': props.isSelected }
+        )}
+      >
+        <span
+          className={classNames(
+            'pr-2 text-caption-1 text-main-gray-400 group-hover:text-primary-main dark:text-main-gray-50',
+            {
+              'text-primary-main': props.isSelected,
+            }
+          )}
+        >
+          {label}
+        </span>
+        <span
+          className={classNames(
+            'text-caption-1 text-main-gray-900 group-hover:text-primary-main dark:text-main-gray-200',
+            {
+              'text-primary-main': props.isSelected,
+            }
+          )}
+        >
+          {value}
+        </span>
+      </div>
+    )
+  }
+
+  const Menu = (props: MenuProps) => {
+    return (
+      <div
+        {...props.innerProps}
+        className='absolute -right-[10px] top-[50px] mt-1 w-full min-w-[calc(100vh_-_52px)] rounded bg-main-gray-50'
+        style={{
+          boxShadow:
+            '101px 101px 40px 0px rgba(167, 174, 192, 0.00), 64px 64px 36px 0px rgba(167, 174, 192, 0.02), 36px 36px 31px 0px rgba(167, 174, 192, 0.06), 16px 16px 23px 0px rgba(167, 174, 192, 0.10), 4px 4px 13px 0px rgba(167, 174, 192, 0.12), 0px 0px 0px 0px rgba(167, 174, 192, 0.12)',
+        }}
+      >
+        {props.children}
+      </div>
+    )
+  }
+  const Control = ({ children, ...props }: ControlProps) => (
+    <div {...props.innerProps} className='flex items-center'>
+      {children}
+    </div>
+  )
+  const SingleValue = ({ children, ...props }: SingleValueProps) => (
+    <div
+      {...props.innerProps}
+      className={classNames({
+        'text-error-main': Boolean(error),
+      })}
+    >
+      {children}
+    </div>
+    // <components.SingleValue {...props}></components.SingleValue>
+  )
+  const ValueContainer = (props: ValueContainerProps) => {
+    return (
+      <div {...props.innerProps} className='flex items-center'>
+        {props.children}
+      </div>
+    )
+  }
+  const DropdownIndicator = (props: DropdownIndicatorProps) => {
+    console.log('DropdownIndicator :>> ', props)
+    return (
+      <div {...props.innerProps}>
+        <Chevron
+          width={24}
+          height={24}
+          className={classNames('rotate-180', {
+            'text-error-main': Boolean(error),
+            'rotate-0': props.isFocused,
+          })}
+        />
+      </div>
+    )
+  }
 
   const handleClickVisiblePassword = contextSafe(() => {
     if (isPasswordVisible) {
@@ -87,7 +190,7 @@ export const Input = (props: InputProps) => {
     <div ref={container} className={`input ${(className && className) || ''}`}>
       <label
         htmlFor={id}
-        className={`input__label ${error ? 'opacity-0' : 'opacity-100'}`}
+        className={`input__label ${error ? 'text-error-main' : 'text-main-gray-900'}`}
       >
         {label}
       </label>
@@ -96,12 +199,12 @@ export const Input = (props: InputProps) => {
           'input__container--error': error,
         })}
       >
-        {prependInnerIcon && (
+        {(prependInnerIcon || optionValue?.label) && (
           <PrependInnerIcon
-            componentName={prependInnerIcon}
+            componentName={prependInnerIcon || (optionValue?.label as string)}
             className={classNames(
               'input__pre-icon dark:text-main-gray-50',
-              `input__pre-icon--${prependInnerIcon.toLowerCase()}`
+              `input__pre-icon--${(prependInnerIcon || (optionValue?.label as string)).toLowerCase()}`
             )}
           />
         )}
@@ -118,6 +221,24 @@ export const Input = (props: InputProps) => {
           )}
           maxLength={maxLength}
         />
+        {wallet && (
+          <Select
+            isSearchable={false}
+            classNamePrefix={'input__wallet-select'}
+            options={ListOfCurrencies}
+            value={optionValue}
+            defaultValue={ListOfCurrencies[0]}
+            onChange={setOptionValue}
+            components={{
+              Option,
+              Menu,
+              SingleValue,
+              Control,
+              DropdownIndicator,
+              ValueContainer,
+            }}
+          />
+        )}
         {appendInnerIcon && (
           <button {...propsAppendIconButton}>
             <AppendInnerIcon

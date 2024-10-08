@@ -2,6 +2,17 @@
   position: relative
   width: 100%
   font-size: 12px
+  input[type="number"]
+      -webkit-appearance: initial
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button
+        -webkit-appearance: none
+        margin: 0
+  &__wallet-select
+    &__control
+      border: none !important
+      box-shadow: none !important
+      width: 90px !important
   &__container
     display: flex
     align-items: center
@@ -17,7 +28,7 @@
     // position: absolute
     // top: 24px
     // left: 20px
-    color: theme('colors.main.gray-900')
+    // color: theme('colors.main.gray-900')
     font-size: 12px
     line-height: 16px
     margin-bottom: 4px
