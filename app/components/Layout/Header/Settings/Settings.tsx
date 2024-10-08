@@ -53,7 +53,7 @@ const Settings = () => {
   }
   return (
     <div className='settings'>
-      <Search />
+      {false && <Search />}
       <div className='ml-4 cursor-pointer'>
         <Support width={24} height={24} className='dark:text-main-gray-50' />
       </div>

@@ -50,7 +50,7 @@
     "filterName": "Filter name",
     "notify": {
       "success": {
-        "filterSaved": "Filter saved successfull"
+        "filterSaved": "Filter saved successfully"
       },
       "warning": {
         "filterIsEmpty": "The filter is empty. Please add parameters and try again."
@@ -59,7 +59,26 @@
   },
   "Dashboard": {
     "notify": {
-      "fakeDataCreatedSuccessfull": "Fake data created successfull"
+      "fakeDataCreatedSuccessfull": "Fake data created successfully"
     }
+  },
+  "Users": {
+    "createdUser": "Create a user",
+    "save": "Save",
+    "cancel": "Cancel",
+    "PleaseCorrectYourEmail": "Please correct your Email",
+    "PasswordMustBeLonger": "Password must be at least 8 characters",
+    "PleaseConfirmYourPassword": "Please confirm your password",
+    "PasswordsDoNotMatch": "Passwords do not match",
+    "fullName": "Full name",
+    "confirmPassword": "Confirm password",
+    "password": "Password",
+    "email": "Email",
+    "createdUserSuccess": "The user created successfully",
+    "PasswordMustHaveAtLeastOneUppercaseLetter": "Password must have at least one uppercase letter",
+    "PasswordMustHaveAtLeastOneLowercaseLetter": "Password must have at least one lowercase letter",
+    "PasswordMustHaveAtLeastOneNumber": "Password must have at least one number",
+    "PasswordMustHaveAtLeastOneSpecialCharacter": "Password must have at least one special character",
+    "PasswordMustBeLess": "Password must not exceed 20 characters"
   }
 }

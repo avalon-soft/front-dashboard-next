@@ -15,6 +15,7 @@ import {
   Line,
 } from 'recharts'
 import CircleSpinner from '@/app/components/CircleSpinner/CircleSpinner'
+import { useTheme } from 'next-themes'
 
 interface IData {
   x: number
@@ -32,10 +33,16 @@ interface IChart {
 }
 
 const Charts = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const { resolvedTheme } = useTheme()
+
   useEffect(() => {
     loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  useEffect(() => {
+    setIsDarkMode(resolvedTheme === 'dark')
+  }, [resolvedTheme])
   const [charts, setCharts] = useState<IChart[]>([])
 
   const loadData = async () => {
@@ -52,7 +59,7 @@ const Charts = () => {
     )
   return (
     <div className='charts'>
-      <div className='charts__container'>
+      <div className='charts__container dark:bg-main-gray-900'>
         {charts.map(({ data, options }, index) => (
           <ResponsiveContainer width='100%' height='100%' key={index}>
             <LineChart
@@ -67,7 +74,11 @@ const Charts = () => {
               <CartesianGrid strokeDasharray='3 3' />
               <XAxis dataKey='x' />
               <YAxis />
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: isDarkMode ? '#616161' : '#fff',
+                }}
+              />
               <Legend />
               <Line
                 type='monotone'
