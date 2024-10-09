@@ -41,6 +41,7 @@ const Payments = () => {
       toast.success(t('createdPaymentSuccess'))
       replace(pathname)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success])
   return (
     <div className='payments dark:bg-main-gray-900'>
